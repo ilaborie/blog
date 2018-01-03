@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'Akka, Concurrency, et al.',
+    title: 'Akka, Concurrency, etc.',
     author: 'Richard Imaoka',
     description: 'Memo about Akka, concurrency, and other technical stuff',
     siteUrl: 'https://richardimaoka.github.io/blog/',
