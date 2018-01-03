@@ -31,7 +31,7 @@ class Template extends React.Component {
             }}
             to={'/'}
           >
-            Gatsby Starter Blog
+            Akka, Concurrency, et al.
           </Link>
         </h1>
       )
@@ -52,7 +52,7 @@ class Template extends React.Component {
             }}
             to={'/'}
           >
-            Gatsby Starter Blog
+            Akka, Concurrency, et al.
           </Link>
         </h3>
       )
