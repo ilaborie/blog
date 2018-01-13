@@ -1,2 +1,0 @@
-webpackJsonp([0x81b8806e4260],{497:function(e,a){e.exports={data:{site:{siteMetadata:{title:"Akka, Concurrency, et al."}},allMarkdownRemark:{edges:[{node:{excerpt:"Far far away, behind the word mountains, far from the countries Vokalia and\nConsonantia, there live the blind texts. Separated they live in…",fields:{slug:"/aaaa/"},frontmatter:{date:"28 May, 2015",title:"New Beginnings"}}}]}},pathContext:{}}}});
-//# sourceMappingURL=path---index-3a925f068a1c7c8f21ee.js.map
