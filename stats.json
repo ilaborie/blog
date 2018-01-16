@@ -25,8 +25,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-61c346d9c863510c74ad.js",
-      "path---index-61c346d9c863510c74ad.js.map"
+      "path---index-099f9d7d370ac6be1a12.js",
+      "path---index-099f9d7d370ac6be1a12.js.map"
     ],
     "commons": [
       "commons-85d973a0b17b2f0d3c45.js",
@@ -38,10 +38,14 @@
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js",
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
     ],
+    "path---event-adapter-cassandra": [
+      "path---event-adapter-cassandra-3b220cd3d471c61234b7.js",
+      "path---event-adapter-cassandra-3b220cd3d471c61234b7.js.map"
+    ],
     "app": [
-      "app-da3f69f96865310bd353.js",
+      "app-dddff392ec04a044de53.js",
       "build-js-styles.css",
-      "app-da3f69f96865310bd353.js.map",
+      "app-dddff392ec04a044de53.js.map",
       "build-js-styles.css.map"
     ]
   }

@@ -1,4 +1,152 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 13 Jan 2018 16:35:31 GMT</lastBuildDate><item><title><![CDATA[PersistentActor minimal example]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . receiveCommand Persistence actor receives a  Command  and…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal/</guid><pubDate>Sat, 13 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 16 Jan 2018 21:33:14 GMT</lastBuildDate><item><title><![CDATA[Event Adapter with akka-persistence-cassandra]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . You firstly need  configuration  to tie up  MyEventAdapter…]]></description><link>https://richardimaoka.github.io/blog//event-adapter-cassandra/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//event-adapter-cassandra/</guid><pubDate>Tue, 16 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/event-adapter-tagging-cassandra&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/cIau92KiNiE&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 24.324324324324326%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAA7CAAAOwgEVKEqAAAAA+ElEQVQY03WP6UuEUBTFrzDquMxooONCgeuoUDQtRBRURAv9/+SoH9T/5Mx7F6IF+nC45573zu/x6HO/R9d1GPoewzBgHEdM0/RL8zxzLs/l3Z/qRW8vGG3bssj3fbiuiyAIeG42G9i2DV3XYZomHMfBer3mzDAMKIoCIvpflmUxTFVVaJoGz/N4l2A5wzBEkiSoqgrb7ZaV5zmKomCfZRn7NE1R1zVotbK5KF82lgvhfURRxJKwOI658AWUsyxLLv/1TdOAPG+BlydCHBKOXMJySQL+/YWTY8LdLeHxnnB9QTg/Jbw9Ez5eCQ8iu7ki7M4IlzvCu8gPmNKsjS+tLm8AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;cqlsh&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
+        srcset=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;You firstly need &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/event-adapter-tagging-cassandra/src/main/resources/application.conf#L26L33&quot;&gt;configuration&lt;/a&gt; to tie up &lt;code&gt;MyEventAdapter&lt;/code&gt; under the &lt;code&gt;example&lt;/code&gt; package, and &lt;code&gt;Event&lt;/code&gt; under the same &lt;code&gt;example&lt;/code&gt; package.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;cassandra-journal {
+  event-adapters {
+    tagging-adapter = &quot;example.MyEventAdapter&quot;
+  }
+  event-adapter-bindings {
+    &quot;example.Event&quot; = tagging-adapter
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;In &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/event-adapter-tagging-cassandra/src/main/scala/example/Main.scala#L28L38&quot;&gt;MyPersistentAcdtor&lt;/a&gt;, when &lt;code&gt;persist&lt;/code&gt; method is called, an &lt;code&gt;Event&lt;/code&gt; is sent to &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra/blob/bf6bcbfa5d5616a285872ff605430c5b18ea289c/core/src/main/scala/akka/persistence/cassandra/journal/CassandraJournal.scala#L42&quot;&gt;CassandraJournal&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;   &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receiveCommand&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; Command&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; ⇒
+      persist&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Event&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
+        &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra/blob/bf6bcbfa5d5616a285872ff605430c5b18ea289c/core/src/main/scala/akka/persistence/cassandra/journal/CassandraJournal.scala#L42&quot;&gt;CassandraJournal&lt;/a&gt; invokes the &lt;code&gt;toJournal&lt;/code&gt; method of &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/event-adapter-tagging-cassandra/src/main/scala/example/MyEventAdapter.scala#L9&quot;&gt;MyEventAdapter.scala&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; toJournal&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;event&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; tags &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Set&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;mytag1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;mytag2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    Tagged&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;event&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; tags&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;  
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;After that, &lt;code&gt;Tagged(event, tags)&lt;/code&gt; is serialized to &lt;code&gt;Array[Byte]&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;In more detail, &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra/blob/bf6bcbfa5d5616a285872ff605430c5b18ea289c/core/src/main/scala/akka/persistence/cassandra/journal/CassandraJournal.scala#L42&quot;&gt;CassandraJournal&lt;/a&gt;’s &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra/blob/bf6bcbfa5d5616a285872ff605430c5b18ea289c/core/src/main/scala/akka/persistence/cassandra/journal/CassandraJournal.scala#L464&quot;&gt;&lt;code&gt;def serializeEvent()&lt;/code&gt;&lt;/a&gt; method serializes &lt;code&gt;payload&lt;/code&gt; (in this example, &lt;code&gt;Tagged(event, tags)&lt;/code&gt;) to  &lt;code&gt;Array[Byte]&lt;/code&gt; with &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;Akka serializer&lt;/a&gt;. After that, &lt;code&gt;CassandraJournal&lt;/code&gt; prepares a CQL statement to set all necessary columns in Cassandra, including the &lt;code&gt;event&lt;/code&gt; column to hold the binary of &lt;code&gt;Tagged(event, tags)&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd event-adapter-tagging-cassandra
+&gt; sbt
+&gt; runMain example.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.Main
+[info] Running example.Main
+receiveCommand  : Received Command(1)
+EventAdapter    : toJournal called for event = Event(1), tags = Set(mytag1, mytag2)
+[WARN] [SECURITY][01/17/2018 05:59:44.106] [exampleSystem-cassandra-plugin-default-dispatcher-8] [akka.serialization.Serialization(akka://exampleSystem)] Using the default Java serializer for class [example.Event] which is not recommended because of performance implications. Use another serializer or disable this warning using the setting &apos;akka.actor.warn-about-java-serializer-usage&apos;
+persist callback: Event = Event(1) persisted
+persist callback: current state = 1
+receiveCommand  : Received Command(2)
+EventAdapter    : toJournal called for event = Event(2), tags = Set(mytag1, mytag2)
+persist callback: Event = Event(2) persisted
+persist callback: current state = 3
+receiveCommand  : Received Command(3)
+EventAdapter    : toJournal called for event = Event(3), tags = Set(mytag1, mytag2)
+persist callback: Event = Event(3) persisted
+persist callback: current state = 6
+[ERROR] [01/17/2018 05:59:45.538] [exampleSystem-akka.actor.default-dispatcher-12] [akka://exampleSystem/user/p1] exploded!
+java.lang.Exception: exploded!
+        at example.MyPersistentActor$$anonfun$receiveCommand$1.applyOrElse(Main.scala:37)
+        at akka.actor.Actor.aroundReceive(Actor.scala:517)
+        at akka.actor.Actor.aroundReceive$(Actor.scala:515)
+        at example.MyPersistentActor.akka$persistence$Eventsourced$$super$aroundReceive(Main.scala:11)
+        at akka.persistence.Eventsourced$$anon$1.stateReceive(Eventsourced.scala:680)
+        at akka.persistence.Eventsourced.aroundReceive(Eventsourced.scala:192)
+        at akka.persistence.Eventsourced.aroundReceive$(Eventsourced.scala:191)
+        at example.MyPersistentActor.aroundReceive(Main.scala:11)
+        at akka.actor.ActorCell.receiveMessage(ActorCell.scala:527)
+        at akka.actor.ActorCell.invoke(ActorCell.scala:496)
+        at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+        at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+        at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+        at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+        at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+        at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+        at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+
+EventAdapter    : fromJournal called for event = Event(1) and manifest =
+EventAdapter    : fromJournal called for event = Event(2) and manifest =
+EventAdapter    : fromJournal called for event = Event(3) and manifest =
+receiveRecover  : Recovering an event = Event(1)
+receiveRecover  : current state = 1
+receiveRecover  : Recovering an event = Event(2)
+receiveRecover  : current state = 3
+receiveRecover  : Recovering an event = Event(3)
+receiveRecover  : current state = 6
+receiveCommand  : Received Command(4)
+EventAdapter    : toJournal called for event = Event(4), tags = Set(mytag1, mytag2)
+persist callback: Event = Event(4) persisted
+persist callback: current state = 10
+receiveCommand  : Received Command(5)
+EventAdapter    : toJournal called for event = Event(5), tags = Set(mytag1, mytag2)
+persist callback: Event = Event(5) persisted
+persist callback: current state = 15
+[success] Total time: 12 s, completed Jan 17, 2018 5:59:52 AM
+## References 
+
+- Official documentation at https://doc.akka.io/docs/akka/2.5.9/persistence.html&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;</content:encoded></item><item><title><![CDATA[PersistentActor minimal example]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . receiveCommand Persistence actor receives a  Command  and…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal/</guid><pubDate>Sat, 13 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/persistent-actor-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;receiveCommand&lt;/h3&gt;
 &lt;div&gt;
