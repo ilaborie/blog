@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 16 Jan 2018 21:33:14 GMT</lastBuildDate><item><title><![CDATA[Event Adapter with akka-persistence-cassandra]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . You firstly need  configuration  to tie up  MyEventAdapter…]]></description><link>https://richardimaoka.github.io/blog//event-adapter-cassandra/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//event-adapter-cassandra/</guid><pubDate>Tue, 16 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 16 Jan 2018 21:41:40 GMT</lastBuildDate><item><title><![CDATA[Event Adapter with akka-persistence-cassandra]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . You firstly need  configuration  to tie up  MyEventAdapter…]]></description><link>https://richardimaoka.github.io/blog//event-adapter-cassandra/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//event-adapter-cassandra/</guid><pubDate>Tue, 16 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/event-adapter-tagging-cassandra&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
@@ -17,7 +17,7 @@
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
+    href=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -36,11 +36,11 @@
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;cqlsh&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
-        srcset=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
-/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
-/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
-/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
+        src=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
+        srcset=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
+/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
+/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
+/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -142,11 +142,17 @@ receiveCommand  : Received Command(5)
 EventAdapter    : toJournal called for event = Event(5), tags = Set(mytag1, mytag2)
 persist callback: Event = Event(5) persisted
 persist callback: current state = 15
-[success] Total time: 12 s, completed Jan 17, 2018 5:59:52 AM
-## References 
-
-- Official documentation at https://doc.akka.io/docs/akka/2.5.9/persistence.html&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;</content:encoded></item><item><title><![CDATA[PersistentActor minimal example]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . receiveCommand Persistence actor receives a  Command  and…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal/</guid><pubDate>Sat, 13 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+[success] Total time: 12 s, completed Jan 17, 2018 5:59:52 AM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official persistence documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official event adapter documentation for tagging at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html#event-adapters&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html#event-adapters&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official Akka serialization documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/serialization.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;akka-persistence-cassandra at &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra&quot;&gt;https://github.com/akka/akka-persistence-cassandra&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Apache Cassandra downloading page at &lt;a href=&quot;http://cassandra.apache.org/download/&quot;&gt;http://cassandra.apache.org/download/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Datastax provides a great deal of documentation about Cassandra, including a free course avaialble as of the time of this blog post &lt;a href=&quot;https://academy.datastax.com/courses&quot;&gt;https://academy.datastax.com/courses&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[PersistentActor minimal example]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . receiveCommand Persistence actor receives a  Command  and…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal/</guid><pubDate>Sat, 13 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/persistent-actor-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;receiveCommand&lt;/h3&gt;
 &lt;div&gt;
