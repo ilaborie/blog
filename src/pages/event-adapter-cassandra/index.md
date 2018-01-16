@@ -1,5 +1,5 @@
 ---
-title: PersistentActor minimal example
+title: Event Adapter with akka-persistence-cassandra
 date: "2018-01-17T01:31:00.000+0900"
 ---
 
@@ -115,6 +115,13 @@ EventAdapter    : toJournal called for event = Event(5), tags = Set(mytag1, myta
 persist callback: Event = Event(5) persisted
 persist callback: current state = 15
 [success] Total time: 12 s, completed Jan 17, 2018 5:59:52 AM
+```
+
 ## References 
 
-- Official documentation at https://doc.akka.io/docs/akka/2.5.9/persistence.html
+- Official persistence documentation at https://doc.akka.io/docs/akka/2.5/persistence.html
+- Official event adapter documentation for tagging at https://doc.akka.io/docs/akka/2.5/persistence.html#event-adapters
+-  Official Akka serialization documentation at https://doc.akka.io/docs/akka/2.5/serialization.html
+- akka-persistence-cassandra at https://github.com/akka/akka-persistence-cassandra
+- Apache Cassandra downloading page at http://cassandra.apache.org/download/
+- Datastax provides a great deal of documentation about Cassandra, including a free course avaialble as of the time of this blog post https://academy.datastax.com/courses
