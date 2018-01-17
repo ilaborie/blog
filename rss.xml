@@ -1,4 +1,129 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 16 Jan 2018 21:41:40 GMT</lastBuildDate><item><title><![CDATA[Event Adapter with akka-persistence-cassandra]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . You firstly need  configuration  to tie up  MyEventAdapter…]]></description><link>https://richardimaoka.github.io/blog//event-adapter-cassandra/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//event-adapter-cassandra/</guid><pubDate>Tue, 16 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 17 Jan 2018 22:16:15 GMT</lastBuildDate><item><title><![CDATA[PersistentActor minimal example with akka-persistence-sql-async]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub .
+There is also an  official sample  available. Refer to…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal-sql/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal-sql/</guid><pubDate>Wed, 17 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/persistent-actor-minimal-sql&quot;&gt;GitHub&lt;/a&gt;.
+There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql-async/tree/master/sample/src/main&quot;&gt;official sample&lt;/a&gt; available.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/WcpEMcnx5XU&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 16.083916083916083%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAADCAYAAACTWi8uAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAt0lEQVQI10WPy2rDMBBF8/9/lDYtZJPYYBqoHpYt7YotJUY2rV1cQ+BEVRddnRnucJi7G4aBaZoYx5EYI5P3dMbwURtCUdCdToSyxBcl/fmcWHBN++35wPXlFb9/wh+PzOnuHgK7dV3Zto1l+c786nuC1jjnMHWNlBJjGqTSvAuJTpm1NufOupyZ9ECMIz9N8y+c5yXzs+sISmFbi04UQmCaP2FVVYmKOgls26LSrKTg8nbJ7X6FD4891954O8n4AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;sql&quot;
+        title=&quot;&quot;
+        src=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
+        srcset=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
+/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
+/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
+/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Refer to another post, &lt;a href=&quot;../persistent-actor-minimal&quot;&gt;Persistence Actor Minimal example&lt;/a&gt; for basics of PersistentActor.&lt;/p&gt;
+&lt;p&gt;In this example, the target DB is MySQL. Firstly you need to create a database &lt;code&gt;akka_persistence_sql_async&lt;/code&gt; and execute &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/persistent-actor-minimal-sql/mysql.sql&quot;&gt;&lt;code&gt;mysql.sql&lt;/code&gt;&lt;/a&gt; so that the database has necessary tables.&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/persistent-actor-minimal-sql/src/main/scala/example/Main.scala#L28L38&quot;&gt;MyPersistentAcdtor&lt;/a&gt;, when &lt;code&gt;persist&lt;/code&gt; method is called, an &lt;code&gt;Event&lt;/code&gt; is sent to &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql-async/blob/8dba8158273dbf206ce4abca0725e28207b1db1b/core/src/main/scala/akka/persistence/journal/sqlasync/ScalikeJDBCWriteJournal.scala&quot;&gt;ScalikeJDBCWriteJournal&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;   &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receiveCommand&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; Command&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; ⇒
+      persist&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Event&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
+        &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql-async/blob/8dba8158273dbf206ce4abca0725e28207b1db1b/core/src/main/scala/akka/persistence/journal/sqlasync/ScalikeJDBCWriteJournal.scala&quot;&gt;ScalikeJDBCWriteJournal&lt;/a&gt; serializes &lt;code&gt;Event&lt;/code&gt; to &lt;code&gt;Array[Byte]&lt;/code&gt; with &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;Akka serializer&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;After that, &lt;code&gt;ScalikeJDBCWriteJournal&lt;/code&gt; prepares an SQL statement to persist the data to an SQL database, including the &lt;code&gt;message&lt;/code&gt; column to hold the binary of &lt;code&gt;Event&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd persistent-actor-minimal-sql
+&gt; sbt
+&gt; runMain example.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.Main
+receiveCommand  : Received Command Command(1)
+persist callback: Event = Event(1) persisted
+persist callback: current state = 1
+receiveCommand  : Received Command Command(2)
+persist callback: Event = Event(2) persisted
+persist callback: current state = 3
+receiveCommand  : Received Command Command(3)
+persist callback: Event = Event(3) persisted
+persist callback: current state = 6
+[ERROR] [01/13/2018 17:24:19.422] [exampleSystem-akka.actor.default-dispatcher-7] [akka://exampleSystem/user/p1] exploded!
+java.lang.Exception: exploded!
+        at example.MyPersistentActor$$anonfun$receiveCommand$1.applyOrElse(Main.scala:37)
+        at akka.actor.Actor.aroundReceive(Actor.scala:517)
+        at akka.actor.Actor.aroundReceive$(Actor.scala:515)
+        at example.MyPersistentActor.akka$persistence$Eventsourced$$super$aroundReceive(Main.scala:11)
+        at akka.persistence.Eventsourced$$anon$1.stateReceive(Eventsourced.scala:663)
+        at akka.persistence.Eventsourced.aroundReceive(Eventsourced.scala:183)
+        at akka.persistence.Eventsourced.aroundReceive$(Eventsourced.scala:182)
+        at example.MyPersistentActor.aroundReceive(Main.scala:11)
+        at akka.actor.ActorCell.receiveMessage(ActorCell.scala:527)
+        at akka.actor.ActorCell.invoke(ActorCell.scala:496)
+        at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:257)
+        at akka.dispatch.Mailbox.run(Mailbox.scala:224)
+        at akka.dispatch.Mailbox.exec(Mailbox.scala:234)
+        at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+        at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+        at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+        at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+
+receiveRecover  : Recovering an event = Event(1)
+receiveRecover  : current state = 1
+receiveRecover  : Recovering an event = Event(2)
+receiveRecover  : current state = 3
+receiveRecover  : Recovering an event = Event(3)
+receiveRecover  : current state = 6
+receiveCommand  : Received Command Command(4)
+persist callback: Event = Event(4) persisted
+persist callback: current state = 10
+receiveCommand  : Received Command Command(5)
+persist callback: Event = Event(5) persisted
+persist callback: current state = 15
+[success] Total time: 2 s, completed Jan 13, 2018 5:24:20 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official persistence documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official Akka serialization documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/serialization.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;akka-persistence-sql-async plugin at &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql-async&quot;&gt;https://github.com/okumin/akka-persistence-sql-async&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Event Adapter with akka-persistence-cassandra]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . You firstly need  configuration  to tie up  MyEventAdapter…]]></description><link>https://richardimaoka.github.io/blog//event-adapter-cassandra/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//event-adapter-cassandra/</guid><pubDate>Tue, 16 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/event-adapter-tagging-cassandra&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div

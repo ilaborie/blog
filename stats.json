@@ -1,5 +1,9 @@
 {
   "assetsByChunkName": {
+    "path---persistent-actor-minimal-sql": [
+      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js",
+      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js.map"
+    ],
     "component---src-pages-index-js": [
       "component---src-pages-index-js-644405045e130227f65b.js",
       "component---src-pages-index-js-644405045e130227f65b.js.map"
@@ -25,8 +29,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-099f9d7d370ac6be1a12.js",
-      "path---index-099f9d7d370ac6be1a12.js.map"
+      "path---index-ef2d1e268d99baf92cc6.js",
+      "path---index-ef2d1e268d99baf92cc6.js.map"
     ],
     "commons": [
       "commons-85d973a0b17b2f0d3c45.js",
@@ -43,9 +47,9 @@
       "path---event-adapter-cassandra-586d6466e6d564cdeb9b.js.map"
     ],
     "app": [
-      "app-dddff392ec04a044de53.js",
+      "app-2d9f4ee4b6cc83de6b9b.js",
       "build-js-styles.css",
-      "app-dddff392ec04a044de53.js.map",
+      "app-2d9f4ee4b6cc83de6b9b.js.map",
       "build-js-styles.css.map"
     ]
   }
