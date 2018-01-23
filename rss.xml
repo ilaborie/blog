@@ -1,4 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 17 Jan 2018 22:16:15 GMT</lastBuildDate><item><title><![CDATA[PersistentActor minimal example with akka-persistence-sql-async]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub .
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 23 Jan 2018 13:53:25 GMT</lastBuildDate><item><title><![CDATA[Serializer minimal example]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Akka Serialization Akka doc’s  serialization section  says…]]></description><link>https://richardimaoka.github.io/blog//serializer-minimal/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//serializer-minimal/</guid><pubDate>Mon, 22 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/serialize-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Akka Serialization&lt;/h3&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe &quot;=&quot;&quot; src=&quot;https://www.youtube.com/embed/paclLCSv6NA&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;Akka doc’s &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;serialization section&lt;/a&gt; says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;However, messages that have to escape the JVM to reach an actor running on a different host have to undergo some form of serialization (i.e. the objects have to be converted to and from byte arrays).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This example shows a simplified version, but still the core of what Akka serialization does -
+(i.e.) how &lt;code&gt;Serialization&lt;/code&gt; Akka extention class, &lt;code&gt;Serializer&lt;/code&gt;,
+and the message you want to serialize/deserialize work together.&lt;/p&gt;
+&lt;h3&gt;Serializer configuration&lt;/h3&gt;
+&lt;p&gt;First, you need to define your serializer class, extending &lt;code&gt;Serializer&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;serialization&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Serializer
+
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; MyMessage&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;str1&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; str2&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; MySerializer &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Serializer &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then you need configuration which binds your &lt;code&gt;MySerializer&lt;/code&gt; to the &lt;code&gt;MyMessage&lt;/code&gt; type.
+Note the common &lt;code&gt;mymessage&lt;/code&gt; key which defines the binding.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;//application.conf&lt;/span&gt;
+akka &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  actor &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    serializers &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      mymessage &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;example.MySerializer&quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;                                     
+    serialization&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;bindings &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;              
+      &lt;span class=&quot;token string&quot;&gt;&quot;example.MyMessage&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; mymessage     
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Next, you should define &lt;code&gt;toBinary&lt;/code&gt; and &lt;code&gt;fromBinary&lt;/code&gt; inside &lt;code&gt;MySerializer&lt;/code&gt; to handle
+serialization and deserialization of &lt;code&gt;MyMessage&lt;/code&gt; instances.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; toBinary&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;obj&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;AnyRef&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Byte&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    obj &lt;span class=&quot;token keyword&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; msg&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; MyMessage &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; 
+        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;str1 &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;|&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;str2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;getBytes&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;StandardCharsets&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;UTF_8&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; fromBinary&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bytes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Byte&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; clazz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Option&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Class&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;_&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;AnyRef&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; repString &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bytes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; StandardCharsets&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;UTF_8&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// &apos;|&apos; is enclosed in single quotes = Char, not &lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; arr&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; repString&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;split&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;|&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; MyMessage&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;arr&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; arr&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The below piece of code is the simplied version of what Akka does, when serializing a message.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val system = akka.actor.ActorSystem(&quot;example&quot;, ConfigFactory.load())
+val original = MyMessage(&quot;aaa&quot;, &quot;bbb&quot;)
+val serialization = SerializationExtension(system)
+
+//serialization by toBinary
+val bytes = serializer.toBinary(original)
+
+//de-serialization by fromBinary
+val restored = serializer.fromBinary(bytes, manifest = None)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;When you are (e.g.) sending a message to a remote JVM, this is done under the ground
+and you don’t explicitly call &lt;code&gt;SerializationExtension(system)&lt;/code&gt;, &lt;code&gt;toBinary&lt;/code&gt; and &lt;code&gt;fromBinary&lt;/code&gt; yourself, but this example is to show what’s done by Akka in the simple form.&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd serialize-minimal
+&gt; sbt
+&gt; runMain example.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;p&gt;Some &lt;code&gt;println&lt;/code&gt; calls are inserted in the &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/serialize-minimal&quot;&gt;complete example at GitHub&lt;/a&gt; to illustrate the behavior&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.Main
+Serializer for class example.MyMessage = example.MySerializer@254b2a65
+MySerializer: toBinary(MyMessage(aaa,bbb)) is called
+MySerializer: fromBinary(979797124989898) is called
+original = MyMessage(aaa,bbb), class = class example.MyMessage
+restored = MyMessage(aaa,bbb), class = class example.MyMessage
+[success] Total time: 1 s, completed Jan 23, 2018 9:48:55 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official documentation of Akka serialization at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/serialization.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[PersistentActor minimal example with akka-persistence-sql-async]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub .
 There is also an  official sample  available. Refer to…]]></description><link>https://richardimaoka.github.io/blog//persistent-actor-minimal-sql/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//persistent-actor-minimal-sql/</guid><pubDate>Wed, 17 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/persistent-actor-minimal-sql&quot;&gt;GitHub&lt;/a&gt;.
 There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql-async/tree/master/sample/src/main&quot;&gt;official sample&lt;/a&gt; available.&lt;/p&gt;
@@ -19,7 +127,7 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
+    href=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -38,11 +146,11 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sql&quot;
         title=&quot;&quot;
-        src=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
-        srcset=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
+        src=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
+        srcset=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -142,7 +250,7 @@ persist callback: current state = 15
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
+    href=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -161,11 +269,11 @@ persist callback: current state = 15
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;cqlsh&quot;
         title=&quot;&quot;
-        src=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
-        srcset=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
+        src=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
+        srcset=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;

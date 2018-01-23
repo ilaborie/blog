@@ -1,8 +1,8 @@
 {
   "assetsByChunkName": {
     "path---persistent-actor-minimal-sql": [
-      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js",
-      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js.map"
+      "path---persistent-actor-minimal-sql-e2d1aecac9a6fe7cd4a1.js",
+      "path---persistent-actor-minimal-sql-e2d1aecac9a6fe7cd4a1.js.map"
     ],
     "component---src-pages-index-js": [
       "component---src-pages-index-js-644405045e130227f65b.js",
@@ -29,8 +29,12 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-ef2d1e268d99baf92cc6.js",
-      "path---index-ef2d1e268d99baf92cc6.js.map"
+      "path---index-9b33d69f366b1a65b48e.js",
+      "path---index-9b33d69f366b1a65b48e.js.map"
+    ],
+    "path---serializer-minimal": [
+      "path---serializer-minimal-3de8e4b4e2a844510d28.js",
+      "path---serializer-minimal-3de8e4b4e2a844510d28.js.map"
     ],
     "commons": [
       "commons-85d973a0b17b2f0d3c45.js",
@@ -43,13 +47,13 @@
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---event-adapter-cassandra": [
-      "path---event-adapter-cassandra-586d6466e6d564cdeb9b.js",
-      "path---event-adapter-cassandra-586d6466e6d564cdeb9b.js.map"
+      "path---event-adapter-cassandra-ce29992effec9b634a06.js",
+      "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-2d9f4ee4b6cc83de6b9b.js",
+      "app-bce25c38f42cafe14a16.js",
       "build-js-styles.css",
-      "app-2d9f4ee4b6cc83de6b9b.js.map",
+      "app-bce25c38f42cafe14a16.js.map",
       "build-js-styles.css.map"
     ]
   }
