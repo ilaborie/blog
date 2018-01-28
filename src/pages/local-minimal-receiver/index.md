@@ -13,20 +13,48 @@ You can find the code and instruction to run the example at [GitHub](https://git
 ## Workflow 
 
 ```scala
-class MessageSender(messageReceiver: ActorRef) extends Actor {
-  override def preStart(): Unit = {
-    val messages = List(
-      "Hello World",
-      "Hello Universe",
-      "Hello Galaxy"
-    )
+//ForkJoinWorkerThread.java in akka.dispatch.forkjoin
+  public void run() {...} 
+```
 
-    for(msg <- messages)
-      messageReceiver ! msg
+```scala
+//abstract class Mailbox
+  @tailrec private final def processMailbox(
+    ...
+    val next = dequeue() //  def dequeue(): Envelope = messageQueue.dequeue()
+    ...
+    actor invoke next
+    ...
+    processMailbox(...)
   }
+```
 
+![processmailbox](./processmailbox.jpg)
+
+
+```scala
+//class ActorCell
+  final def invoke(messageHandle: Envelope): Unit
+```
+
+```scala
+//class ActorCell
+  def actor: Actor = _actor // return type is `Actor`
   ...
-}
+  final def receiveMessage(msg: Any): Unit = actor.aroundReceive(behaviorStack.head, msg)
+```
+
+![receivemessage](./receivemessage.jpg)
+
+```scala
+//class ActorCell
+  @InternalApi
+  protected[akka] def aroundReceive(receive: Actor.Receive, msg: Any): Unit = {
+    // optimization: avoid allocation of lambda
+    if (receive.applyOrElse(msg, Actor.notHandledFun).asInstanceOf[AnyRef] eq Actor.NotHandled) {
+      unhandled(msg)
+    }
+  }
 ```
 
 ```scala
@@ -38,88 +66,7 @@ class MessageReceiver extends Actor {
 }
 ```
 
-![message](./message.jpg)
-
-```scala
-val receiver = 
-  system.actorOf(Props[MessageReceiver], "receiver")
-
-system.actorOf(MessageSender.props(receiver), "sender")
-```
-
-
-```scala
-//trait Cell in akka/actor/dungeon/ActorCell.scala
-final def sendMessage(message: Any, sender: ActorRef): Unit
-  = sendMessage(Envelope(message, sender, system))
-
-```
-
-![envelope](./envelope.jpg)
-
-
-```scala
-//trait Dispatch in akka/actor/Dispatch.scala
-def sendMessage(msg: Envelope): Unit =
-  try {
-    ...
-    dispatcher.dispatch(this, msg)
-  } 
-```
-
-```scala
-//class Dispatcher in akka/dispatch/Dispatcher.scala
-protected[akka] def dispatch(receiver: ActorCell, invocation: Envelope): Unit = {
-  val mbox = receiver.mailbox
-  mbox.enqueue(receiver.self, invocation)
-  registerForExecution(mbox, true, false)
-}
-```
-
-![dispatcher](./dispatcher.jpg)
-
-```scala
-//object UnboundedMailbox in in akka/dispatch/Mailbox.scala
-class MessageQueue 
-  extends ConcurrentLinkedQueue[Envelope] 
-  with UnboundedQueueBasedMessageQueue { ... }
-```
-
-```scala
-//class Dispatcher in akka/dispatch/Dispatcher.scala
-protected final def executorService: ExecutorServiceDelegate 
-  = executorServiceDelegate
-
-...
-
-protected[akka] override def registerForExecution(
-  mbox: Mailbox, 
-  hasMessageHint: Boolean, 
-  hasSystemMessageHint: Boolean): Boolean = {
-  ...
-  try {
-    executorService execute mbox
-    ...
-  } catch {
-    ...
-  } 
-  ...
-}
-```
-
-```scala
-//Mailbox in akka/dispatch/Mailbox.scala
-private[akka] abstract class Mailbox(
-  val messageQueue: MessageQueue
-) extends ForkJoinTask[Unit] 
-  with SystemMessageQueue 
-  with Runnable {
-    ...
-}
-
-```
-
-![messagequeue](./messagequeue.jpg)
+![receive](./receive.jpg)
 
 ## Instruction to run the example
 ```
