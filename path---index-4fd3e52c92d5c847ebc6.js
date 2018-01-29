@@ -1,2 +1,0 @@
-webpackJsonp([0x81b8806e4260],{498:function(e,t){e.exports={data:{site:{siteMetadata:{title:"Akka, Concurrency, etc."}},allMarkdownRemark:{edges:[{node:{excerpt:"Wow! I love blogging so much already. Did you know that “despite its name, salted duck eggs can also be made from\nchicken eggs, though the…",fields:{slug:"/persistent-actor-minimal/"},frontmatter:{date:"06 May, 2015",title:"My Second Post!"}}}]}},pathContext:{}}}});
-//# sourceMappingURL=path---index-4fd3e52c92d5c847ebc6.js.map

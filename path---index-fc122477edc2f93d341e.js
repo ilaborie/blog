@@ -1,2 +1,0 @@
-webpackJsonp([0x81b8806e4260],{498:function(e,t){e.exports={data:{site:{siteMetadata:{title:"Akka, Concurrency, etc."}},allMarkdownRemark:{edges:[{node:{excerpt:"Overview You can find the code and instruction to run the example at  GitHub . receiveCommand Persistence actor receives a  Command  and…",fields:{slug:"/persistent-actor-minimal/"},frontmatter:{date:"06 May, 2015",title:"PersistentActor minimal example"}}}]}},pathContext:{}}}});
-//# sourceMappingURL=path---index-fc122477edc2f93d341e.js.map
