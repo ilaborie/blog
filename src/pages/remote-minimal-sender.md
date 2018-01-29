@@ -1,5 +1,5 @@
 ---
-title: Serializer minimal example
+title: Remote minimal sender example
 date: "2018-01-23T01:31:00.000+0900"
 ---
 
