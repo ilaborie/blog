@@ -7,7 +7,7 @@ date: "2018-01-29T01:31:00.000+0900"
 
 You can find the code and instruction to run the example at [GitHub](https://github.com/richardimaoka/resources/tree/master/local-minimal).
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/SKOpmttB47A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/hQJkN4zXTyo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 This is about how Akka sends a message from one Actor to another **locally** (i.e. within the same JVM). As in the [`Serialization` part](https://doc.akka.io/docs/akka/2.5/serialization.html?language=scala) of the official doc:
 
@@ -186,3 +186,5 @@ provider = local
 - Official documentation of Akka lifecycle at https://doc.akka.io/docs/akka/current/actors.html$actor-lifecycle
 - Official documentation of Akka Mailbox at https://doc.akka.io/docs/akka/2.5/mailboxes.html?language=scala#mailboxes)
 - Official documentation of Akka location transparency at https://doc.akka.io/docs/akka/current/general/remoting.html#location-transparency
+- Oracle's documentation about Fork/Join at https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html
+- ExecutorService Javadoc at https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html
