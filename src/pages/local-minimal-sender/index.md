@@ -1,6 +1,6 @@
 ---
 title: Local Actor workflow part 1 - Sender side
-date: "2018-01-29T01:31:00.000+0900"
+date: "2018-01-30T01:31:00.000+0900"
 ---
 
 ## Overview
@@ -13,7 +13,7 @@ This is about how Akka sends a message from one Actor to another **locally** (i.
 
 > The messages that Akka actors send to each other are JVM objects (e.g. instances of Scala case classes). Message passing between actors that live on the same JVM is straightforward. It is simply done via reference passing. 
 
-Refer to the remote sender article, which I will write up soon, when sending a message to a remote actor on a different JVM.
+If you are interested in the remote behavior when sending messages to remote JVM, I will write remote versions of articles soon and please refer to them.
 
 ## Workflow 
 
