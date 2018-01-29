@@ -20,7 +20,9 @@ If you are interested in the remote behavior when sending messages to remote JVM
 [`MessageSender`](https://github.com/richardimaoka/resources/blob/master/local-minimal/src/main/scala/example/Main.scala#L14L24) sends messages "Hello World", "Hello Universe" and "Hello Galaxy" to the `messageReceiver` actor.
 
 ```scala
-class MessageSender(messageReceiver: ActorRef) extends Actor {
+class MessageSender(messageReceiver: ActorRef)
+  extends Actor {
+  
   override def preStart(): Unit = {
     val messages = List(
       "Hello World",
@@ -43,8 +45,16 @@ The below is what's inside the main method, which initializes the receiver and t
 ```scala
 val system = ActorSystem("exampleSystem")
 
-val receiver = system.actorOf(Props[MessageReceiver], "receiver")
-system.actorOf(MessageSender.props(receiver), "sender")
+val receiver = system.actorOf(
+  Props[MessageReceiver],
+  "receiver"
+)
+
+// sender
+system.actorOf(
+  MessageSender.props(receiver), 
+  "sender"
+)
 ```
 
 As in the `preStart` method of `MessageSender`, the first message to be sent is,
@@ -78,7 +88,10 @@ Here you see an [`Envelope`](https://github.com/akka/akka/blob/v2.5.9/akka-actor
 ![envelope](./envelope.jpg)
 
 ```scala
-case class Envelope(val message: Any, val sender: ActorRef)
+case class Envelope(
+  val message: Any, 
+  val sender: ActorRef
+)
 ```
 
 To illustrate the workflow so far up to the `sendMessage`:
@@ -125,8 +138,10 @@ The `messageQueue` is type of [`MessageQueue`](https://github.com/akka/akka/blob
 
 ```scala
 object UnboundedMailbox {
-  class MessageQueue extends ConcurrentLinkedQueue[Envelope] with UnboundedQueueBasedMessageQueue {
-    final def queue: Queue[Envelope] = this
+  class MessageQueue 
+    extends ConcurrentLinkedQueue[Envelope] 
+    with UnboundedQueueBasedMessageQueue {
+      final def queue: Queue[Envelope] = this
   }
 }
 ```
