@@ -16,6 +16,10 @@
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
     ],
+    "path---local-minimal-receiver": [
+      "path---local-minimal-receiver-82e73a8bfb4d764c9640.js",
+      "path---local-minimal-receiver-82e73a8bfb4d764c9640.js.map"
+    ],
     "path---persistent-actor-minimal": [
       "path---persistent-actor-minimal-dd16e6391d5dadafed32.js",
       "path---persistent-actor-minimal-dd16e6391d5dadafed32.js.map"
@@ -33,8 +37,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-e09e8af0358adfce6190.js",
-      "path---index-e09e8af0358adfce6190.js.map"
+      "path---index-76db564c4db2f58dffaa.js",
+      "path---index-76db564c4db2f58dffaa.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-3de8e4b4e2a844510d28.js",
@@ -55,9 +59,9 @@
       "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-14a8e617ec69d9066ca8.js",
+      "app-f57f67382202e763044a.js",
       "build-js-styles.css",
-      "app-14a8e617ec69d9066ca8.js.map",
+      "app-f57f67382202e763044a.js.map",
       "build-js-styles.css.map"
     ]
   }

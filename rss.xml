@@ -1,4 +1,233 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 29 Jan 2018 22:56:04 GMT</lastBuildDate><item><title><![CDATA[Local Actor workflow part 1 - Sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is about how Akka sends a message from one Actor to…]]></description><link>https://richardimaoka.github.io/blog//local-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//local-minimal-sender/</guid><pubDate>Mon, 29 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 30 Jan 2018 23:08:40 GMT</lastBuildDate><item><title><![CDATA[Local Actor workflow part 2 - Receiver side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from the previous article,  Local Actor…]]></description><link>https://richardimaoka.github.io/blog//local-minimal-receiver/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//local-minimal-receiver/</guid><pubDate>Mon, 29 Jan 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/local-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/LbuLAtN20HA&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;This is continued from the previous article, &lt;a href=&quot;../local-minimal-sender&quot;&gt;Local Actor workflow part 1 - Sender side&lt;/a&gt;. I would recommend you to read that article too.&lt;/p&gt;
+&lt;p&gt;Also, later I am going to write the remote versions of articles to illustrate the message-sending/receiving behavior of Akka Actor when sending across different JVMs.&lt;/p&gt;
+&lt;h2&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;As in bottom of the previous &lt;a href=&quot;../local-minimal-sender&quot;&gt;Local Actor workflow part 1 - Sender side&lt;/a&gt; article, the below  &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L115&quot;&gt;registerForExecution&lt;/a&gt; method will let Java’s &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&quot;&gt;&lt;code&gt;ExecutorService&lt;/code&gt;&lt;/a&gt; process &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57&quot;&gt;&lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt; , which is defined as &lt;code&gt;ForkJoinTask&lt;/code&gt;, to be executed on a different thread.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; registerForExecution&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mbox&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Mailbox&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  executorService execute mbox
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Mailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; messageQueue&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; MessageQueue&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; ForkJoinTask&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; 
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; SystemMessageQueue 
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; Runnable &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;When &lt;code&gt;ExecutorService&lt;/code&gt; executes the &lt;code&gt;Mailbox&lt;/code&gt; as &lt;code&gt;ForkJoinTask&lt;/code&gt;, then the following &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/java/akka/dispatch/forkjoin/ForkJoinWorkerThread.java#L103&quot;&gt;&lt;code&gt;run&lt;/code&gt; method of &lt;code&gt;ForkJoinWorkerThread&lt;/code&gt;&lt;/a&gt; is called:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-java&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;(Somehow a copy of ForkJoinWorkerThread from Java’s standard library is in akka’s source code … not sure why)&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;run&lt;/code&gt; method above runs the &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L250&quot;&gt;following method of &lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@tailrec&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; processMailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// def dequeue(): Envelope = messageQueue.dequeue()&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; next &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dequeue&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  actor invoke next
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  processMailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;By &lt;code&gt;dequeue&lt;/code&gt;-ing an &lt;code&gt;Envelope&lt;/code&gt;, &lt;code&gt;Mailbox&lt;/code&gt; calls the &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L488&quot;&gt;&lt;code&gt;invoke&lt;/code&gt; method of &lt;code&gt;ActorCell&lt;/code&gt;&lt;/a&gt;, &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHWddSMJB//xAAZEAADAAMAAAAAAAAAAAAAAAAAAQIQEzH/2gAIAQEAAQUCl3spi5hH/8QAFREBAQAAAAAAAAAAAAAAAAAAARD/2gAIAQMBAT8BJ//EABYRAQEBAAAAAAAAAAAAAAAAAAEQEf/aAAgBAgEBPwFdn//EABcQAQADAAAAAAAAAAAAAAAAAAERICL/2gAIAQEABj8CZM2//8QAGRAAAgMBAAAAAAAAAAAAAAAAAAERITFR/9oACAEBAAE/IUlO4IFVvg8h4SzCP//aAAwDAQACAAMAAAAQQA//xAAXEQADAQAAAAAAAAAAAAAAAAABEBEx/9oACAEDAQE/EAmmr//EABYRAQEBAAAAAAAAAAAAAAAAABEQMf/aAAgBAgEBPxBGE//EABwQAAICAgMAAAAAAAAAAAAAAAERACFBgVFxwf/aAAgBAQABPxAI4Da9XmUwGlAUTEB1n2ULqOJZxCZjxP/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;processmailbox&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-e8976.jpg 148w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-63df2.jpg 295w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg 590w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; invoke&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;messageHandle&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Envelope&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  receiveMessage&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;msg&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;which unpacks the message from &lt;code&gt;Envelope&lt;/code&gt; then calls &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L527&quot;&gt;&lt;code&gt;receiveMessage&lt;/code&gt; of &lt;code&gt;ActorCell&lt;/code&gt;&lt;/a&gt;,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// def actor: Actor = ... in ActorCell&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receiveMessage&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;msg&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+  actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;aroundReceive&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;behaviorStack&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;head&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; msg&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHVfdSMJB//xAAaEAACAgMAAAAAAAAAAAAAAAAAAQIREyEx/9oACAEBAAEFAlKeRvS4WI//xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAwEBPwEn/8QAFhEBAQEAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/AV2f/8QAFxABAAMAAAAAAAAAAAAAAAAAAREgIf/aAAgBAQAGPwJky3//xAAaEAACAwEBAAAAAAAAAAAAAAAAARExUSFB/9oACAEBAAE/IVEuyeFdweQ6JaUR/9oADAMBAAIAAwAAABDQD//EABcRAAMBAAAAAAAAAAAAAAAAAAEQETH/2gAIAQMBAT8QCDav/8QAFREBAQAAAAAAAAAAAAAAAAAAERD/2gAIAQIBAT8QQhP/xAAdEAACAgEFAAAAAAAAAAAAAAABEQAhQVFhcYHB/9oACAEBAAE/EBUwt7W15hwxSyQoxAes+yhcQFJtCZjpP//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;receivemessage&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-e8976.jpg 148w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-63df2.jpg 295w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg 590w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Here, &lt;code&gt;Actor&lt;/code&gt; has an important method called &lt;code&gt;aroundReceive&lt;/code&gt;, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; aroundReceive&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;receive&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Receive&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; msg&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    receive&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;applyOrElse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;msg&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;notHandledFun&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;asInstanceOf&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;AnyRef&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; eq Actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;NotHandled
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    unhandled&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;msg&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;which, as the name suggests, wraps around &lt;code&gt;Actor&lt;/code&gt;’s &lt;code&gt;receive&lt;/code&gt; method. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; MessageReceiver &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Actor &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; s&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+      EchoActor&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; received message &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; $s&quot;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECAwX/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHWvmkQwf/EABoQAQABBQAAAAAAAAAAAAAAAAECAxATITH/2gAIAQEAAQUCi1MjoOX/AP/EABURAQEAAAAAAAAAAAAAAAAAAAEQ/9oACAEDAQE/ASf/xAAWEQEBAQAAAAAAAAAAAAAAAAABEBH/2gAIAQIBAT8BXZ//xAAWEAEBAQAAAAAAAAAAAAAAAAABICL/2gAIAQEABj8CRM1//8QAGRABAAIDAAAAAAAAAAAAAAAAAQARIEFR/9oACAEBAAE/IUVDRjejHeD/2gAMAwEAAgADAAAAEBDP/8QAFxEBAAMAAAAAAAAAAAAAAAAAARARMf/aAAgBAwEBPxAUbH//xAAWEQEBAQAAAAAAAAAAAAAAAAAREDH/2gAIAQIBAT8QRhP/xAAdEAACAQQDAAAAAAAAAAAAAAABEQAgIUFRgaHB/9oACAEBAAE/EDCBNnS3HEAuAQs4gPGfaP/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;receive&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-e8976.jpg 148w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-63df2.jpg 295w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg 590w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;In &lt;code&gt;aroundReceive&lt;/code&gt; you can see &lt;code&gt;receive.applyOrElse&lt;/code&gt; is called, and if there is no match in &lt;code&gt;receive&lt;/code&gt;’s patter-match, it will call &lt;code&gt;unhandled&lt;/code&gt; of &lt;code&gt;Actor&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Up to here, we have pretty much covered the receiver side of the behavior in actor’s message passing. Next up, I will go through how this changes when sending to a remote JVM.&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd local-minimal
+&gt; sbt
+&gt; runMain example.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;p&gt;Some &lt;code&gt;println&lt;/code&gt; calls are inserted in the &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/local-minimal&quot;&gt;complete example at GitHub&lt;/a&gt; to illustrate the behavior.&lt;/p&gt;
+&lt;p&gt;Thread names are shown as [exampleSystem-akka.actor.default-dispatcher-3] and […-4].&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.Main
+provider = local
+[exampleSystem-akka.actor.default-dispatcher-5] sending message Hello World to Actor[akka://exampleSystem/user/receiver#-846959521]
+[exampleSystem-akka.actor.default-dispatcher-5] sending message Hello Universe to Actor[akka://exampleSystem/user/receiver#-846959521]
+[exampleSystem-akka.actor.default-dispatcher-2] EchoActor: received message = Hello World
+[exampleSystem-akka.actor.default-dispatcher-5] sending message Hello Galaxy to Actor[akka://exampleSystem/user/receiver#-846959521]
+[exampleSystem-akka.actor.default-dispatcher-2] EchoActor: received message = Hello Universe
+[exampleSystem-akka.actor.default-dispatcher-2] EchoActor: received message = Hello Galaxy
+[success] Total time: 7 s, completed Jan 30, 2018 6:16:46 AM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official documentation of Akka Actor at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/actors.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/actors.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka Dispatcher at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/dispatchers.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/dispatchers.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka lifecycle at &lt;a href=&quot;https://doc.akka.io/docs/akka/current/actors.html$actor-lifecycle&quot;&gt;https://doc.akka.io/docs/akka/current/actors.html$actor-lifecycle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka Mailbox at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/mailboxes.html?language=scala#mailboxes&quot;&gt;https://doc.akka.io/docs/akka/2.5/mailboxes.html?language=scala#mailboxes&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka location transparency at &lt;a href=&quot;https://doc.akka.io/docs/akka/current/general/remoting.html#location-transparency&quot;&gt;https://doc.akka.io/docs/akka/current/general/remoting.html#location-transparency&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Oracle’s documentation about Fork/Join at &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html&quot;&gt;https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;ExecutorService Javadoc at &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Local Actor workflow part 1 - Sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is about how Akka sends a message from one Actor to…]]></description><link>https://richardimaoka.github.io/blog//local-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//local-minimal-sender/</guid><pubDate>Mon, 29 Jan 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/local-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
