@@ -1,6 +1,6 @@
 ---
 title: Local Actor workflow part 2 - Receiver side
-date: "2018-01-30T01:31:00.000+0900"
+date: "2018-01-30T01:31:08.000+0900"
 ---
 
 ## Overview
