@@ -13,7 +13,7 @@ This is about how Akka sends a message from one Actor to another **locally** (i.
 
 > The messages that Akka actors send to each other are JVM objects (e.g. instances of Scala case classes). Message passing between actors that live on the same JVM is straightforward. It is simply done via reference passing. 
 
-If you are interested in the remote behavior when sending messages to remote JVM, I will write remote versions of articles soon and please refer to them.
+If you are interested in the remote behavior when sending messages to remote JVM, I will write remote versions of articles soon so please refer to them.
 
 ## Workflow 
 
@@ -166,6 +166,8 @@ abstract class Mailbox(val messageQueue: MessageQueue)
     ...
 }
 ```
+
+In the next article, [Local Actor workflow part 2 - Receiver side](../local-minimal-receiver), I will discuss about what happens on the receiver side which is triggered as the above `ForkJoinTask`.
 
 ## Instruction to run the example
 ```
