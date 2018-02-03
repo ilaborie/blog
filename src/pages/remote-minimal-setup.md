@@ -7,7 +7,7 @@ date: "2018-02-3T01:31:00.000+0900"
 
 You can find the code and instruction to run the example at [GitHub](https://github.com/richardimaoka/resources/tree/master/remote-minimal).
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/xfsF0u0s3e4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/YYGQYSpoBhE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 There will be more articles to explain the remoting behavior in more detail.
 
@@ -80,6 +80,7 @@ EchoActor: received message = Hello!!
 ```
 
 and immediately after that, the receiver side shows this error, which can be ignored.
+
 As explained in [this thrad in akka-user](https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0) mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.
 
 ```
