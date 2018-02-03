@@ -101,4 +101,4 @@ Once everything is done, press the enter key on the receiver side's console and 
 
 ## References 
 
-- Official documentation at https://doc.akka.io/docs/akka/2.5.9/persistence.html
+- Official documentation at https://doc.akka.io/docs/akka/2.5/remoting.html
