@@ -40,10 +40,13 @@ trait ScalaActorSelection {
 ActorSelectionMessage(msg, path, wildcardFanOut = false)
 ```      
 
+through `deliverSelection`, ActorSelection calls the following method of `RemoteActorRef`
+
 ```scala
 //class RemoteActorRef in akka/remote/RemoteActorRefProvider.scala
   override def !(message: Any)(...): Unit = {
     ...
+    //remote: RemoteTransport
     remote.send(message, Option(sender), this) 
     ...
   }
@@ -53,7 +56,9 @@ ActorSelectionMessage(msg, path, wildcardFanOut = false)
 //akka.remote.Remoting.scala class Remoting(
   override def send(message: Any, ... ): Unit = 
     ...
-    manager.tell(Send(message, ... ), ... )
+    //manager is ActorRef referencing an EndPointManager actor
+    case Some(manager) 
+      ⇒ manager.tell(Send(message, ... ), ... )
     ...  
   }  
 ```
