@@ -1,6 +1,6 @@
 ---
 title: Akka remoting minimal example part 1 - setup
-date: "2018-02-3T01:31:00.000+0900"
+date: "2018-02-03T01:31:00.000+0900"
 ---
 
 ## Overview
@@ -81,14 +81,14 @@ EchoActor: received message = Hello!!
 
 and immediately after that, the receiver side shows this error, which can be ignored.
 
-As explained in [this thrad in akka-user](https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0) mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.
-
 ```
 [ERROR] [02/03/2018 13:37:19.572] [receiverSystem-akka.remote.default-remote-dispatcher-15] [akka.tcp://receiverSystem@127.0.0.1:2551/system/endpointManager/reliableEndpointWriter-akka.tcp%3A%2F%2FsenderSystem%40127.0.0.1%3A2552-0/endpointWriter] AssociationError [akka.tcp://receiverSystem@127.0.0.1:2551] <- [akka.tcp://senderSystem@127.0.0.1:2552]: Error [Shut down address: akka.tcp://senderSystem@127.0.0.1:2552] [
 akka.remote.ShutDownAssociation: Shut down address: akka.tcp://senderSystem@127.0.0.1:2552
 Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remote system terminated the association because it is shutting down.
 ]
 ```
+
+As explained in [this thrad in akka-user](https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0) mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.
 
 Once everything is done, press the enter key on the receiver side's console and you get this:
 
