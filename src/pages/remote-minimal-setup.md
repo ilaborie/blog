@@ -9,7 +9,7 @@ You can find the code and instruction to run the example at [GitHub](https://git
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/YYGQYSpoBhE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-There will be more articles to explain the remoting behavior in more detail.
+[The next article](../remote-minimal-sender) explains how this remoting example works on the sender side.
 
 ## Instruction to run the example
 
