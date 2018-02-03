@@ -16,6 +16,10 @@
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
     ],
+    "path---remote-minimal-setup": [
+      "path---remote-minimal-setup-bd632163438c33ab9caf.js",
+      "path---remote-minimal-setup-bd632163438c33ab9caf.js.map"
+    ],
     "path---local-minimal-receiver": [
       "path---local-minimal-receiver-82e73a8bfb4d764c9640.js",
       "path---local-minimal-receiver-82e73a8bfb4d764c9640.js.map"
@@ -37,8 +41,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-76db564c4db2f58dffaa.js",
-      "path---index-76db564c4db2f58dffaa.js.map"
+      "path---index-0e6465232abf50f083de.js",
+      "path---index-0e6465232abf50f083de.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-3de8e4b4e2a844510d28.js",
@@ -59,9 +63,9 @@
       "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-f57f67382202e763044a.js",
+      "app-bf9bc1cc07fd8481aba8.js",
       "build-js-styles.css",
-      "app-f57f67382202e763044a.js.map",
+      "app-bf9bc1cc07fd8481aba8.js.map",
       "build-js-styles.css.map"
     ]
   }
