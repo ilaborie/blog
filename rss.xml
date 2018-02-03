@@ -1,4 +1,379 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Feb 2018 08:29:17 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 1 - setup]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . There will be more articles to explain the remoting behavior…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-setup/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-setup/</guid><pubDate>Fri, 02 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Feb 2018 12:49:50 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 2 - sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from  the previous article , and now we are…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-sender/</guid><pubDate>Sat, 03 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/BA952fhMGpc&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;This is continued from &lt;a href=&quot;../remote-minimal-setup&quot;&gt;the previous article&lt;/a&gt;, and now we are going deep into the implementation and behavior of akka remoting on the sender side.&lt;/p&gt;
+&lt;h3&gt;Workflow&lt;/h3&gt;
+&lt;p&gt;As in the &lt;code&gt;Main&lt;/code&gt; of this example, the sender side sends a message &lt;code&gt;&quot;Hello&quot;&lt;/code&gt; to the receiver side, but in this example, as it uses remoting, the receiver side is referenced by &lt;code&gt;ActorSelection&lt;/code&gt; instead of local &lt;code&gt;ActorRef&lt;/code&gt; unlike the &lt;a href=&quot;../local-minimal-sender&quot;&gt;local sender example&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; selection&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorSelection &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+  context&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorSelection&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Hello!!&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ActorSelection&lt;/code&gt; has &lt;code&gt;path&lt;/code&gt; inside, which is a URL of the target actor. The components of the &lt;code&gt;path&lt;/code&gt; URL is shown as follows: &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMEBf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHtqCDQs//EABoQAAICAwAAAAAAAAAAAAAAAAECAxIQESL/2gAIAQEAAQUC62S1Y7Fc/wD/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAwEBPwFH/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQIBAT8BV//EABgQAAIDAAAAAAAAAAAAAAAAAAAxICEi/9oACAEBAAY/AhWacP/EABcQAQEBAQAAAAAAAAAAAAAAABEBABD/2gAIAQEAAT8htSSZkWW2RcOf/9oADAMBAAIAAwAAABA7D//EABcRAQEBAQAAAAAAAAAAAAAAABEAASH/2gAIAQMBAT8QOFgwb//EABcRAQEBAQAAAAAAAAAAAAAAABEAASH/2gAIAQIBAT8Qetp1L//EABwQAQEAAgIDAAAAAAAAAAAAAAERACEQMUFxkf/aAAgBAQABPxDSCeHAdMsmi5YOgKop6xLkDd/eP//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;path&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-e8976.jpg 148w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-63df2.jpg 295w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg 590w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;You can find more detail about akka’s path &lt;a href=&quot;https://doc.akka.io/docs/akka/current/general/addressing.html?language=scala#actor-references-paths-and-addresses&quot;&gt;in the official documentation&lt;/a&gt;, and &lt;a href=&quot;https://doc.akka.io/docs/akka/current/remoting.html#looking-up-remote-actors&quot;&gt;components of the path&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now let’s look into the &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorSelection.scala#L265&quot;&gt;&lt;code&gt;!&lt;/code&gt; method&lt;/a&gt; of &lt;code&gt;ActorSelection&lt;/code&gt;,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;trait ScalaActorSelection {
+  this: ActorSelection ⇒
+
+  def !(msg: Any)
+       (implicit sender: ActorRef = Actor.noSender) = 
+    tell(msg, sender)
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and the below &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorSelection.scala#L44L47&quot;&gt;&lt;code&gt;tell&lt;/code&gt; method&lt;/a&gt; called from the above. You can see that the original message &lt;code&gt;&quot;Hello&quot;&lt;/code&gt; is wrapped into &lt;code&gt;ActorSelectionMessage&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;def tell(
+  msg: Any,
+  sender: ActorRef
+): Unit =
+  ActorSelection.deliverSelection(
+    ...,
+    ActorSelectionMessage(msg, ...)
+  )&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB3IYIgsFf/8QAGhAAAgIDAAAAAAAAAAAAAAAAARIAAgMQIf/aAAgBAQABBQLsLLjY13//xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAwEBPwFH/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQIBAT8BV//EABgQAAIDAAAAAAAAAAAAAAAAAAAxICEi/9oACAEBAAY/AhWacP/EABkQAQEAAwEAAAAAAAAAAAAAABEBABAxQf/aAAgBAQABPyHu+ZcUIZbZFo1//9oADAMBAAIAAwAAABA/D//EABcRAQEBAQAAAAAAAAAAAAAAABEAASH/2gAIAQMBAT8QOWDBv//EABcRAQEBAQAAAAAAAAAAAAAAABEAASH/2gAIAQIBAT8Qetp1L//EABwQAQEAAgIDAAAAAAAAAAAAAAERACEQMUFxkf/aAAgBAQABPxCojTwuaxlJOrlg6AqinrEuQN394//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;actorselectionmessage&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-e8976.jpg 148w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-63df2.jpg 295w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg 590w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Through the &lt;code&gt;deliverSelection&lt;/code&gt; method, &lt;code&gt;ActorSelection&lt;/code&gt; calls &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/RemoteActorRefProvider.scala#L94&quot;&gt;the following method of &lt;code&gt;RemoteActorRef&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;message&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;//remote: RemoteTransport&lt;/span&gt;
+  remote&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;send&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Option&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sender&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;remote&lt;/code&gt; is an instance of &lt;code&gt;RemoteTransport&lt;/code&gt; which has the following &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/Remoting.scala#L222L225&quot;&gt;&lt;code&gt;send&lt;/code&gt; method&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; send&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;message&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; Some&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;manager&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+    ⇒ manager&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;tell&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Send&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;  
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;manager&lt;/code&gt; is ActorRef pointing to an &lt;code&gt;EndPointManager&lt;/code&gt;. (More precisely, there is actually one more actor in-between, but the message is anyway delivered to &lt;code&gt;EndPointManager&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMCBf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHqmrJqj//EABoQAAMAAwEAAAAAAAAAAAAAAAECEgMQESL/2gAIAQEAAQUCfL66ZQtMitf/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAwEBPwFH/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAEhQf/aAAgBAgEBPwGsS//EABsQAAIBBQAAAAAAAAAAAAAAAAARARASISJh/9oACAEBAAY/ArYOmw1mv//EABoQAAMBAAMAAAAAAAAAAAAAAAABESEQMXH/2gAIAQEAAT8hRujHVNgd7L6M0i4//9oADAMBAAIAAwAAABA3H//EABYRAQEBAAAAAAAAAAAAAAAAAAERAP/aAAgBAwEBPxAsRwQl3//EABcRAQEBAQAAAAAAAAAAAAAAAAERACH/2gAIAQIBAT8QehxVs3//xAAbEAEBAAMAAwAAAAAAAAAAAAABEQAhYRCRwf/aAAgBAQABPxCggdUNY61BIDPuUUb1UayjDrOB68f/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;endpointmanager&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-e8976.jpg 148w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-63df2.jpg 295w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg 590w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;EndpointManager&lt;/code&gt; manager &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/Endpoint.scala#L567&quot;&gt;has a buffer inside&lt;/a&gt;, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val buffer = new java.util.LinkedList[AnyRef]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and upon flushing the buffer, &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/Endpoint.scala#L673L735&quot;&gt;the &lt;code&gt;sendBufferedMessages&lt;/code&gt; method&lt;/a&gt; is called to efficiently send buffered messages via network. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;def sendBufferedMessages(): Unit = {
+  ...
+  val ok = writePrioLoop() &amp;&amp; writeLoop(SendBufferBatchSize)
+  ...
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The reason for this buffering behavior is, if my understanding is correct, because there is throughput gap between local message-passing (up to &lt;code&gt;EndPointWriter&lt;/code&gt;) and the remote message-passing (after &lt;code&gt;EndPointWriter&lt;/code&gt;), so this buffering behavior will fill in the gap and keep the overall throughput of whole message-passing high.&lt;/p&gt;
+&lt;p&gt;There is a following method in &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/Endpoint.scala#L777L823&quot;&gt;&lt;code&gt;EndpointWriter&lt;/code&gt;&lt;/a&gt;,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;//class EndpointWriter in akka.remote.Endpoint.scala
+  def writeSend(s: Send): Boolean = try {
+    ...
+      
+      val pdu: ByteString = codec.constructMessage(
+        ..., 
+        serializeMessage(s.message), 
+        ...)
+
+      ...
+      val ok = h.write(pdu)
+    ...
+  }&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;which performs message serialization, so that the message is converted to a payload which can be passed via network. As akka doc’s &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;serialization section&lt;/a&gt; says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;However, messages that have to escape the JVM to reach an actor running on a different host have to undergo some form of serialization (i.e. the objects have to be converted to and from byte arrays).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABAABAv/EABYBAQEBAAAAAAAAAAAAAAAAAAECBP/aAAwDAQACEAMQAAABfwvZwjmSf//EABgQAAMBAQAAAAAAAAAAAAAAAAABAhEQ/9oACAEBAAEFAsY1RKrO/wD/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEv/aAAgBAwEBPwGUv//EABYRAQEBAAAAAAAAAAAAAAAAAAEAA//aAAgBAgEBPwEyJzFv/8QAFhAAAwAAAAAAAAAAAAAAAAAAECAh/9oACAEBAAY/AhU//8QAGhABAQACAwAAAAAAAAAAAAAAAREAICFRYf/aAAgBAQABPyHwcHUr0TEcDdP/2gAMAwEAAgADAAAAEKs//8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAEDAQE/EICf/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAgBAgEBPxADuzhOX//EABsQAQACAgMAAAAAAAAAAAAAABEAARAhQVHx/9oACAEBAAE/EPGuaKJwCIa66uFKZ//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;serialize&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-e8976.jpg 148w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-63df2.jpg 295w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg 590w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;serialization converts a JVM object into &lt;code&gt;Array[Byte]&lt;/code&gt;. The above &lt;code&gt;writeSend&lt;/code&gt; converts &lt;code&gt;Array[Byte]&lt;/code&gt; further into &lt;code&gt;ByteString&lt;/code&gt; by &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/util/ByteString.scala#L25&quot;&gt;its &lt;code&gt;apply&lt;/code&gt; method&lt;/a&gt;. &lt;code&gt;ByteString&lt;/code&gt; is extensively used in Akka when payload needs to be send via network.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;object ByteString {
+
+  /**
+   * Creates a new ByteString by copying a byte array.
+   */
+  def apply(bytes: Array[Byte]): ByteString = CompactByteString(bytes)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Now it comes down to the point between the application (akka) layer and the network layer. The &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-remote/src/main/scala/akka/remote/transport/netty/TcpSupport.scala#L86L103&quot;&gt;&lt;code&gt;write&lt;/code&gt; method&lt;/a&gt; of &lt;code&gt;TcpAssociationHandle&lt;/code&gt; has &lt;code&gt;Channel&lt;/code&gt; class instance where the &lt;code&gt;Channel&lt;/code&gt; class is defined in the &lt;code&gt;Netty&lt;/code&gt; library.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;//Channel is a class in netty, so from here the work is passed to netty
+private[remote] class TcpAssociationHandle(
+  val localAddress:    Address,
+  val remoteAddress:   Address,
+  val transport:       NettyTransport,
+  private val channel: Channel)
+  extends AssociationHandle {
+  import transport.executionContext
+
+  override val readHandlerPromise: Promise[HandleEventListener] = Promise()
+
+  override def write(payload: ByteString): Boolean =
+    if (channel.isWritable &amp;&amp; channel.isOpen) {
+      channel.write(ChannelBuffers.wrappedBuffer(payload.asByteBuffer))
+      true
+    } else false&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABYBAQEBAAAAAAAAAAAAAAAAAAECBP/aAAwDAQACEAMQAAAB7lsMcVzf/8QAGBAAAwEBAAAAAAAAAAAAAAAAAAIRATH/2gAIAQEAAQUCNsWxUVRjOf/EABYRAQEBAAAAAAAAAAAAAAAAAAACEf/aAAgBAwEBPwGZY//EABgRAQEAAwAAAAAAAAAAAAAAAAEAAgMR/9oACAECAQE/ATWE49b/xAAYEAACAwAAAAAAAAAAAAAAAAAQIQABMf/aAAgBAQAGPwIOKtP/xAAcEAEAAgEFAAAAAAAAAAAAAAABABEQIUGBkcH/2gAIAQEAAT8h4epVYG4XpNxFat09Yv/aAAwDAQACAAMAAAAQow//xAAWEQEBAQAAAAAAAAAAAAAAAAABECH/2gAIAQMBAT8QAcn/xAAXEQEBAQEAAAAAAAAAAAAAAAABABEx/9oACAECAQE/EFNhR5f/xAAcEAEAAgIDAQAAAAAAAAAAAAABADERIVFhkdH/2gAIAQEAAT8QFVBU4UC0EaMMBJsu6gCnYLu/rKkbFc+z/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;netty&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-e8976.jpg 148w,
+/blog/static/netty-73732168839d69bfac62eaf8c86be66d-63df2.jpg 295w,
+/blog/static/netty-73732168839d69bfac62eaf8c86be66d-f8fb9.jpg 590w,
+/blog/static/netty-73732168839d69bfac62eaf8c86be66d-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;So this lets netty take care of payload transfer to a remote JVM.&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;p&gt;As this example uses &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;Akka remoting&lt;/a&gt; to send a message,
+you need to run two JVMs for the receiver and sender of the application respectively.&lt;/p&gt;
+&lt;p&gt;Firstly, run the receiver side with the &lt;code&gt;receiver&lt;/code&gt; argument supplied to &lt;code&gt;Main&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd remote-minimal
+&gt; sbt
+&gt; runMain example.Main receiver&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;After that, you can press the enter key on the console running the receiver side, to terminate the process.&lt;/p&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;p&gt;For the receiver side, you’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.Main receiver
+[info] Running example.Main receiver
+Program args:
+receiver
+running startMessageReceiver()
+[INFO] [02/03/2018 13:36:58.281] [run-main-0] [akka.remote.Remoting] Starting remoting
+[INFO] [02/03/2018 13:36:58.462] [run-main-0] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://receiverSystem@127.0.0.1:2551]
+[INFO] [02/03/2018 13:36:58.464] [run-main-0] [akka.remote.Remoting] Remoting now listens on addresses: [akka.tcp://receiverSystem@127.0.0.1:2551]
+provider = remote
+listening at port = 2551
+started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;this is the sender side output:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.Main sender
+Program args:
+sender
+running startMessageSender()
+[INFO] [02/03/2018 13:37:16.215] [run-main-0] [akka.remote.Remoting] Starting remoting
+[INFO] [02/03/2018 13:37:16.427] [run-main-0] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://senderSystem@127.0.0.1:2552]
+[INFO] [02/03/2018 13:37:16.432] [run-main-0] [akka.remote.Remoting] Remoting now listens on addresses: [akka.tcp://senderSystem@127.0.0.1:2552]
+provider = remote
+listening at port = 2552
+sending a message to akka.tcp://receiverSystem@127.0.0.1:2551/user/receiver
+[INFO] [02/03/2018 13:37:19.533] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Shutting down remote daemon.
+[INFO] [02/03/2018 13:37:19.537] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.actor.default-dispatcher-4] [akka.remote.Remoting] Remoting shut down
+[INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remoting shut down.
+[success] Total time: 5 s, completed Feb 3, 2018 1:37:19 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;then you see the receiver output as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;EchoActor: received message = Hello!!&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and immediately after that, the receiver side shows this error, which can be ignored.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[ERROR] [02/03/2018 13:37:19.572] [receiverSystem-akka.remote.default-remote-dispatcher-15] [akka.tcp://receiverSystem@127.0.0.1:2551/system/endpointManager/reliableEndpointWriter-akka.tcp%3A%2F%2FsenderSystem%40127.0.0.1%3A2552-0/endpointWriter] AssociationError [akka.tcp://receiverSystem@127.0.0.1:2551] &lt;- [akka.tcp://senderSystem@127.0.0.1:2552]: Error [Shut down address: akka.tcp://senderSystem@127.0.0.1:2552] [
+akka.remote.ShutDownAssociation: Shut down address: akka.tcp://senderSystem@127.0.0.1:2552
+Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remote system terminated the association because it is shutting down.
+]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As explained in &lt;a href=&quot;https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0&quot;&gt;this thrad in akka-user&lt;/a&gt; mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.&lt;/p&gt;
+&lt;p&gt;Once everything is done, press the enter key on the receiver side’s console and you get this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[INFO] [02/03/2018 13:38:05.942] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Shutting down remote daemon.
+[INFO] [02/03/2018 13:38:05.944] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.actor.default-dispatcher-3] [akka.remote.Remoting] Remoting shut down
+[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.remote.default-remote-dispatcher-6] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remoting shut down.&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/remoting.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Netty documentation at &lt;a href=&quot;https://netty.io/&quot;&gt;https://netty.io/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Akka remoting minimal example part 1 - setup]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . The next article  explains how this remoting example works on…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-setup/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-setup/</guid><pubDate>Fri, 02 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
@@ -14,7 +389,7 @@
           &quot;&gt;&lt;/iframe&gt;
           &lt;/div&gt;
           &lt;/div&gt;
-&lt;p&gt;There will be more articles to explain the remoting behavior in more detail.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;../remote-minimal-sender&quot;&gt;The next article&lt;/a&gt; explains how this remoting example works on the sender side.&lt;/p&gt;
 &lt;h2&gt;Instruction to run the example&lt;/h2&gt;
 &lt;p&gt;As this example uses &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;Akka remoting&lt;/a&gt; to send a message,
 you need to run two JVMs for the receiver and sender of the application respectively.&lt;/p&gt;
@@ -147,7 +522,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg&quot;
+    href=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -166,11 +541,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;processmailbox&quot;
         title=&quot;&quot;
-        src=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg&quot;
-        srcset=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-e8976.jpg 148w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-63df2.jpg 295w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg 590w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg 640w&quot;
+        src=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-e8976.jpg 148w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-63df2.jpg 295w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg 590w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -196,7 +571,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg&quot;
+    href=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -215,11 +590,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receivemessage&quot;
         title=&quot;&quot;
-        src=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg&quot;
-        srcset=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-e8976.jpg 148w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-63df2.jpg 295w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg 590w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-e8976.jpg 148w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-63df2.jpg 295w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg 590w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -252,7 +627,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg&quot;
+    href=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -271,11 +646,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receive&quot;
         title=&quot;&quot;
-        src=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg&quot;
-        srcset=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-e8976.jpg 148w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-63df2.jpg 295w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg 590w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-e8976.jpg 148w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-63df2.jpg 295w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg 590w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -383,7 +758,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg&quot;
+    href=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -402,11 +777,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;message&quot;
         title=&quot;&quot;
-        src=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg&quot;
-        srcset=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-e8976.jpg 148w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-63df2.jpg 295w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg 590w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg 640w&quot;
+        src=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-e8976.jpg 148w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-63df2.jpg 295w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg 590w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -434,7 +809,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
+    href=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -453,10 +828,10 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;envelope&quot;
         title=&quot;&quot;
-        src=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
-        srcset=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-83678.jpg 148w,
-/static/envelope-91cfa7f809e99172f6902691b880c231-04048.jpg 295w,
-/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg 298w&quot;
+        src=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
+        srcset=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-83678.jpg 148w,
+/blog/static/envelope-91cfa7f809e99172f6902691b880c231-04048.jpg 295w,
+/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg 298w&quot;
         sizes=&quot;(max-width: 298px) 100vw, 298px&quot;
       /&gt;
     &lt;/span&gt;
@@ -475,7 +850,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg&quot;
+    href=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -494,11 +869,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sendMessage&quot;
         title=&quot;&quot;
-        src=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg&quot;
-        srcset=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-e8976.jpg 148w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-63df2.jpg 295w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg 590w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg 640w&quot;
+        src=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-e8976.jpg 148w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-63df2.jpg 295w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg 590w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -531,7 +906,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -550,11 +925,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-e8976.jpg 148w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-63df2.jpg 295w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg 590w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-e8976.jpg 148w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-63df2.jpg 295w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg 590w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -570,7 +945,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg&quot;
+    href=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -589,11 +964,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;enqueue&quot;
         title=&quot;&quot;
-        src=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg&quot;
-        srcset=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-e8976.jpg 148w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-63df2.jpg 295w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg 590w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg 640w&quot;
+        src=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-e8976.jpg 148w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-63df2.jpg 295w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg 590w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -792,7 +1167,7 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
+    href=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -811,11 +1186,11 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sql&quot;
         title=&quot;&quot;
-        src=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
-        srcset=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
+        src=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
+        srcset=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -915,7 +1290,7 @@ persist callback: current state = 15
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
+    href=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -934,11 +1309,11 @@ persist callback: current state = 15
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;cqlsh&quot;
         title=&quot;&quot;
-        src=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
-        srcset=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
+        src=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
+        srcset=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;

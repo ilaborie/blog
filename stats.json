@@ -1,28 +1,28 @@
 {
   "assetsByChunkName": {
     "path---persistent-actor-minimal-sql": [
-      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js",
-      "path---persistent-actor-minimal-sql-d86fe42a75dbcd1d685d.js.map"
+      "path---persistent-actor-minimal-sql-e2d1aecac9a6fe7cd4a1.js",
+      "path---persistent-actor-minimal-sql-e2d1aecac9a6fe7cd4a1.js.map"
     ],
     "component---src-pages-index-js": [
       "component---src-pages-index-js-644405045e130227f65b.js",
       "component---src-pages-index-js-644405045e130227f65b.js.map"
     ],
     "path---local-minimal-sender": [
-      "path---local-minimal-sender-0808c4f339c58b0ce874.js",
-      "path---local-minimal-sender-0808c4f339c58b0ce874.js.map"
+      "path---local-minimal-sender-fa8f20b4c891cbb7623d.js",
+      "path---local-minimal-sender-fa8f20b4c891cbb7623d.js.map"
     ],
     "path---": [
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
     ],
     "path---remote-minimal-setup": [
-      "path---remote-minimal-setup-8d1f88994c9e26f9d8f7.js",
-      "path---remote-minimal-setup-8d1f88994c9e26f9d8f7.js.map"
+      "path---remote-minimal-setup-61e697884afd5279718c.js",
+      "path---remote-minimal-setup-61e697884afd5279718c.js.map"
     ],
     "path---local-minimal-receiver": [
-      "path---local-minimal-receiver-d9e6df3d8a1fbf7ad3dc.js",
-      "path---local-minimal-receiver-d9e6df3d8a1fbf7ad3dc.js.map"
+      "path---local-minimal-receiver-82e73a8bfb4d764c9640.js",
+      "path---local-minimal-receiver-82e73a8bfb4d764c9640.js.map"
     ],
     "path---persistent-actor-minimal": [
       "path---persistent-actor-minimal-dd16e6391d5dadafed32.js",
@@ -41,8 +41,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-9dea9500569518eb1851.js",
-      "path---index-9dea9500569518eb1851.js.map"
+      "path---index-a96b32adf2f80d6d1cf0.js",
+      "path---index-a96b32adf2f80d6d1cf0.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-3de8e4b4e2a844510d28.js",
@@ -59,14 +59,18 @@
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---event-adapter-cassandra": [
-      "path---event-adapter-cassandra-586d6466e6d564cdeb9b.js",
-      "path---event-adapter-cassandra-586d6466e6d564cdeb9b.js.map"
+      "path---event-adapter-cassandra-ce29992effec9b634a06.js",
+      "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-f3ecb9c61b9c1c29e531.js",
+      "app-7c73d927b6dd2e90fb08.js",
       "build-js-styles.css",
-      "app-f3ecb9c61b9c1c29e531.js.map",
+      "app-7c73d927b6dd2e90fb08.js.map",
       "build-js-styles.css.map"
+    ],
+    "path---remote-minimal-sender": [
+      "path---remote-minimal-sender-19f2be7e18d822507f5a.js",
+      "path---remote-minimal-sender-19f2be7e18d822507f5a.js.map"
     ]
   }
 }
