@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Feb 2018 12:51:59 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 2 - sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from  the previous article , and now we are…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-sender/</guid><pubDate>Sat, 03 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Feb 2018 12:55:32 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 2 - sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from  the previous article , and now we are…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-sender/</guid><pubDate>Sat, 03 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
@@ -268,7 +268,7 @@ private[remote] class TcpAssociationHandle(
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-db559.jpg&quot;
+    href=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -280,18 +280,18 @@ private[remote] class TcpAssociationHandle(
   &gt;
     &lt;span
       class=&quot;gatsby-resp-image-background-image&quot;
-      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABYBAQEBAAAAAAAAAAAAAAAAAAECBP/aAAwDAQACEAMQAAAB7lsMcVzf/8QAGBAAAwEBAAAAAAAAAAAAAAAAAAIRATH/2gAIAQEAAQUCNsWxUVRjOf/EABYRAQEBAAAAAAAAAAAAAAAAAAACEf/aAAgBAwEBPwGZY//EABgRAQEAAwAAAAAAAAAAAAAAAAEAAgMR/9oACAECAQE/ATWE49b/xAAYEAACAwAAAAAAAAAAAAAAAAAQIQABMf/aAAgBAQAGPwIOKtP/xAAcEAEAAgEFAAAAAAAAAAAAAAABABEQIUGBkcH/2gAIAQEAAT8h4epVYG4XpNxFat09Yv/aAAwDAQACAAMAAAAQow//xAAWEQEBAQAAAAAAAAAAAAAAAAABECH/2gAIAQMBAT8QAcn/xAAXEQEBAQEAAAAAAAAAAAAAAAABABEx/9oACAECAQE/EFNhR5f/xAAcEAEAAgIDAQAAAAAAAAAAAAABADERIVFhkdH/2gAIAQEAAT8QFVBU4UC0EaMMBJsu6gCnYLu/rKkbFc+z/9k=&apos;); background-size: cover; display: block;&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/9oADAMBAAIQAxAAAAHuWwxxXJ//xAAYEAADAQEAAAAAAAAAAAAAAAAAAhEBMf/aAAgBAQABBQI2xbFRVGM5/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECEf/aAAgBAwEBPwGZRh//xAAYEQADAQEAAAAAAAAAAAAAAAAAARECA//aAAgBAgEBPwFc4PNZ/8QAFxAAAwEAAAAAAAAAAAAAAAAAABAhAf/aAAgBAQAGPwJUmP8A/8QAGxABAQABBQAAAAAAAAAAAAAAAREAECExgZH/2gAIAQEAAT8h6fMlQNwvabiCyvOq/9oADAMBAAIAAwAAABCLD//EABYRAQEBAAAAAAAAAAAAAAAAAAEQIf/aAAgBAwEBPxADk//EABcRAQEBAQAAAAAAAAAAAAAAAAEAETH/2gAIAQIBAT8QFbCjy//EAB4QAQADAAAHAAAAAAAAAAAAAAEAESExQVFhcZHw/9oACAEBAAE/EBVQVOigWgjCmAk1u/CWuPKXfrZgPM0Vv3P/2Q==&apos;); background-size: cover; display: block;&quot;
     &gt;
       &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;netty&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/netty-73732168839d69bfac62eaf8c86be66d-e8976.jpg 148w,
-/blog/static/netty-73732168839d69bfac62eaf8c86be66d-63df2.jpg 295w,
-/blog/static/netty-73732168839d69bfac62eaf8c86be66d-f8fb9.jpg 590w,
-/blog/static/netty-73732168839d69bfac62eaf8c86be66d-db559.jpg 640w&quot;
+        src=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
