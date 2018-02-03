@@ -7,7 +7,7 @@ date: "2018-02-04T01:31:00.000+0900"
 
 You can find the code and instruction to run the example at [GitHub](https://github.com/richardimaoka/resources/tree/master/remote-minimal).
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/BA952fhMGpc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/TJJUcaJqUeY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 This is continued from [the previous article](../remote-minimal-setup), and now we are going deep into the implementation and behavior of akka remoting on the sender side.
 
@@ -23,6 +23,10 @@ selection ! "Hello!!"
 ```
 
 `ActorSelection` has `path` inside, which is a URL of the target actor. The components of the `path` URL is shown as follows: 
+
+```
+ val path = "akka.tcp://receiverSystem@127.0.0.1:2551/user/receiver"
+```
 
 ![path](./path.jpg)
 
