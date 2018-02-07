@@ -1,4 +1,500 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 03 Feb 2018 21:57:11 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 2 - sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from  the previous article , and now we are…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-sender/</guid><pubDate>Sat, 03 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 07 Feb 2018 22:32:00 GMT</lastBuildDate><item><title><![CDATA[Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Thread in Java Thread  and  Runnable  has been there for long…]]></description><link>https://richardimaoka.github.io/blog//executor-and-execution-context/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//executor-and-execution-context/</guid><pubDate>Wed, 07 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/executor-and-execution-context&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/zgp2B-cuUMI&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;h2&gt;Thread in Java&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQDBf/EABYBAQEBAAAAAAAAAAAAAAAAAAEDBP/aAAwDAQACEAMQAAAB6ChmhioL/8QAFxABAQEBAAAAAAAAAAAAAAAAAQARIf/aAAgBAQABBQLuuxshIQX/xAAWEQADAAAAAAAAAAAAAAAAAAAAARP/2gAIAQMBAT8BiiKP/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAISE//aAAgBAgEBPwHRy3P/xAAWEAEBAQAAAAAAAAAAAAAAAABBACD/2gAIAQEABj8CZz//xAAbEAABBAMAAAAAAAAAAAAAAAAAAREhMVFxkf/aAAgBAQABPyFcnRRLNkVqOiEIsf/aAAwDAQACAAMAAAAQvC//xAAYEQACAwAAAAAAAAAAAAAAAAAAAREhMf/aAAgBAwEBPxCqBIWn/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAFx/9oACAECAQE/EMUX/8QAGxABAAIDAQEAAAAAAAAAAAAAAQARITFBkaH/2gAIAQEAAT8Qz7rvkItMblmW57+rFNp9YhwdcWB0+z//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;thread&quot;
+        title=&quot;&quot;
+        src=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg&quot;
+        srcset=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-e8976.jpg 148w,
+/static/thread-46cd166852cb3bb57e031d8bab405132-63df2.jpg 295w,
+/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg 590w,
+/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Thread&lt;/code&gt; and &lt;code&gt;Runnable&lt;/code&gt; has been there for long as the very first generation of concurrent execution approaches in Java. The concept and usage are rather simple, where you extend &lt;code&gt;Runnable&lt;/code&gt; and implement the &lt;code&gt;run&lt;/code&gt; method which represents the operation you want to execute concurrently.&lt;/p&gt;
+&lt;p&gt;(&lt;code&gt;Runnable&lt;/code&gt; is from Java, but here I’m defining a Scala class extending it.)&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; PrintRunnable &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Runnable &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; run&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;token string&quot;&gt;&quot;[${Thread.currentThread()}] - PrintRunnable run() is executed&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html&quot;&gt;javadoc of &lt;code&gt;Runnable&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Then you instantiate a &lt;code&gt;Thread&lt;/code&gt; by passing in a &lt;code&gt;Runnable&lt;/code&gt; instance, and call the &lt;code&gt;start()&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;token string&quot;&gt;&quot;[${Thread.currentThread()}] - main thread&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+t &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; Thread&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; PrintRunnable&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;start&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html&quot;&gt;javadoc of &lt;code&gt;Thread&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Then you will get output like this. The &lt;code&gt;Thread&lt;/code&gt; names are enclosed in &lt;code&gt;[]&lt;/code&gt;, which show that the main thread - (i.e.) one which did &lt;code&gt;t = new Thread(new PrintRunnable(1))&lt;/code&gt; - and the thread running &lt;code&gt;Runnable&lt;/code&gt; are different - (i.e.) Concurrently executed.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[Thread[run-main-0,5,run-main-group-0]] - main thread
+[Thread[pool-8-thread-1,5,run-main-group-0]] - PrintRunnable run() is executed&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Typically after you call the &lt;code&gt;start()&lt;/code&gt; method of &lt;code&gt;Thread&lt;/code&gt;, you also call the &lt;code&gt;join()&lt;/code&gt; method to wait until the thrad dies.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;Executor and ExecutorService in Java&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe7WiVD/xAAVEAEBAAAAAAAAAAAAAAAAAAAgIf/aAAgBAQABBQKr/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFBABAAAAAAAAAAAAAAAAAAAAIP/aAAgBAQAGPwJf/8QAGxAAAgEFAAAAAAAAAAAAAAAAAAERICExQXH/2gAIAQEAAT8h7Q8WFO6P/9oADAMBAAIAAwAAABCAD//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8QP//EABsQAAICAwEAAAAAAAAAAAAAAAERACEgMUFx/9oACAEBAAE/EE1q8hkF1K92+BYf/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;interfaces&quot;
+        title=&quot;&quot;
+        src=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg&quot;
+        srcset=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-e8976.jpg 148w,
+/static/interfaces-58c9ff9873a22582e5b84a6f127af378-63df2.jpg 295w,
+/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg 590w,
+/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;The next generation of Java concurrency execution approach was &lt;code&gt;Executor&lt;/code&gt; and &lt;code&gt;ExecutorService&lt;/code&gt;.
+While &lt;code&gt;Thread&lt;/code&gt; allowed you handle concurrent execution in a separate thread, but when it comes to the point where you handle many threads for many different purposes in the same application, it becomes unmanagable.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Executor&lt;/code&gt; and &lt;code&gt;ExecutorService&lt;/code&gt; control &lt;code&gt;Thread&lt;/code&gt; instances in the background so that you don’t handle each single &lt;code&gt;Thread&lt;/code&gt; by yourself, which is tedious, but rather you do higher level of control by handling a group of &lt;code&gt;Thread&lt;/code&gt; instances (&lt;code&gt;ThreadPool&lt;/code&gt;, which is not explained in this article though) via &lt;code&gt;ExecutorService&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s look at the code - firstly &lt;code&gt;Executor&lt;/code&gt; is a very simple interface which only has this single &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-java&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Executor&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;token comment&quot;&gt;/**
+     * Executes the given command at some time in the future.  The command
+     * may execute in a new thread, in a pooled thread, or in the calling
+     * thread, at the discretion of the {@code Executor} implementation.
+     *
+     * @param command the runnable task
+     * @throws RejectedExecutionException if this task cannot be
+     * accepted for execution
+     * @throws NullPointerException if command is null
+     */&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Runnable command&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html&quot;&gt;javadoc of &lt;code&gt;Executor&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And &lt;code&gt;ExecutorService&lt;/code&gt; is also a Java &lt;code&gt;interface&lt;/code&gt; which extends &lt;code&gt;Executor&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-java&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ExecutorService&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Executor&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and define those lifecycle management methods (and some other methods).&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-java&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  List&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Runnable&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;shutdownNow&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;isShutdown&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;isTerminated&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;awaitTermination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;long&lt;/span&gt; timeout&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; TimeUnit unit&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;throws&lt;/span&gt; InterruptedException&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&quot;&gt;javadoc of &lt;code&gt;ExecutorService&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;There are factory methods available in the &lt;code&gt;Executors&lt;/code&gt; class like this one, which creates a group of 5 threads in the background:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val executor = Executors.newFixedThreadPool(5);
+executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBf/EABYBAQEBAAAAAAAAAAAAAAAAAAADBP/aAAwDAQACEAMQAAAB6S+54wXH/8QAGRAAAwEBAQAAAAAAAAAAAAAAAAERIQIS/9oACAEBAAEFAtvN9aTUkRH/xAAWEQADAAAAAAAAAAAAAAAAAAAAARP/2gAIAQMBAT8BkiKP/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAISE//aAAgBAgEBPwHRy3P/xAAYEAACAwAAAAAAAAAAAAAAAAAAMQEgQf/aAAgBAQAGPwLSGOn/xAAbEAACAQUAAAAAAAAAAAAAAAAAATEhQVFh8P/aAAgBAQABPyHmyZF1U5EpSaNR/9oADAMBAAIAAwAAABBc7//EABgRAAIDAAAAAAAAAAAAAAAAAAABIVFh/9oACAEDAQE/EJk6ND//xAAWEQEBAQAAAAAAAAAAAAAAAAABEBH/2gAIAQIBAT8QEQcl/8QAGxABAAIDAQEAAAAAAAAAAAAAAQARIUFRMWH/2gAIAQEAAT8QG0FNvzHnKXm2GfS2gbU3btiGDZ5lgC9PWf/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;executorService&quot;
+        title=&quot;&quot;
+        src=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg&quot;
+        srcset=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-e8976.jpg 148w,
+/static/executorService-91862e98b381bb414a432b8afa9ae502-63df2.jpg 295w,
+/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg 590w,
+/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAEDBf/EABYBAQEBAAAAAAAAAAAAAAAAAAMAAf/aAAwDAQACEAMQAAAB0nZgMC5l/8QAGhAAAwADAQAAAAAAAAAAAAAAAAERAhIhQf/aAAgBAQABBQL3G7dIqkiI/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAET/9oACAEDAQE/AZIij//EABYRAAMAAAAAAAAAAAAAAAAAAAACEv/aAAgBAgEBPwG3Lc//xAAYEAACAwAAAAAAAAAAAAAAAAAAASAxQf/aAAgBAQAGPwLRFw//xAAcEAACAgIDAAAAAAAAAAAAAAAAASFBEZExUWH/2gAIAQEAAT8hm+5cPZaXPYipNYR5H//aAAwDAQACAAMAAAAQlO//xAAYEQACAwAAAAAAAAAAAAAAAAAAASFRYf/aAAgBAwEBPxCZOjQ//8QAFREBAQAAAAAAAAAAAAAAAAAAARD/2gAIAQIBAT8QGQZf/8QAGxABAAIDAQEAAAAAAAAAAAAAAQARITFRQWH/2gAIAQEAAT8QG7Zb8xu2m83Bn0vUBanb6xzorWWAL09Z/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;executorService2&quot;
+        title=&quot;&quot;
+        src=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg&quot;
+        srcset=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-e8976.jpg 148w,
+/static/executorService2-41484c3a90ad5f1e855f031beb002e89-63df2.jpg 295w,
+/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg 590w,
+/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;and the &lt;code&gt;execute&lt;/code&gt; call let &lt;code&gt;ExecutorService&lt;/code&gt; execute &lt;code&gt;PrintRunnable&lt;/code&gt; in the background threads.
+Note that you didn’t specify which exact thread the &lt;code&gt;PrintRunnable&lt;/code&gt; should be run in, but instead, you asked &lt;code&gt;ExecutorService&lt;/code&gt; to decide the actual thread to run it.&lt;/p&gt;
+&lt;h2&gt;ExecutionContext, and how it works with Future&lt;/h2&gt;
+&lt;p&gt;Now we move onto Scala’s &lt;code&gt;Future&lt;/code&gt;. Scala’s &lt;code&gt;Future&lt;/code&gt; is used with Scala’s &lt;code&gt;ExecutionContext&lt;/code&gt;, both of which I will explain below in the article.&lt;/p&gt;
+&lt;p&gt;(I’m intentionally saying &lt;strong&gt;Scala’s&lt;/strong&gt; &lt;code&gt;Future&lt;/code&gt; as there is also Java’s &lt;code&gt;Future&lt;/code&gt; and that is different from Scala’s. I will not talk about the Java &lt;code&gt;Future&lt;/code&gt; in this article.)&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe61CqP/xAAXEAEAAwAAAAAAAAAAAAAAAAAQABFB/9oACAEBAAEFAppR/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFBABAAAAAAAAAAAAAAAAAAAAIP/aAAgBAQAGPwJf/8QAGRABAAMBAQAAAAAAAAAAAAAAARARQQBh/9oACAEBAAE/IRMvhXxNDI//2gAMAwEAAgADAAAAEPMP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAGhABAQEAAwEAAAAAAAAAAAAAAREAECFRYf/aAAgBAQABPxA1j6uURvjV8cgkezCqAeP/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;executionContext&quot;
+        title=&quot;&quot;
+        src=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg&quot;
+        srcset=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-e8976.jpg 148w,
+/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-63df2.jpg 295w,
+/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg 590w,
+/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;You can think of &lt;code&gt;ExecutionContext&lt;/code&gt; in Scala is kind of equivalent to &lt;code&gt;Executor&lt;/code&gt; in Java.
+It has the following &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;trait ExecutionContext {
+  def execute(runnable: Runnable): Unit
+  .. // only few other methods (two other methods as of Scala 2.12.4)
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EABYBAQEBAAAAAAAAAAAAAAAAAAIDBP/aAAwDAQACEAMQAAAB0Hq2eKFRr//EABgQAQADAQAAAAAAAAAAAAAAAAABESFB/9oACAEBAAEFAta7UKhT/8QAFREBAQAAAAAAAAAAAAAAAAAAABP/2gAIAQMBAT8Bim//xAAWEQADAAAAAAAAAAAAAAAAAAAAAhL/2gAIAQIBAT8BtymP/8QAFxAAAwEAAAAAAAAAAAAAAAAAARAgcf/aAAgBAQAGPwJHY//EABoQAAIDAQEAAAAAAAAAAAAAAAABESExQXH/2gAIAQEAAT8hd3ZpW+F6MOYuwhL9P//aAAwDAQACAAMAAAAQsA//xAAWEQADAAAAAAAAAAAAAAAAAAAAEVH/2gAIAQMBAT8QSiU//8QAFREBAQAAAAAAAAAAAAAAAAAAARD/2gAIAQIBAT8QJX//xAAcEAEAAgMAAwAAAAAAAAAAAAABABEhMUFRcZH/2gAIAQEAAT8QZqe3rBVlx5sPfFZjm0/Wbm2OsylbS5n/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;future&quot;
+        title=&quot;&quot;
+        src=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg&quot;
+        srcset=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-e8976.jpg 148w,
+/static/future-e7f56e76d0381aaa9c0f3945591632c5-63df2.jpg 295w,
+/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg 590w,
+/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;However, you don’t call the &lt;code&gt;execute()&lt;/code&gt; method of &lt;code&gt;ExecutionContext&lt;/code&gt; directly, but you should  &lt;code&gt;implicit&lt;/code&gt;ly declare &lt;code&gt;ExecutionContext&lt;/code&gt; like below.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;implicit val executionContext: ExecutionContext = 
+  ExecutionContext.Implicits.global&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;(Little bit side-tracked, but in production code, you shouldn’t use &lt;code&gt;ExecutionContext.Implicits.global&lt;/code&gt;, as you will need more flexibility and careful configuration of the background thread pool, like number of threads, whether it’s fixed thread pool or fork-join, etc)&lt;/p&gt;
+&lt;p&gt;Then you call &lt;code&gt;Future{...}&lt;/code&gt; which is &lt;code&gt;Future&lt;/code&gt; companion object’s &lt;code&gt;apply&lt;/code&gt; method, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;def printThreadInsideFuture(): Unit = 
+  println(s&quot;[${Thread.currentThread()}] - printThreadInsideFuture() is executed&quot;)
+
+val f = Future{ printThreadInsideFuture() }  &lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;that takes an &lt;code&gt;implicit&lt;/code&gt; parameter of &lt;code&gt;ExecutionContext&lt;/code&gt;. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; apply&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;T&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;body&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+             &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; executor&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ExecutionContext&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Future&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;T&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;By doing this, you let the &lt;code&gt;implicit&lt;/code&gt;-ly passed &lt;code&gt;ExecutionContext&lt;/code&gt; execute the body of &lt;code&gt;Future&lt;/code&gt; you passed in, in one of the background threads.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EABYBAQEBAAAAAAAAAAAAAAAAAAIDBP/aAAwDAQACEAMQAAAB0Hq2eKFRr//EABgQAAMBAQAAAAAAAAAAAAAAAAABESFB/9oACAEBAAEFAtp2IiIf/8QAFREBAQAAAAAAAAAAAAAAAAAAABP/2gAIAQMBAT8Bim//xAAWEQADAAAAAAAAAAAAAAAAAAAAAhL/2gAIAQIBAT8BtymP/8QAGBAAAgMAAAAAAAAAAAAAAAAAAAEgMXH/2gAIAQEABj8CLHsP/8QAGxAAAwACAwAAAAAAAAAAAAAAAAERIUExYXH/2gAIAQEAAT8hbplldWWtmeRh2Ooiv0//2gAMAwEAAgADAAAAELAP/8QAFhEAAwAAAAAAAAAAAAAAAAAAABFR/9oACAEDAQE/EEolP//EABURAQEAAAAAAAAAAAAAAAAAAAEQ/9oACAECAQE/ECV//8QAHBABAAIDAAMAAAAAAAAAAAAAAQARITFBYXGR/9oACAEBAAE/EBAbfMIpHvisxzafrFkvSuvJlK2lzP/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;onComplete&quot;
+        title=&quot;&quot;
+        src=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg&quot;
+        srcset=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-e8976.jpg 148w,
+/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-63df2.jpg 295w,
+/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg 590w,
+/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Scala’s &lt;code&gt;Future&lt;/code&gt; also has &lt;code&gt;onComplete&lt;/code&gt; method which lets you execute a callback function taking the return value from the &lt;code&gt;Future&lt;/code&gt; body you earlier passed.&lt;/p&gt;
+&lt;p&gt;The callback should have &lt;code&gt;case Success()&lt;/code&gt; and &lt;code&gt;case Future&lt;/code&gt; because a &lt;code&gt;Future&lt;/code&gt; can fail without completing the passed-in &lt;code&gt;Future&lt;/code&gt; body for whatever reasons.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; printThreadInsideCallback&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 
+  println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;token string&quot;&gt;&quot;[${Thread.currentThread()}] - printThreadInsideCallback() is executed&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// The callback passed to onComplete is either be &lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// applied immediately or be scheduled asynchronously.&lt;/span&gt;
+f1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;onComplete&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; Success&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;_&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; 
+    printThreadInsideCallback&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; Failure&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;_&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+    println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Future failed!!&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;In &lt;a href=&quot;https://www.scala-lang.org/api/2.12.4/scala/concurrent/Future.html&quot;&gt;Scaladoc&lt;/a&gt;, &lt;code&gt;Future&lt;/code&gt;’s &lt;code&gt;onComplete&lt;/code&gt; has the following comment, explaining its behavior.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;When this future is completed, either through an exception, or a value,
+apply the provided function.
+
+If the future has already been completed,
+this will either be applied immediately or be scheduled asynchronously.
+
+Note that the returned value of `f` will be discarded.&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Details of &lt;code&gt;onComplete&lt;/code&gt; can be found in &lt;a href=&quot;https://docs.scala-lang.org/overviews/core/futures.html&quot;&gt;the official &lt;code&gt;Future&lt;/code&gt; doc&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Inter-operabilities between Executor/ExecutorService and ExecutionContext&lt;/h2&gt;
+&lt;p&gt;You might get into a situation where you have a Scala application dependent on some Java libraries, which only expects &lt;code&gt;Executor&lt;/code&gt; or &lt;code&gt;ExecutionContext&lt;/code&gt;, not knowing Scala &lt;code&gt;ExecutionContext&lt;/code&gt; at all.&lt;/p&gt;
+&lt;p&gt;To deal with such a situation, Scala provides the following two traits bridging the gap between &lt;code&gt;Executor&lt;/code&gt;/&lt;code&gt;ExecutorService&lt;/code&gt; and &lt;code&gt;ExecutionContext&lt;/code&gt;. You’ll create an instance of eitehr &lt;code&gt;ExecutionContextExecutor&lt;/code&gt; or &lt;code&gt;ExecutionContextExecutorService&lt;/code&gt;, then that can be passed as &lt;code&gt;Executor&lt;/code&gt;/&lt;code&gt;ExecutorService&lt;/code&gt; to Java libraries, as well as &lt;code&gt;ExecutionContext&lt;/code&gt; to Scala libraries.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;/**
+ * An ExecutionContext that is also a
+ * Java Executor.
+ */
+trait ExecutionContextExecutor 
+  extends ExecutionContext 
+  with Executor&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;/**
+ * An ExecutionContext that is also a
+ * Java ExecutorService.
+ */&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; ExecutionContextExecutorService 
+  &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; ExecutionContextExecutor 
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; ExecutorService
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;(Indeed for example, Akka’s &lt;code&gt;Dispatcher&lt;/code&gt; extends &lt;code&gt;ExecutionContextExecutor&lt;/code&gt; so that it works as &lt;code&gt;ExecutionContext&lt;/code&gt; to run &lt;code&gt;Future&lt;/code&gt; bodies, and &lt;code&gt;Executor&lt;/code&gt; to work in Java libraries)&lt;/p&gt;
+&lt;h2&gt;Instruction to run the example, and output&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd executor-and-execution-context
+&gt; sbt&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;There are multiple &lt;code&gt;object Main&lt;/code&gt; defined under separate packages.
+So, to run the thread example under the &lt;code&gt;example.thread&lt;/code&gt; package:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.thread.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.thread.Main
+[Thread[run-main-1,5,run-main-group-1]] - main thread
+[Thread[Thread-4,5,run-main-group-1]] - PrintRunnable(2) run() is executed
+[Thread[Thread-3,5,run-main-group-1]] - PrintRunnable(1) run() is executed
+[Thread[Thread-6,5,run-main-group-1]] - PrintRunnable(4) run() is executed
+[Thread[Thread-8,5,run-main-group-1]] - PrintRunnable(6) run() is executed
+[Thread[Thread-5,5,run-main-group-1]] - PrintRunnable(3) run() is executed
+[Thread[Thread-9,5,run-main-group-1]] - PrintRunnable(7) run() is executed
+[Thread[Thread-12,5,run-main-group-1]] - PrintRunnable(10) run() is executed
+[Thread[Thread-7,5,run-main-group-1]] - PrintRunnable(5) run() is executed
+[Thread[Thread-11,5,run-main-group-1]] - PrintRunnable(9) run() is executed
+[Thread[Thread-13,5,run-main-group-1]] - PrintRunnable(11) run() is executed
+[Thread[Thread-10,5,run-main-group-1]] - PrintRunnable(8) run() is executed
+[Thread[Thread-14,5,run-main-group-1]] - PrintRunnable(12) run() is executed
+[success] Total time: 1 s, completed Feb 4, 2018 5:01:20 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;For the Executor/ExecutorService example:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.executor.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.executor.Main
+[Thread[run-main-0,5,run-main-group-0]] - main thread
+[Thread[pool-8-thread-1,5,run-main-group-0]] - PrintRunnable(1) run() is executed
+[Thread[pool-8-thread-2,5,run-main-group-0]] - PrintRunnable(2) run() is executed
+[Thread[pool-8-thread-3,5,run-main-group-0]] - PrintRunnable(3) run() is executed
+[Thread[pool-8-thread-1,5,run-main-group-0]] - PrintRunnable(6) run() is executed
+[Thread[pool-8-thread-4,5,run-main-group-0]] - PrintRunnable(4) run() is executed
+[Thread[pool-8-thread-2,5,run-main-group-0]] - PrintRunnable(7) run() is executed
+[Thread[pool-8-thread-3,5,run-main-group-0]] - PrintRunnable(8) run() is executed
+[Thread[pool-8-thread-5,5,run-main-group-0]] - PrintRunnable(5) run() is executed
+[Thread[pool-8-thread-2,5,run-main-group-0]] - PrintRunnable(11) run() is executed
+[Thread[pool-8-thread-4,5,run-main-group-0]] - PrintRunnable(10) run() is executed
+[Thread[pool-8-thread-1,5,run-main-group-0]] - PrintRunnable(9) run() is executed
+[Thread[pool-8-thread-3,5,run-main-group-0]] - PrintRunnable(12) run() is executed
+[success] Total time: 15 s, completed Feb 4, 2018 3:26:02 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then the Future example&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.future.Main&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.future.Main
+[Thread[run-main-3,5,run-main-group-3]] - main thread
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(1) is executed
+[Thread[scala-execution-context-global-199,5,main]] - printThreadName(2) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(3) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(4) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(5) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(6) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(7) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(8) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(9) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(10) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(11) is executed
+[Thread[scala-execution-context-global-200,5,main]] - printThreadName(12) is executed
+[success] Total time: 3 s, completed Feb 4, 2018 4:40:30 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Oracle official doc for Thread at - &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/essential/concurrency/threads.html&quot;&gt;https://docs.oracle.com/javase/tutorial/essential/concurrency/threads.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Javadoc of &lt;code&gt;java.lang.Thraed&lt;/code&gt; at - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Javadoc of &lt;code&gt;java.lang.Runnable&lt;/code&gt; at - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Javadoc of &lt;code&gt;java.util.concurrent.Executor&lt;/code&gt; at - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Javadoc of &lt;code&gt;java.util.concurrent.ExecutorService&lt;/code&gt; at - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Scala official documentation of &lt;code&gt;Future&lt;/code&gt; at - &lt;a href=&quot;https://docs.scala-lang.org/overviews/core/futures.html&quot;&gt;https://docs.scala-lang.org/overviews/core/futures.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Scaladoc of &lt;code&gt;scala.concurrent.Future&lt;/code&gt; at - &lt;a href=&quot;https://www.scala-lang.org/api/2.12.4/scala/concurrent/Future.html&quot;&gt;https://www.scala-lang.org/api/2.12.4/scala/concurrent/Future.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Scaladoc of &lt;code&gt;scala.concurrent.Future&lt;/code&gt; at - &lt;a href=&quot;https://www.scala-lang.org/api/2.12.4/scala/concurrent/ExecutionContext.html&quot;&gt;https://www.scala-lang.org/api/2.12.4/scala/concurrent/ExecutionContext.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Akka remoting minimal example part 2 - sender side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is continued from  the previous article , and now we are…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-sender/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-sender/</guid><pubDate>Sat, 03 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
