@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 07 Feb 2018 22:32:00 GMT</lastBuildDate><item><title><![CDATA[Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Thread in Java Thread  and  Runnable  has been there for long…]]></description><link>https://richardimaoka.github.io/blog//executor-and-execution-context/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//executor-and-execution-context/</guid><pubDate>Wed, 07 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 07 Feb 2018 22:35:02 GMT</lastBuildDate><item><title><![CDATA[Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Thread in Java Thread  and  Runnable  has been there for long…]]></description><link>https://richardimaoka.github.io/blog//executor-and-execution-context/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//executor-and-execution-context/</guid><pubDate>Wed, 07 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/executor-and-execution-context&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
@@ -18,7 +18,7 @@
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg&quot;
+    href=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -37,11 +37,11 @@
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg&quot;
-        srcset=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-e8976.jpg 148w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-63df2.jpg 295w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg 590w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg 640w&quot;
+        src=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-e8976.jpg 148w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-63df2.jpg 295w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg 590w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -82,7 +82,7 @@ t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;start&lt;span cla
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg&quot;
+    href=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -101,11 +101,11 @@ t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;start&lt;span cla
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;interfaces&quot;
         title=&quot;&quot;
-        src=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg&quot;
-        srcset=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-e8976.jpg 148w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-63df2.jpg 295w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg 590w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg 640w&quot;
+        src=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-e8976.jpg 148w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-63df2.jpg 295w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg 590w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -163,7 +163,7 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg&quot;
+    href=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -182,11 +182,11 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executorService&quot;
         title=&quot;&quot;
-        src=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg&quot;
-        srcset=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-e8976.jpg 148w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-63df2.jpg 295w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg 590w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-e8976.jpg 148w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-63df2.jpg 295w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg 590w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -197,7 +197,7 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg&quot;
+    href=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -216,11 +216,11 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executorService2&quot;
         title=&quot;&quot;
-        src=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg&quot;
-        srcset=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-e8976.jpg 148w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-63df2.jpg 295w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg 590w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-e8976.jpg 148w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-63df2.jpg 295w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg 590w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -236,7 +236,7 @@ Note that you didn’t specify which exact thread the &lt;code&gt;PrintRunnable&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg&quot;
+    href=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -255,11 +255,11 @@ Note that you didn’t specify which exact thread the &lt;code&gt;PrintRunnable&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executionContext&quot;
         title=&quot;&quot;
-        src=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg&quot;
-        srcset=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-e8976.jpg 148w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-63df2.jpg 295w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg 590w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-e8976.jpg 148w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-63df2.jpg 295w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg 590w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -278,7 +278,7 @@ It has the following &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg&quot;
+    href=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -297,11 +297,11 @@ It has the following &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;future&quot;
         title=&quot;&quot;
-        src=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg&quot;
-        srcset=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-e8976.jpg 148w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-63df2.jpg 295w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg 590w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg 640w&quot;
+        src=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-e8976.jpg 148w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-63df2.jpg 295w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg 590w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -332,7 +332,7 @@ val f = Future{ printThreadInsideFuture() }  &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg&quot;
+    href=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -351,11 +351,11 @@ val f = Future{ printThreadInsideFuture() }  &lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;onComplete&quot;
         title=&quot;&quot;
-        src=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg&quot;
-        srcset=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-e8976.jpg 148w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-63df2.jpg 295w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg 590w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg 640w&quot;
+        src=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-e8976.jpg 148w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-63df2.jpg 295w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg 590w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
