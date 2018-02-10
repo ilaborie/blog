@@ -17,8 +17,8 @@
       "path----557518bd178906f8d58a.js.map"
     ],
     "path---remote-minimal-setup": [
-      "path---remote-minimal-setup-61e697884afd5279718c.js",
-      "path---remote-minimal-setup-61e697884afd5279718c.js.map"
+      "path---remote-minimal-setup-7c5794af28e56d976fc0.js",
+      "path---remote-minimal-setup-7c5794af28e56d976fc0.js.map"
     ],
     "path---local-minimal-receiver": [
       "path---local-minimal-receiver-82e73a8bfb4d764c9640.js",
@@ -32,6 +32,10 @@
       "component---node-modules-gatsby-plugin-offline-app-shell-js-a4372d8aab423f26d2d4.js",
       "component---node-modules-gatsby-plugin-offline-app-shell-js-a4372d8aab423f26d2d4.js.map"
     ],
+    "path---remote-minimal-receiver": [
+      "path---remote-minimal-receiver-ac9563d395ce93546389.js",
+      "path---remote-minimal-receiver-ac9563d395ce93546389.js.map"
+    ],
     "component---src-templates-blog-post-js": [
       "component---src-templates-blog-post-js-0601a6b49635c3f38ccf.js",
       "component---src-templates-blog-post-js-0601a6b49635c3f38ccf.js.map"
@@ -41,8 +45,8 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-786d2d03ecca3f279b8f.js",
-      "path---index-786d2d03ecca3f279b8f.js.map"
+      "path---index-eb193887bfe48d0b53e0.js",
+      "path---index-eb193887bfe48d0b53e0.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-3de8e4b4e2a844510d28.js",
@@ -67,14 +71,14 @@
       "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-caee5217bf2b45b49c77.js",
+      "app-341483c42afc4dcc20c6.js",
       "build-js-styles.css",
-      "app-caee5217bf2b45b49c77.js.map",
+      "app-341483c42afc4dcc20c6.js.map",
       "build-js-styles.css.map"
     ],
     "path---remote-minimal-sender": [
-      "path---remote-minimal-sender-d6910d0a1b679fd94a1f.js",
-      "path---remote-minimal-sender-d6910d0a1b679fd94a1f.js.map"
+      "path---remote-minimal-sender-669db11f1076edf34b93.js",
+      "path---remote-minimal-sender-669db11f1076edf34b93.js.map"
     ]
   }
 }

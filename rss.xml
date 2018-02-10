@@ -1,4 +1,296 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 07 Feb 2018 22:35:02 GMT</lastBuildDate><item><title><![CDATA[Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Thread in Java Thread  and  Runnable  has been there for long…]]></description><link>https://richardimaoka.github.io/blog//executor-and-execution-context/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//executor-and-execution-context/</guid><pubDate>Wed, 07 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Feb 2018 02:28:17 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 3 - receiver side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is the last of three articles about akka’s remote…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-receiver/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-receiver/</guid><pubDate>Fri, 09 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/YAuamfYBb1o&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;This is the last of three articles about akka’s remote message passing. The previous articles are here:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;../remote-minimal-setup&quot;&gt;Akka remoting minimal example part 1 - setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;../remote-minimal-sender&quot;&gt;Akka remoting minimal example part 2 - sender side&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;TcpHandlers&lt;/h3&gt;
+&lt;p&gt;As in the previous article, Netty takes care of the message transport in the network layer.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/9oADAMBAAIQAxAAAAHuWwxxXJ//xAAYEAADAQEAAAAAAAAAAAAAAAAAAhEBMf/aAAgBAQABBQI2xbFRVGM5/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECEf/aAAgBAwEBPwGZRh//xAAYEQADAQEAAAAAAAAAAAAAAAAAARECA//aAAgBAgEBPwFc4PNZ/8QAFxAAAwEAAAAAAAAAAAAAAAAAABAhAf/aAAgBAQAGPwJUmP8A/8QAGxABAQABBQAAAAAAAAAAAAAAAREAECExgZH/2gAIAQEAAT8h6fMlQNwvabiCyvOq/9oADAMBAAIAAwAAABCLD//EABYRAQEBAAAAAAAAAAAAAAAAAAEQIf/aAAgBAwEBPxADk//EABcRAQEBAQAAAAAAAAAAAAAAAAEAETH/2gAIAQIBAT8QFbCjy//EAB4QAQADAAAHAAAAAAAAAAAAAAEAESExQVFhcZHw/9oACAEBAAE/EBVQVOigWgjCmAk1u/CWuPKXfrZgPM0Vv3P/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;netty&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Onc the receiver side, &lt;code&gt;TcpHandler&lt;/code&gt; has the &lt;code&gt;onMessage&lt;/code&gt; method, which is called when a message payload (serialized byte array) arrives on the receiver side. &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIEA//EABYBAQEBAAAAAAAAAAAAAAAAAAIABP/aAAwDAQACEAMQAAABparOxqUBH//EABoQAAICAwAAAAAAAAAAAAAAAAESAhEAEDH/2gAIAQEAAQUCizBro6j3P//EABYRAQEBAAAAAAAAAAAAAAAAAAASAf/aAAgBAwEBPwGcS//EABcRAQADAAAAAAAAAAAAAAAAAAABAhP/2gAIAQIBAT8BmrJ//8QAGRAAAgMBAAAAAAAAAAAAAAAAAREAAiAh/9oACAEBAAY/Ai6lToz/AP/EABoQAQADAAMAAAAAAAAAAAAAAAEAESEQQWH/2gAIAQEAAT8hTIQ7my4J4MveGp//2gAMAwEAAgADAAAAEBMf/8QAGBEAAgMAAAAAAAAAAAAAAAAAAAERQVH/2gAIAQMBAT8QdhHT/8QAGREAAwADAAAAAAAAAAAAAAAAAAERIVGh/9oACAECAQE/EEuxLPCdn//EABsQAQACAwEBAAAAAAAAAAAAAAEAESExcUHx/9oACAEBAAE/EE+w0jDmcgik+FBtVxc069lecan/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;tcphandler&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-e8976.jpg 148w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-63df2.jpg 295w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg 590w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; TcpHandlers &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; onMessage&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+    notifyListener&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+      InboundPayload&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ByteString&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bytes&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The above &lt;code&gt;notifyListener&lt;/code&gt;  method is as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; notifyListener&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;channel&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Channel&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; msg&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; HandleEvent&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 
+    get&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;channel&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; foreach &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; _ notify msg &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and &lt;code&gt;notify&lt;/code&gt; performs usual local message passing via the familiar &lt;code&gt;!&lt;/code&gt; method, &lt;code&gt;actor ! ev&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;  final case class ActorHandleEventListener(actor: ActorRef) 
+    extends HandleEventListener {
+    
+    override def notify(ev: HandleEvent): Unit =
+      actor ! ev
+  }&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h3&gt;EndPointReader and de-serialization&lt;/h3&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgAE/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEEBf/aAAwDAQACEAMQAAAB1JU+cJwv/8QAFxABAQEBAAAAAAAAAAAAAAAAEQEgIf/aAAgBAQABBQKK8jj/xAAVEQEBAAAAAAAAAAAAAAAAAAAQEf/aAAgBAwEBPwGn/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQACEf/aAAgBAgEBPwHT2W//xAAXEAADAQAAAAAAAAAAAAAAAAAAASAx/9oACAEBAAY/AjHP/8QAGBABAAMBAAAAAAAAAAAAAAAAAQARISD/2gAIAQEAAT8h02ZN2JNFonH/2gAMAwEAAgADAAAAEDff/8QAFhEBAQEAAAAAAAAAAAAAAAAAAREA/9oACAEDAQE/ECWzLXf/xAAXEQEBAQEAAAAAAAAAAAAAAAABEQBx/9oACAECAQE/EAdk5gWhN//EABkQAQADAQEAAAAAAAAAAAAAAAEAESEgMf/aAAgBAQABPxB12r5LIg7jjGeoaF2uP//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;deserialize&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-e8976.jpg 148w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-63df2.jpg 295w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg 590w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;There are some intermediate actor(s) passes through the payload after the &lt;code&gt;notify&lt;/code&gt; method described above (in the case of this example, &lt;code&gt;AkkaProtocolManager&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Afterwards, an important &lt;code&gt;EndpointReader&lt;/code&gt; actor receives the payload. It has the following &lt;code&gt;receive&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; EndpointReader&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receive&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; InboundPayload&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;p&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; p&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;size &lt;span class=&quot;token operator&quot;&gt;&amp;lt;=&lt;/span&gt; transport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;maximumPayloadBytes ⇒
+      &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;     
+      msgDispatch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatch&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+        msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;recipient&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;recipientAddress&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// msg.serializedMessage.message: ByteString &lt;/span&gt;
+        msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;serializedMessage&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        msg&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;senderOption
+      &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;        
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;When &lt;code&gt;EndPointReader&lt;/code&gt; receives the payload, it is de-serialized from a serialized byte array (represented as &lt;code&gt;ByteString&lt;/code&gt;) to a Scala object, with the following call in &lt;code&gt;DefaultMessageDispatcher&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;class DefaultMessageDispatcher(
+    ...
+    lazy val payload: AnyRef =
+      MessageSerializer.deserialize(
+        system, 
+        serializedMessage
+      )
+    ...
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;msgDispatch.dispatch&lt;/code&gt; in &lt;code&gt;EndPointReader&lt;/code&gt; finally passes the deserialized message to the &lt;code&gt;MessageReceiver&lt;/code&gt; actor via local message passing.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgAE/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEEBf/aAAwDAQACEAMQAAAB0p0+cJwv/8QAGRAAAgMBAAAAAAAAAAAAAAAAARECEBIh/9oACAEBAAEFAgTp8i1f/8QAFREBAQAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8Bp//EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAgEBPwFdZdb/xAAXEAADAQAAAAAAAAAAAAAAAAABECEg/9oACAEBAAY/AjFcf//EABkQAQEBAAMAAAAAAAAAAAAAAAERACAhUf/aAAgBAQABPyGQVDd1BHx1OB//2gAMAwEAAgADAAAAEEz/AP/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAwEBPxBDbf/EABYRAQEBAAAAAAAAAAAAAAAAAAERAP/aAAgBAgEBPxAQZMaITf/EABwQAQACAQUAAAAAAAAAAAAAAAEAETEQIUFRcf/aAAgBAQABPxBPAk9yzt2UFMVwI35EHJADGn//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;receiver&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-e8976.jpg 148w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-63df2.jpg 295w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg 590w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h2&gt;Instruction to run the example, and output&lt;/h2&gt;
+&lt;p&gt;As this example uses &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;Akka remoting&lt;/a&gt; to send a message,
+you need to run two JVMs for the receiver and sender of the application respectively.&lt;/p&gt;
+&lt;p&gt;Firstly, run the receiver side with the &lt;code&gt;receiver&lt;/code&gt; argument supplied to &lt;code&gt;Main&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; git clone https://github.com/richardimaoka/resources.git
+&gt; cd resources
+&gt; cd remote-minimal
+&gt; sbt
+&gt; runMain example.Main receiver&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;You’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.Main receiver
+[info] Running example.Main receiver
+Program args:
+receiver
+running startMessageReceiver()
+[INFO] [02/03/2018 13:36:58.281] [run-main-0] [akka.remote.Remoting] Starting remoting
+[INFO] [02/03/2018 13:36:58.462] [run-main-0] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://receiverSystem@127.0.0.1:2551]
+[INFO] [02/03/2018 13:36:58.464] [run-main-0] [akka.remote.Remoting] Remoting now listens on addresses: [akka.tcp://receiverSystem@127.0.0.1:2551]
+provider = remote
+listening at port = 2551
+started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;this is the sender side output:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[info] Running example.Main sender
+Program args:
+sender
+running startMessageSender()
+[INFO] [02/03/2018 13:37:16.215] [run-main-0] [akka.remote.Remoting] Starting remoting
+[INFO] [02/03/2018 13:37:16.427] [run-main-0] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://senderSystem@127.0.0.1:2552]
+[INFO] [02/03/2018 13:37:16.432] [run-main-0] [akka.remote.Remoting] Remoting now listens on addresses: [akka.tcp://senderSystem@127.0.0.1:2552]
+provider = remote
+listening at port = 2552
+sending a message to akka.tcp://receiverSystem@127.0.0.1:2551/user/receiver
+[INFO] [02/03/2018 13:37:19.533] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Shutting down remote daemon.
+[INFO] [02/03/2018 13:37:19.537] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.actor.default-dispatcher-4] [akka.remote.Remoting] Remoting shut down
+[INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remoting shut down.
+[success] Total time: 5 s, completed Feb 3, 2018 1:37:19 PM&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;then you see the receiver output as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;EchoActor: received message = Hello!!&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and immediately after that, the receiver side shows this error, which can be ignored.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[ERROR] [02/03/2018 13:37:19.572] [receiverSystem-akka.remote.default-remote-dispatcher-15] [akka.tcp://receiverSystem@127.0.0.1:2551/system/endpointManager/reliableEndpointWriter-akka.tcp%3A%2F%2FsenderSystem%40127.0.0.1%3A2552-0/endpointWriter] AssociationError [akka.tcp://receiverSystem@127.0.0.1:2551] &lt;- [akka.tcp://senderSystem@127.0.0.1:2552]: Error [Shut down address: akka.tcp://senderSystem@127.0.0.1:2552] [
+akka.remote.ShutDownAssociation: Shut down address: akka.tcp://senderSystem@127.0.0.1:2552
+Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remote system terminated the association because it is shutting down.
+]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As explained in &lt;a href=&quot;https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0&quot;&gt;this thrad in akka-user&lt;/a&gt; mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.&lt;/p&gt;
+&lt;p&gt;Once everything is done, press the enter key on the receiver side’s console and you get this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;[INFO] [02/03/2018 13:38:05.942] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Shutting down remote daemon.
+[INFO] [02/03/2018 13:38:05.944] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.actor.default-dispatcher-3] [akka.remote.Remoting] Remoting shut down
+[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.remote.default-remote-dispatcher-6] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remoting shut down.&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Official documentation of Akka remoting at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/remoting.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka serialization at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/serialization.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Netty documentation at &lt;a href=&quot;https://netty.io/&quot;&gt;https://netty.io/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . Thread in Java Thread  and  Runnable  has been there for long…]]></description><link>https://richardimaoka.github.io/blog//executor-and-execution-context/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//executor-and-execution-context/</guid><pubDate>Wed, 07 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/executor-and-execution-context&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
@@ -799,7 +1091,7 @@ private[remote] class TcpAssociationHandle(
   &lt;/a&gt;
     &lt;/p&gt;
 &lt;p&gt;So this lets netty take care of payload transfer to a remote JVM.&lt;/p&gt;
-&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;h2&gt;Instruction to run the example, and output&lt;/h2&gt;
 &lt;p&gt;As this example uses &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;Akka remoting&lt;/a&gt; to send a message,
 you need to run two JVMs for the receiver and sender of the application respectively.&lt;/p&gt;
 &lt;p&gt;Firstly, run the receiver side with the &lt;code&gt;receiver&lt;/code&gt; argument supplied to &lt;code&gt;Main&lt;/code&gt;.&lt;/p&gt;
@@ -810,14 +1102,7 @@ you need to run two JVMs for the receiver and sender of the application respecti
 &gt; sbt
 &gt; runMain example.Main receiver&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot;&gt;
-      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
-&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;p&gt;After that, you can press the enter key on the console running the receiver side, to terminate the process.&lt;/p&gt;
-&lt;h2&gt;Output&lt;/h2&gt;
-&lt;p&gt;For the receiver side, you’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
+&lt;p&gt;You’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
       &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.Main receiver
 [info] Running example.Main receiver
@@ -830,6 +1115,11 @@ running startMessageReceiver()
 provider = remote
 listening at port = 2551
 started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
 &lt;p&gt;this is the sender side output:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
@@ -871,6 +1161,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Official documentation at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/remoting.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka serialization at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/serialization.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/serialization.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Netty documentation at &lt;a href=&quot;https://netty.io/&quot;&gt;https://netty.io/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Akka remoting minimal example part 1 - setup]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . The next article  explains how this remoting example works on…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-setup/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-setup/</guid><pubDate>Fri, 02 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
@@ -889,7 +1180,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
           &lt;/div&gt;
           &lt;/div&gt;
 &lt;p&gt;&lt;a href=&quot;../remote-minimal-sender&quot;&gt;The next article&lt;/a&gt; explains how this remoting example works on the sender side.&lt;/p&gt;
-&lt;h2&gt;Instruction to run the example&lt;/h2&gt;
+&lt;h2&gt;Instruction to run the example, and output&lt;/h2&gt;
 &lt;p&gt;As this example uses &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/remoting.html&quot;&gt;Akka remoting&lt;/a&gt; to send a message,
 you need to run two JVMs for the receiver and sender of the application respectively.&lt;/p&gt;
 &lt;p&gt;Firstly, run the receiver side with the &lt;code&gt;receiver&lt;/code&gt; argument supplied to &lt;code&gt;Main&lt;/code&gt;.&lt;/p&gt;
@@ -900,14 +1191,7 @@ you need to run two JVMs for the receiver and sender of the application respecti
 &gt; sbt
 &gt; runMain example.Main receiver&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot;&gt;
-      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
-&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;p&gt;After that, you can press the enter key on the console running the receiver side, to terminate the process.&lt;/p&gt;
-&lt;h2&gt;Output&lt;/h2&gt;
-&lt;p&gt;For the receiver side, you’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
+&lt;p&gt;You’ll get output like below, then it waits until the message is sent from the sender.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
       &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; runMain example.Main receiver
 [info] Running example.Main receiver
@@ -920,6 +1204,11 @@ running startMessageReceiver()
 provider = remote
 listening at port = 2551
 started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then in the same directory, run the same &lt;code&gt;Main&lt;/code&gt; with &lt;code&gt;sender&lt;/code&gt; as the argument&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain example.Main sender&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
 &lt;p&gt;this is the sender side output:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
