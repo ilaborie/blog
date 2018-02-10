@@ -1,15 +1,107 @@
 ---
-title: Akka remoting minimal example part 1 - setup
-date: "2018-02-03T01:31:00.000+0900"
+title: Akka remoting minimal example part 3 - receiver side
+date: "2018-02-10T01:31:00.000+0900"
+published: false
 ---
 
 ## Overview
 
 You can find the code and instruction to run the example at [GitHub](https://github.com/richardimaoka/resources/tree/master/remote-minimal).
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/YYGQYSpoBhE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/YAuamfYBb1o" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-[The next article](../remote-minimal-sender) explains how this remoting example works on the sender side.
+
+This is the last of three articles about akka's remote message passing. The previous articles are here:
+
+- [Akka remoting minimal example part 1 - setup](../remote-minimal-setup)
+- [Akka remoting minimal example part 2 - sender side](../remote-minimal-sender)
+
+### TcpHandlers
+
+As in the previous article, Netty takes care of the message transport in the network layer.
+
+![netty](./netty.jpg)
+
+
+Onc the receiver side, `TcpHandler` has the `onMessage` method, which is called when a message payload (serialized byte array) arrives on the receiver side. 
+
+![tcphandler](./tcphandler.jpg)
+
+
+```scala
+trait TcpHandlers extends ... {
+
+  override def onMessage(...): Unit = {
+    ...
+    notifyListener(
+      ..., 
+      InboundPayload(ByteString(bytes))
+    )
+  }
+```
+
+The above `notifyListener`  method is as follows:
+
+```scala
+  def notifyListener(channel: Channel, msg: HandleEvent): Unit = 
+    get(channel) foreach { _ notify msg }
+```
+
+and `notify` performs usual local message passing via the familiar `!` method, `actor ! ev`.
+
+```
+  final case class ActorHandleEventListener(actor: ActorRef) 
+    extends HandleEventListener {
+    
+    override def notify(ev: HandleEvent): Unit =
+      actor ! ev
+  }
+```
+
+### EndPointReader and de-serialization
+
+![deserialize](./deserialize.jpg)
+
+There are some intermediate actor(s) passes through the payload after the `notify` method described above (in the case of this example, `AkkaProtocolManager`).
+
+Afterwards, an important `EndpointReader` actor receives the payload. It has the following `receive` method.
+
+```scala
+class EndpointReader(
+  ...
+  override def receive: Receive = {
+    case InboundPayload(p) if p.size <= transport.maximumPayloadBytes ⇒
+      ...     
+      msgDispatch.dispatch(
+        msg.recipient,
+        msg.recipientAddress,
+        // msg.serializedMessage.message: ByteString 
+        msg.serializedMessage,
+        msg.senderOption
+      )
+  ...
+}        
+```
+
+When `EndPointReader` receives the payload, it is de-serialized from a serialized byte array (represented as `ByteString`) to a Scala object, with the following call in `DefaultMessageDispatcher`.
+
+```
+class DefaultMessageDispatcher(
+    ...
+    lazy val payload: AnyRef =
+      MessageSerializer.deserialize(
+        system, 
+        serializedMessage
+      )
+    ...
+}
+```
+
+`msgDispatch.dispatch` in `EndPointReader` finally passes the deserialized message to the `MessageReceiver` actor via local message passing.
+
+
+![receiver](./receiver.jpg)
+
 
 ## Instruction to run the example, and output
 
@@ -97,4 +189,6 @@ Once everything is done, press the enter key on the receiver side's console and 
 
 ## References 
 
-- Official documentation at https://doc.akka.io/docs/akka/2.5/remoting.html
+- Official documentation of Akka remoting at https://doc.akka.io/docs/akka/2.5/remoting.html
+- Official documentation of Akka serialization at https://doc.akka.io/docs/akka/2.5/serialization.html
+- Netty documentation at https://netty.io/

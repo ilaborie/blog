@@ -167,7 +167,7 @@ private[remote] class TcpAssociationHandle(
 
 So this lets netty take care of payload transfer to a remote JVM.
 
-## Instruction to run the example
+## Instruction to run the example, and output
 
 As this example uses [Akka remoting](https://doc.akka.io/docs/akka/2.5/remoting.html) to send a message,
 you need to run two JVMs for the receiver and sender of the application respectively.
@@ -182,18 +182,7 @@ Firstly, run the receiver side with the `receiver` argument supplied to `Main`.
 > runMain example.Main receiver
 ```
 
-Then in the same directory, run the same `Main` with `sender` as the argument
-
-```
-> sbt
-> runMain example.Main sender
-```
-
-After that, you can press the enter key on the console running the receiver side, to terminate the process.
-
-## Output 
-
-For the receiver side, you'll get output like below, then it waits until the message is sent from the sender.
+You'll get output like below, then it waits until the message is sent from the sender.
 
 ```
 > runMain example.Main receiver
@@ -207,6 +196,13 @@ running startMessageReceiver()
 provider = remote
 listening at port = 2551
 started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]
+```
+
+Then in the same directory, run the same `Main` with `sender` as the argument
+
+```
+> sbt
+> runMain example.Main sender
 ```
 
 this is the sender side output:
@@ -255,8 +251,8 @@ Once everything is done, press the enter key on the receiver side's console and 
 [INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.remote.default-remote-dispatcher-6] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remoting shut down.
 ````
 
-
 ## References 
 
 - Official documentation at https://doc.akka.io/docs/akka/2.5/remoting.html
+- Official documentation of Akka serialization at https://doc.akka.io/docs/akka/2.5/serialization.html
 - Netty documentation at https://netty.io/
