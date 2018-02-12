@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 12 Feb 2018 19:38:47 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 12 Feb 2018 19:44:53 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
@@ -53,10 +53,21 @@
     &lt;/p&gt;
 &lt;p&gt;Firstly, &lt;code&gt;Dispatcher&lt;/code&gt; is configured for &lt;code&gt;ActorSystem&lt;/code&gt;, typically in &lt;code&gt;application.conf&lt;/code&gt;. There is at least default one, and you can &lt;a href=&quot;https://doc.akka.io/docs/akka/current/dispatchers.html#dispatchers&quot;&gt;also configure multiple &lt;code&gt;Dispatcher&lt;/code&gt;s&lt;/a&gt;.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
-      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val system = ActorSystem(&quot;exampleSystem&quot;)
-system.dispatchers.lookup(&quot;my-dispatcher&quot;)&lt;/code&gt;&lt;/pre&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;exampleSystem&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lookup&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;my-dispatcher&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;As a rule of thumb, the &lt;code&gt;Dispatcher&lt;/code&gt; instance for the given name is created when the &lt;code&gt;lookup&lt;/code&gt; method of &lt;code&gt;ActorSystem&lt;/code&gt; is called for the first time. You don’t normally call it yourself, but this lookup is done by akka. Another thing is the default &lt;code&gt;Dispatcher&lt;/code&gt; is already created upon &lt;code&gt;ActorSystem&lt;/code&gt; initialization, as it calls &lt;code&gt;lookup&lt;/code&gt; for the default internally.&lt;/p&gt;
+&lt;p&gt;As a rule of thumb, the &lt;code&gt;Dispatcher&lt;/code&gt; instance for the given name is created when the &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatchers.scala#L79&quot;&gt;&lt;code&gt;lookup&lt;/code&gt; method of &lt;code&gt;ActorSystem&lt;/code&gt;&lt;/a&gt; is called for the first time. You don’t normally call it yourself, but this lookup is done by akka. Another thing is the default &lt;code&gt;Dispatcher&lt;/code&gt; is already created upon &lt;code&gt;ActorSystem&lt;/code&gt; initialization, as it calls &lt;code&gt;lookup&lt;/code&gt; for the default internally.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;/**
+* Returns a dispatcher as specified in configuration. Please note that this
+* method _may_ create and return a NEW dispatcher, _every_ call.
+*
+* Throws ConfigurationException if the specified dispatcher cannot be found in the configuration.
+*/&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; lookup&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; MessageDispatcher &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; lookupConfigurator&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;id&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatcher&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
@@ -130,7 +141,8 @@ system.dispatchers.lookup(&quot;my-dispatcher&quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt; has &lt;code&gt;ExecutorService&lt;/code&gt;. &lt;code&gt;ExecutorService&lt;/code&gt; is like a pool of threads where you can execute code (&lt;code&gt;Runnable&lt;/code&gt;) concurrently. See &lt;a href=&quot;../executor-and-execution-context&quot;&gt;Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala&lt;/a&gt; for illustration and more details.&lt;/p&gt;
 &lt;p&gt;Here is &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L47&quot;&gt;&lt;code&gt;executorService&lt;/code&gt; method&lt;/a&gt; of &lt;code&gt;Dispatcher&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
-      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;def executorService: ExecutorServiceDelegate = ...&lt;/code&gt;&lt;/pre&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; executorService&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ExecutorServiceDelegate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
 &lt;p&gt;The pool of threads from &lt;code&gt;ExecutorService&lt;/code&gt; is what invokes &lt;code&gt;Actor&lt;/code&gt;’s &lt;code&gt;receive&lt;/code&gt; method, which will be explained later in this article.&lt;/p&gt;
 &lt;h2&gt;Dispatcher and sender-side behavior&lt;/h2&gt;
@@ -419,11 +431,12 @@ system.dispatchers.lookup(&quot;my-dispatcher&quot;)&lt;/code&gt;&lt;/pre&gt;
     &lt;/p&gt;
 &lt;p&gt;So this &lt;code&gt;processMailbox&lt;/code&gt; method, called from &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; is what invokes your &lt;code&gt;receive&lt;/code&gt; method you defined in your &lt;code&gt;Actor&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
-      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;class MyActor extends Actor {
-  def receive = {
-    ...  
-  }  
-}&lt;/code&gt;&lt;/pre&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; MyActor &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Actor &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;  
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;  
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;</content:encoded></item><item><title><![CDATA[Akka remoting minimal example part 3 - receiver side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is the last of three articles about akka’s remote…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-receiver/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-receiver/</guid><pubDate>Fri, 09 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
