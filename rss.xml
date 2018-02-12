@@ -1,4 +1,430 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Feb 2018 02:28:17 GMT</lastBuildDate><item><title><![CDATA[Akka remoting minimal example part 3 - receiver side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is the last of three articles about akka’s remote…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-receiver/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-receiver/</guid><pubDate>Fri, 09 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 12 Feb 2018 19:38:47 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;div&gt;
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/hnIDDXDD1Io&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          &lt;/div&gt;
+&lt;p&gt;The concept of Akka &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/dispatchers.html?language=scala&quot;&gt;&lt;code&gt;Dispatcher&lt;/code&gt;&lt;/a&gt; might be unfamiliar to you and it is probably difficult to understand. So I am going to explain how Dispatcher works in detail here.&lt;/p&gt;
+&lt;h2&gt;Meaning of “dispatch”&lt;/h2&gt;
+&lt;p&gt;If you look up the meaning of the word “dispatch” in a dictionary, you would find it is almost same as “send”. In akka, &lt;code&gt;Dispatcher&lt;/code&gt; is, yes, what sends messages, but something more than that.&lt;/p&gt;
+&lt;h2&gt;Dispatcher and Actor relationship&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAdhqxsYn/8QAGhAAAgIDAAAAAAAAAAAAAAAAAAEDIQIRMv/aAAgBAQABBQKShWIneoseT//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABcQAAMBAAAAAAAAAAAAAAAAAAABEBH/2gAIAQEABj8C2tin/8QAHBABAAICAwEAAAAAAAAAAAAAAQARMUEhYZGx/9oACAEBAAE/IUnfqKhXkwiDZK+zkrDc/9oADAMBAAIAAwAAABDbD//EABURAQEAAAAAAAAAAAAAAAAAAAEQ/9oACAEDAQE/EBJ//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAHBABAQACAgMAAAAAAAAAAAAAAREAITHBQWFx/9oACAEBAAE/EH4oDgzyHeVQ2nJrftmKmkTSYyM0GWaYDZFBa+sAICb6z//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;dispatcher-config&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-e8976.jpg 148w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-63df2.jpg 295w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg 590w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Firstly, &lt;code&gt;Dispatcher&lt;/code&gt; is configured for &lt;code&gt;ActorSystem&lt;/code&gt;, typically in &lt;code&gt;application.conf&lt;/code&gt;. There is at least default one, and you can &lt;a href=&quot;https://doc.akka.io/docs/akka/current/dispatchers.html#dispatchers&quot;&gt;also configure multiple &lt;code&gt;Dispatcher&lt;/code&gt;s&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val system = ActorSystem(&quot;exampleSystem&quot;)
+system.dispatchers.lookup(&quot;my-dispatcher&quot;)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As a rule of thumb, the &lt;code&gt;Dispatcher&lt;/code&gt; instance for the given name is created when the &lt;code&gt;lookup&lt;/code&gt; method of &lt;code&gt;ActorSystem&lt;/code&gt; is called for the first time. You don’t normally call it yourself, but this lookup is done by akka. Another thing is the default &lt;code&gt;Dispatcher&lt;/code&gt; is already created upon &lt;code&gt;ActorSystem&lt;/code&gt; initialization, as it calls &lt;code&gt;lookup&lt;/code&gt; for the default internally.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEDAgX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB7Nc0RDF//8QAGRAAAQUAAAAAAAAAAAAAAAAAEAABESEy/9oACAEBAAEFArUBtD//xAAVEQEBAAAAAAAAAAAAAAAAAAABEP/aAAgBAwEBPwEn/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGBAAAgMAAAAAAAAAAAAAAAAAARACMWH/2gAIAQEABj8ConHJ/wD/xAAbEAACAgMBAAAAAAAAAAAAAAABERAxACGBsf/aAAgBAQABPyGpLj0ywAqXY80//9oADAMBAAIAAwAAABCPD//EABURAQEAAAAAAAAAAAAAAAAAABAx/9oACAEDAQE/EIP/xAAWEQADAAAAAAAAAAAAAAAAAAABEDH/2gAIAQIBAT8QNX//xAAbEAEAAgIDAAAAAAAAAAAAAAABABFBYRAhgf/aAAgBAQABPxBQdJWBVeG4gKlXZhAoom161z//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;dispatcher-actor&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-e8976.jpg 148w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-63df2.jpg 295w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg 590w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt; is NOT part of &lt;code&gt;Actor&lt;/code&gt;. One &lt;code&gt;Dispatcher&lt;/code&gt; can send messages to multiple &lt;code&gt;Actor&lt;/code&gt;s. (NOTE: &lt;code&gt;Dispatcher&lt;/code&gt; doesn’t have routing capabilities. Routing is done by akka &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/routing.html#routing&quot;&gt;&lt;code&gt;Router&lt;/code&gt;&lt;/a&gt;)&lt;/p&gt;
+&lt;h2&gt;Dispatcher and ExecutorService&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHdUwC5Iv8A/8QAGhAAAgIDAAAAAAAAAAAAAAAAAQIAEAMRMf/aAAgBAQABBQIzHs03Fr//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAYEAACAwAAAAAAAAAAAAAAAAAAAREgIv/aAAgBAQAGPwI0or//xAAbEAEAAgIDAAAAAAAAAAAAAAABABARIUFx4f/aAAgBAQABPyFgZYjdjv2jmOVf/9oADAMBAAIAAwAAABDvD//EABYRAAMAAAAAAAAAAAAAAAAAABARIf/aAAgBAwEBPxCsf//EABYRAAMAAAAAAAAAAAAAAAAAABARIf/aAAgBAgEBPxCsf//EABwQAQEAAgIDAAAAAAAAAAAAAAERABAhQVFxsf/aAAgBAQABPxC2E6IzF1gkDo+lohpecIMnj5r/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;dispatcher-executor-service&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-e8976.jpg 148w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-63df2.jpg 295w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg 590w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt; has &lt;code&gt;ExecutorService&lt;/code&gt;. &lt;code&gt;ExecutorService&lt;/code&gt; is like a pool of threads where you can execute code (&lt;code&gt;Runnable&lt;/code&gt;) concurrently. See &lt;a href=&quot;../executor-and-execution-context&quot;&gt;Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala&lt;/a&gt; for illustration and more details.&lt;/p&gt;
+&lt;p&gt;Here is &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L47&quot;&gt;&lt;code&gt;executorService&lt;/code&gt; method&lt;/a&gt; of &lt;code&gt;Dispatcher&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;def executorService: ExecutorServiceDelegate = ...&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The pool of threads from &lt;code&gt;ExecutorService&lt;/code&gt; is what invokes &lt;code&gt;Actor&lt;/code&gt;’s &lt;code&gt;receive&lt;/code&gt; method, which will be explained later in this article.&lt;/p&gt;
+&lt;h2&gt;Dispatcher and sender-side behavior&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIBBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB20sBAon/xAAZEAACAwEAAAAAAAAAAAAAAAABEQACEiD/2gAIAQEAAQUCRddHhCf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAZEAACAwEAAAAAAAAAAAAAAAAAAREgIjH/2gAIAQEABj8CZpRTh//EAB0QAAECBwAAAAAAAAAAAAAAAAABIRARMUFR0eH/2gAIAQEAAT8hRzdLG9uk0zF6g//aAAwDAQACAAMAAAAQgP8A/8QAFhEBAQEAAAAAAAAAAAAAAAAAACEB/9oACAEDAQE/EMiv/8QAFREBAQAAAAAAAAAAAAAAAAAAACH/2gAIAQIBAT8QR//EABwQAQACAgMBAAAAAAAAAAAAAAERIQAxEEFhkf/aAAgBAQABPxC6WWZvmsL2RehfxZHUKrfK6VFZWM//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;actor-cell-reference&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-e8976.jpg 148w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-63df2.jpg 295w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg 590w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Part of below is reharsing what was already discussed in &lt;a href=&quot;../local-minimal-sender&quot;&gt;Local Actor workflow part 1 - Sender side&lt;/a&gt;, but here more from the &lt;code&gt;Dispatcher&lt;/code&gt; perspective. &lt;/p&gt;
+&lt;p&gt;(For remoting, there are several more steps to go through but it is combination of local message-passing and network via Netty, as discussed in &lt;a href=&quot;../remote-minimal-sender&quot;&gt;remoting articles&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;LocalActorRef&lt;/code&gt; is coupled with &lt;code&gt;ActorCell&lt;/code&gt;, which is hidden from users as private and it is implementation details of how akka messaging works. As you see below, &lt;code&gt;ActorCell&lt;/code&gt; has a reference to &lt;code&gt;Dispatcher&lt;/code&gt; &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorRef.scala#L319&quot;&gt;as follows&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; LocalActorRef&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; ActorRefWithCell 
+ &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; LocalRef  &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; actorCell&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorCell &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;So when you do &lt;code&gt;actorRef ! &quot;hello&quot;&lt;/code&gt;, that &lt;code&gt;actorRef&lt;/code&gt; (in type of &lt;code&gt;LocalActorRef&lt;/code&gt;) already knows what &lt;code&gt;Dispatcher&lt;/code&gt; to use via &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L370&quot;&gt;&lt;code&gt;ActorCell&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ActorCell&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; dungeon&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Dispatch &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;    
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Also &lt;code&gt;ActorCell&lt;/code&gt; extends &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/dungeon/Dispatch.scala#L27&quot;&gt;&lt;code&gt;Dispatch&lt;/code&gt; trait&lt;/a&gt; and it has a refence to &lt;code&gt;Mailbox&lt;/code&gt;, so &lt;code&gt;LocalActorRef&lt;/code&gt; also knows which &lt;code&gt;Mailbox&lt;/code&gt; to send the massage, via &lt;code&gt;ActorCell&lt;/code&gt;. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; Dispatch &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorCell ⇒
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; mailbox&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Mailbox &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;This couping of &lt;code&gt;LocalActorRef&lt;/code&gt;, &lt;code&gt;ActorCell&lt;/code&gt;, and &lt;code&gt;Mailbox&lt;/code&gt; is what I meant by &lt;code&gt;Dispatcher&lt;/code&gt; doesn’t have routing capabilities in a “NOTE” earlier.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB2o2EIQn/xAAZEAACAwEAAAAAAAAAAAAAAAABEQACEhD/2gAIAQEAAQUCDddGMdyJ/8QAFREBAQAAAAAAAAAAAAAAAAAAACH/2gAIAQMBAT8BV//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABkQAAIDAQAAAAAAAAAAAAAAAAABESAiMf/aAAgBAQAGPwJmlFOH/8QAGhAAAgIDAAAAAAAAAAAAAAAAAREAQRDB8P/aAAgBAQABPyFzWqc7XcFBGQOk/9oADAMBAAIAAwAAABATL//EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oACAEDAQE/EEP/xAAVEQEBAAAAAAAAAAAAAAAAAAAAIf/aAAgBAgEBPxBH/8QAHBABAAICAwEAAAAAAAAAAAAAARExACEQUZFx/9oACAEBAAE/EAsXOak1XzDO6TQ34sQbQdPCSI04FB5Z/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;sender&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-e8976.jpg 148w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-63df2.jpg 295w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg 590w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt;’s &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L52L56&quot;&gt;dispatch&lt;/a&gt; method is as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; dispatch&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  receiver&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorCell&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  invocation&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Envelope
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; mbox &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; receiver&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mailbox
+  mbox&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;enqueue&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;receiver&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; invocation&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  registerForExecution&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mbox&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;where &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L115&quot;&gt;registerForExecution&lt;/a&gt; is:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; registerForExecution&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mbox&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Mailbox&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  executorService execute mbox
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;In the above code, &lt;code&gt;Dispatcher&lt;/code&gt;’s &lt;code&gt;excutorService&lt;/code&gt; is executing &lt;code&gt;mbox: Mailbox&lt;/code&gt;, because &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57&quot;&gt;&lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt; is defined as &lt;code&gt;ForkJoinTask&lt;/code&gt;, which can be &lt;code&gt;execute&lt;/code&gt;-d by &lt;code&gt;ExecutorService&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe3u0A//xAAXEAEAAwAAAAAAAAAAAAAAAAABESAh/9oACAEBAAEFAjWK/wD/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAYEAEBAQEBAAAAAAAAAAAAAAARARAAMf/aAAgBAQABPyGnYSecMIpHf//aAAwDAQACAAMAAAAQwA//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAcEAEAAgEFAAAAAAAAAAAAAAABEBEhAEFRYZH/2gAIAQEAAT8QUKbhh11vrAdAcqzP/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;fork-join-1&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-e8976.jpg 148w,
+/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-63df2.jpg 295w,
+/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-f8fb9.jpg 590w,
+/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIBAwX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAHZW4GJD//EABgQAAMBAQAAAAAAAAAAAAAAAAABEAMS/9oACAEBAAEFAjPpxin/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAYEAACAwAAAAAAAAAAAAAAAAAAEQEgIv/aAAgBAQAGPwKWzVf/xAAbEAABBAMAAAAAAAAAAAAAAAABEBEhMQCB4f/aAAgBAQABPyEEvUeMYmY31Kr/AP/aAAwDAQACAAMAAAAQYw//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAEBAQACAwAAAAAAAAAAAAABESEAEFGBsf/aAAgBAQABPxCkQ2vEz5xoByQjT0utm+eEBhOv/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;fork-join-2&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-e8976.jpg 148w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-63df2.jpg 295w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg 590w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Mailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; messageQueue&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; MessageQueue&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; ForkJoinTask&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; 
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; SystemMessageQueue 
+  &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; Runnable &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Execution (i.e. processing) of &lt;code&gt;Mailbox&lt;/code&gt; is run on a different &lt;code&gt;Thread&lt;/code&gt;, which was covered in &lt;a href=&quot;../local-minimal-receiver&quot;&gt;Local Actor workflow part 2 - Receiver side&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Dispatcher and receiver-side behavior&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAIF/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB2bAsL//EABkQAAMAAwAAAAAAAAAAAAAAAAECEAAhMf/aAAgBAQABBQIHNRuLP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABcQAAMBAAAAAAAAAAAAAAAAAAERIDH/2gAIAQEABj8CLyv/xAAZEAEAAwEBAAAAAAAAAAAAAAABABEhEKH/2gAIAQEAAT8hQddZcFOPsuEdQhfP/9oADAMBAAIAAwAAABDsz//EABcRAQADAAAAAAAAAAAAAAAAAAEQEWH/2gAIAQMBAT8QLHI//8QAFhEBAQEAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/EFdn/8QAHRABAAMAAQUAAAAAAAAAAAAAAQARITEQUWFxsf/aAAgBAQABPxBDRXYJnHqbws8oBMbhEFlzAAcfOn//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;fork-join-3&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-e8976.jpg 148w,
+/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-63df2.jpg 295w,
+/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-f8fb9.jpg 590w,
+/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;When &lt;code&gt;run&lt;/code&gt; method of &lt;code&gt;ForkJoinTask&lt;/code&gt; is executed, the &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L250&quot;&gt;following method of &lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt; is called, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@tailrec&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; processMailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// def dequeue(): Envelope = messageQueue.dequeue()&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; next &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dequeue&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  actor invoke next
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+  processMailbox&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;it picks up a message from the message queue, and process it.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBP/EABUBAQEAAAAAAAAAAAAAAAAAAAME/9oADAMBAAIQAxAAAAHe70TFYyhf/8QAGRABAQADAQAAAAAAAAAAAAAAAQIAETEh/9oACAEBAAEFAmr2NuHHsnmf/8QAGBEAAgMAAAAAAAAAAAAAAAAAAQMQETH/2gAIAQMBAT8BC60x/8QAGREAAgMBAAAAAAAAAAAAAAAAAAIBESED/9oACAECAQE/AU7M2QRdaf/EABcQAAMBAAAAAAAAAAAAAAAAAAABMSD/2gAIAQEABj8CpXn/xAAZEAEAAwEBAAAAAAAAAAAAAAABABEhMUH/2gAIAQEAAT8htbVeTUMI7jnBRkAOT//aAAwDAQACAAMAAAAQuA//xAAXEQEAAwAAAAAAAAAAAAAAAAABEBGR/9oACAEDAQE/EHVprH//xAAZEQEAAgMAAAAAAAAAAAAAAAABABEhQWH/2gAIAQIBAT8QTRL7MTaf/8QAHBABAQACAgMAAAAAAAAAAAAAAREAITFBUZHw/9oACAEBAAE/EBKQsgxWF0I7+36yexPI5oJwrcSnYveGwQz/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;receiver&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-e8976.jpg 148w,
+/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-63df2.jpg 295w,
+/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-f8fb9.jpg 590w,
+/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;So this &lt;code&gt;processMailbox&lt;/code&gt; method, called from &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; is what invokes your &lt;code&gt;receive&lt;/code&gt; method you defined in your &lt;code&gt;Actor&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;class MyActor extends Actor {
+  def receive = {
+    ...  
+  }  
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;</content:encoded></item><item><title><![CDATA[Akka remoting minimal example part 3 - receiver side]]></title><description><![CDATA[Overview You can find the code and instruction to run the example at  GitHub . This is the last of three articles about akka’s remote…]]></description><link>https://richardimaoka.github.io/blog//remote-minimal-receiver/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//remote-minimal-receiver/</guid><pubDate>Fri, 09 Feb 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;You can find the code and instruction to run the example at &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/remote-minimal&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div&gt;
           &lt;div
