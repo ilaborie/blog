@@ -19,13 +19,23 @@ If you look up the meaning of the word "dispatch" in a dictionary, you would fin
 
 Firstly, `Dispatcher` is configured for `ActorSystem`, typically in `application.conf`. There is at least default one, and you can [also configure multiple `Dispatcher`s](https://doc.akka.io/docs/akka/current/dispatchers.html#dispatchers).
 
-```
+```scala
 val system = ActorSystem("exampleSystem")
 system.dispatchers.lookup("my-dispatcher")
 ```
 
-As a rule of thumb, the `Dispatcher` instance for the given name is created when the `lookup` method of `ActorSystem` is called for the first time. You don't normally call it yourself, but this lookup is done by akka. Another thing is the default `Dispatcher` is already created upon `ActorSystem` initialization, as it calls `lookup` for the default internally.
+As a rule of thumb, the `Dispatcher` instance for the given name is created when the [`lookup` method of `ActorSystem`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatchers.scala#L79) is called for the first time. You don't normally call it yourself, but this lookup is done by akka. Another thing is the default `Dispatcher` is already created upon `ActorSystem` initialization, as it calls `lookup` for the default internally.
 
+```scala
+/**
+* Returns a dispatcher as specified in configuration. Please note that this
+* method _may_ create and return a NEW dispatcher, _every_ call.
+*
+* Throws ConfigurationException if the specified dispatcher cannot be found in the configuration.
+*/
+def lookup(id: String): MessageDispatcher = lookupConfigurator(id).dispatcher()
+
+```  
 ![dispatcher-actor](./dispatcher-actor.jpg)
 
 `Dispatcher` is NOT part of `Actor`. One `Dispatcher` can send messages to multiple `Actor`s. (NOTE: `Dispatcher` doesn't have routing capabilities. Routing is done by akka [`Router`](https://doc.akka.io/docs/akka/2.5/routing.html#routing))
@@ -38,7 +48,7 @@ As a rule of thumb, the `Dispatcher` instance for the given name is created when
 
 Here is [`executorService` method](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L47) of `Dispatcher`.
 
-```
+```scala
 def executorService: ExecutorServiceDelegate = ...
 ```
 
@@ -153,16 +163,10 @@ it picks up a message from the message queue, and process it.
 
 So this `processMailbox` method, called from `ForkJoinTask`'s `run` is what invokes your `receive` method you defined in your `Actor`.
 
-```
+```scala
 class MyActor extends Actor {
   def receive = {
     ...  
   }  
 }
-
 ```
-
-
-
-
-
