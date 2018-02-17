@@ -74,7 +74,7 @@ class LocalActorRef(...)
 }
 ```
 
-[As you see below](), `ActorCell` has a reference to `Dispatcher`.
+[As you see below](), `ActorCell` has a reference to `Dispatcher` (`val dispatcher:  MessageDispatcher`).
 
 ```scala
 class ActorCell(
@@ -88,7 +88,7 @@ class ActorCell(
   }
 ```
 
-So when you do `actorRef ! "hello"`, that `actorRef` (in type of `LocalActorRef`) already knows what `Dispatcher` to use via [`ActorCell`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L370).
+So when you do `actorRef ! "hello"`, that `actorRef` (whose type is `LocalActorRef`) already knows what `Dispatcher` to use via [`ActorCell`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L370).
 
 
 Also `ActorCell` extends [`Dispatch` trait](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/dungeon/Dispatch.scala#L27) and it has a refence to `Mailbox`, so `LocalActorRef` also knows which `Mailbox` to send the massage, via `ActorCell`. 
