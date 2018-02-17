@@ -62,11 +62,11 @@ Part of below is reharsing what was already discussed in [Local Actor workflow p
 
 (For remoting, there are several more steps to go through but it is combination of local message-passing and network via Netty, as discussed in [remoting articles](../remote-minimal-sender))
 
-`LocalActorRef` is coupled with `ActorCell`, which is hidden from users as private and it is implementation details of how akka messaging works. As you see below, `ActorCell` has a reference to `Dispatcher` [as follows](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorRef.scala#L319).
+`LocalActorRef` is [coupled with `ActorCell`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorRef.scala#L319), which is hidden from users as private and it is implementation details of how akka messaging works.
 
 ```scala
 class LocalActorRef(...)
- extends ActorRefWithCell 
+ extends ActorRefWithCell
  with LocalRef  {
   ...
   val actorCell: ActorCell = ...
@@ -74,15 +74,22 @@ class LocalActorRef(...)
 }
 ```
 
-So when you do `actorRef ! "hello"`, that `actorRef` (in type of `LocalActorRef`) already knows what `Dispatcher` to use via [`ActorCell`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L370).
+[As you see below](), `ActorCell` has a reference to `Dispatcher`.
 
 ```scala
-class ActorCell(...)
+class ActorCell(
+  ...
+  val dispatcher:  MessageDispatcher,
+  ...
+  ) extends ...
   ...
   with dungeon.Dispatch {
-    ...    
+    ...
   }
 ```
+
+So when you do `actorRef ! "hello"`, that `actorRef` (in type of `LocalActorRef`) already knows what `Dispatcher` to use via [`ActorCell`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/ActorCell.scala#L370).
+
 
 Also `ActorCell` extends [`Dispatch` trait](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/actor/dungeon/Dispatch.scala#L27) and it has a refence to `Mailbox`, so `LocalActorRef` also knows which `Mailbox` to send the massage, via `ActorCell`. 
 
