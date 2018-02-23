@@ -253,6 +253,6 @@ Once everything is done, press the enter key on the receiver side's console and 
 
 ## References 
 
-- Official documentation at https://doc.akka.io/docs/akka/2.5/remoting.html
+- Official documentation of Akka remoting at https://doc.akka.io/docs/akka/2.5/remoting.html
 - Official documentation of Akka serialization at https://doc.akka.io/docs/akka/2.5/serialization.html
 - Netty documentation at https://netty.io/

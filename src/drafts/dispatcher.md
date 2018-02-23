@@ -67,5 +67,18 @@ Config backing mechanism
     throughput = 100
     }
 
-Define your own executor 
+Configuration when you ...
+    - have existing Executor/ExecutionContext 
+      - pass into ActorSystem, check how if it is used ... how???
+    - want different dispatcher for different actors?
+        akka.actor.deployment {
+            /myactor {
+                dispatcher = my-dispatcher
+            }
+        }
+        //make sure dedicated dispatcher is used ... how??
+        //explain it is on the receiver side (print thread name in receive?)
+        otherwise, withDispatcher
+        
+Define your own executor
 Define your own dispatcher (another post?) 
