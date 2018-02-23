@@ -18,7 +18,7 @@ what's discussed in [the local actor article(s)](http://localhost:8000/local-min
 
 Following the instruction at the bottom of this article, you will get output as follows [(also in GoogleSpreadsheet)](https://drive.google.com/open?id=194-t1rYNQU2mprybSC9RibJ7HopCAdPqJX94XlIKxXk) . 
 
-**SO MANY things in the table!!, but no worries!**
+**SO MANY things in the table!! but no worries!**
 
 We will go through each important piece, one after another.
 
@@ -72,7 +72,7 @@ def dispatch(
 }
 ```
 
-then `registerForExecution` schedules a `ForkJoinTask` to be run on a different thread, as `mbox` is an instance of `Mailbox`, and [`Mailbox`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57) exntends [`ForkJoinTask`] (https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html) 
+then `registerForExecution` schedules a `mbox` to be executed on a different thread. `mbox` is actually an instance of [`Mailbox`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57), and since `Mailbox` extends [`ForkJoinTask`] (https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html) , `registerForExecution` is executing the `ForkJoinTask` on a different thread. exntends 
 
 ```scala
 abstract class Mailbox(val messageQueue: MessageQueue)
