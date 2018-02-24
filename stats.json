@@ -45,12 +45,16 @@
       "component---src-layouts-index-js-b2ab61a71e37ce0bc963.js.map"
     ],
     "path---index": [
-      "path---index-fd9cc568f6ddb7619f70.js",
-      "path---index-fd9cc568f6ddb7619f70.js.map"
+      "path---index-f52c15bfd5ab45f4fd3e.js",
+      "path---index-f52c15bfd5ab45f4fd3e.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-3de8e4b4e2a844510d28.js",
       "path---serializer-minimal-3de8e4b4e2a844510d28.js.map"
+    ],
+    "path---mailbox-and-fork-join-task": [
+      "path---mailbox-and-fork-join-task-094cf273eb56c5754097.js",
+      "path---mailbox-and-fork-join-task-094cf273eb56c5754097.js.map"
     ],
     "commons": [
       "commons-85d973a0b17b2f0d3c45.js",
@@ -71,9 +75,9 @@
       "path---event-adapter-cassandra-ce29992effec9b634a06.js.map"
     ],
     "app": [
-      "app-c1fa08aecf424ea2f60b.js",
+      "app-2ab2d11813f9054d897f.js",
       "build-js-styles.css",
-      "app-c1fa08aecf424ea2f60b.js.map",
+      "app-2ab2d11813f9054d897f.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
