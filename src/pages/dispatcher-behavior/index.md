@@ -5,7 +5,7 @@ date: "2018-02-13T01:31:08.000+0900"
 
 ## Overview
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/hnIDDXDD1Io" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/NYWw0DbmUHM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 The concept of Akka [`Dispatcher`](https://doc.akka.io/docs/akka/2.5/dispatchers.html?language=scala) might be unfamiliar to you and it is probably difficult to understand. So I am going to explain how Dispatcher works in detail here.
 
@@ -44,7 +44,7 @@ def lookup(id: String): MessageDispatcher = lookupConfigurator(id).dispatcher()
 
 ![dispatcher-executor-service](./dispatcher-executor-service.jpg)
 
-`Dispatcher` has `ExecutorService`. `ExecutorService` is like a pool of threads where you can execute code (`Runnable`) concurrently. See [Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala](../executor-and-execution-context) for illustration and more details.
+`Dispatcher` has `ExecutorService`, and `ExecutorService` is like a pool of threads where you can execute code (`Runnable`) concurrently. See [Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala](../executor-and-execution-context) for illustration and more details.
 
 Here is [`executorService` method](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L47) of `Dispatcher`.
 
@@ -129,7 +129,7 @@ def registerForExecution(mbox: Mailbox, ...): Boolean = {
 }
 ```
 
-In the above code, `Dispatcher`'s `excutorService` is executing `mbox: Mailbox`, because [`Mailbox`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57) is defined as `ForkJoinTask`, which can be `execute`-d by `ExecutorService`.
+In the above code, `Dispatcher`'s `excutorService` is executing `mbox: Mailbox`, because [`Mailbox`](https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57) extends `ForkJoinTask`, which can be `execute`-d by `ExecutorService`.
 
 ![fork-join-1](./fork-join-1.jpg)
 
