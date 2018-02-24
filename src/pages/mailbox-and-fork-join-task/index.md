@@ -1,7 +1,17 @@
 ---
-title: Mailbox and threads
+title: Mailbox and ForkJoinTask
 date: "2018-02-25T01:31:08.000+0900"
 ---
+
+
+## Update to the article and the video
+
+Thanks to Victor who immediately noticed I had wrong assumption about `ForkJoinTask` behavior in akka, now this article and videos were corrected.
+
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr">Only one FJT should be created.</p>&mdash; ⎷ (@viktorklang) <a href="https://twitter.com/viktorklang/status/967066161899819008?ref_src=twsrc%5Etfw">2018年2月23日</a></blockquote>
+
+
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr">No worries! Actually, many years ago it did create many FJT (..or rather, Runnables).</p>&mdash; ⎷ (@viktorklang) <a href="https://twitter.com/viktorklang/status/967082002804609024?ref_src=twsrc%5Etfw">2018年2月23日</a></blockquote>
 
 ## Overview
 
@@ -11,16 +21,6 @@ The previous [Dispatcher behavior](../dispatcher-behavior/) article explained ho
 
 The code example is at [GitHub](https://github.com/richardimaoka/resources/tree/master/local-minimal). This is the same example as 
 what's discussed in [the local actor article(s)](http://localhost:8000/local-minimal-sender/).
-
-## Updated to the article
-
-Right after this article was published, Victor pointed out my short video and article were wrong. Big thanks to Victor - now the wrong part was corrected.
-
-<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr">Only one FJT should be created.</p>&mdash; ⎷ (@viktorklang) <a href="https://twitter.com/viktorklang/status/967066161899819008?ref_src=twsrc%5Etfw">2018年2月23日</a></blockquote>
-
-
-<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr">No worries! Actually, many years ago it did create many FJT (..or rather, Runnables).</p>&mdash; ⎷ (@viktorklang) <a href="https://twitter.com/viktorklang/status/967082002804609024?ref_src=twsrc%5Etfw">2018年2月23日</a></blockquote>
-
 
 ## Thread-processing details in Akka
 
@@ -34,9 +34,9 @@ Following the instruction at the bottom of this article, you will get output as 
 
 You might notice that I am skipping some parts (some rows in the above table) in the article, but that is just to avoid confusion. Even with this simple example, Akka's internal processing is very complicated. So I am only covering pieces to help you understand important stuff.
 
-## Thread[2]|- sender side
+## Thread[2]- sender side
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/1w2ovhgsUJk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/mPmApp5B8s4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Firstly, let's look at "Thread[2]" from the output table, which is pretty much the sender side. The sender `Actor`'s `Mailbox` was `run()`, 
 
@@ -82,7 +82,7 @@ def dispatch(
 
 ```scala
 abstract class Mailbox(val messageQueue: MessageQueue)
-  extends ForkJoinTask[Unit]|
+  extends ForkJoinTask[Unit]
   with SystemMessageQueue 
   with Runnable {
     ...
@@ -108,9 +108,9 @@ About the general behavior when you `execute` the same `ForkJoinTask` instance i
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Ah I see this is how ForkJoinPool&#39;s execute method behaves differently when different Runnable instances are executed, and when the same Runnable instance is executed multiple times. <a href="https://t.co/OhuHMUyszU">pic.twitter.com/OhuHMUyszU</a></p>&mdash; Richard Imaoka (@richardimaoka) <a href="https://twitter.com/richardimaoka/status/967260911785226245?ref_src=twsrc%5Etfw">2018/2/23</a></blockquote>
 
 
-## Thread[4]|- receiver side
+## Thread[4]- receiver side
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/cMvUlC0Xjn4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/91naDxLuveY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Let's move onto the "Thread[4]", the receiver side behavior. The point here (and for the whole article) is that `processMailbox()` is a **recursive method**.
 
@@ -183,13 +183,13 @@ and insert `println` calls [like this](https://github.com/richardimaoka/akka/com
 now you will see `akka-actor_2.12;2.5-SNAPSHOT` is built and stored under your `.ivy` directory.
 
 ```
-[info]|:: delivering :: com.typesafe.akka#akka-actor_2.12;2.5-SNAPSHOT :: 2.5-SNAPSHOT :: integration :: Thu Feb 22 07:22:33 JST 2018
-[info]| delivering ivy file to Users/username/akka/akka-actor/target/ivy-2.5-SNAPSHOT.xml
-[info]| published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/poms/akka-actor_2.12.pom
-[info]| published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/jars/akka-actor_2.12.jar
-[info]| published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/srcs/akka-actor_2.12-sources.jar
-[info]| published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/docs/akka-actor_2.12-javadoc.jar
-[info]| published ivy to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/ivys/ivy.xml
+[info] :: delivering :: com.typesafe.akka#akka-actor_2.12;2.5-SNAPSHOT :: 2.5-SNAPSHOT :: integration :: Thu Feb 22 07:22:33 JST 2018
+[info] delivering ivy file to Users/username/akka/akka-actor/target/ivy-2.5-SNAPSHOT.xml
+[info]  published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/poms/akka-actor_2.12.pom
+[info]  published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/jars/akka-actor_2.12.jar
+[info]  published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/srcs/akka-actor_2.12-sources.jar
+[info]  published akka-actor_2.12 to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/docs/akka-actor_2.12-javadoc.jar
+[info]  published ivy to Users/username/.ivy2/local/com.typesafe.akka/akka-actor_2.12/2.5-SNAPSHOT/ivys/ivy.xml
 ```
 
 From here you move to the [local actor example code](https://github.com/richardimaoka/resources/tree/master/local-minimal). 
