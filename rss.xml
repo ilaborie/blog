@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 23 Feb 2018 16:01:21 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 24 Feb 2018 05:51:01 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
           &gt;
-            &lt;iframe src=&quot;https://www.youtube.com/embed/hnIDDXDD1Io&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/NYWw0DbmUHM&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen style=&quot;
             position: absolute;
             top: 0;
             left: 0;
@@ -138,7 +138,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
   
   &lt;/a&gt;
     &lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt; has &lt;code&gt;ExecutorService&lt;/code&gt;. &lt;code&gt;ExecutorService&lt;/code&gt; is like a pool of threads where you can execute code (&lt;code&gt;Runnable&lt;/code&gt;) concurrently. See &lt;a href=&quot;../executor-and-execution-context&quot;&gt;Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala&lt;/a&gt; for illustration and more details.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt; has &lt;code&gt;ExecutorService&lt;/code&gt;, and &lt;code&gt;ExecutorService&lt;/code&gt; is like a pool of threads where you can execute code (&lt;code&gt;Runnable&lt;/code&gt;) concurrently. See &lt;a href=&quot;../executor-and-execution-context&quot;&gt;Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala&lt;/a&gt; for illustration and more details.&lt;/p&gt;
 &lt;p&gt;Here is &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Dispatcher.scala#L47&quot;&gt;&lt;code&gt;executorService&lt;/code&gt; method&lt;/a&gt; of &lt;code&gt;Dispatcher&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
       &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; executorService&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ExecutorServiceDelegate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
@@ -272,11 +272,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;In the above code, &lt;code&gt;Dispatcher&lt;/code&gt;’s &lt;code&gt;excutorService&lt;/code&gt; is executing &lt;code&gt;mbox: Mailbox&lt;/code&gt;, because &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57&quot;&gt;&lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt; is defined as &lt;code&gt;ForkJoinTask&lt;/code&gt;, which can be &lt;code&gt;execute&lt;/code&gt;-d by &lt;code&gt;ExecutorService&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In the above code, &lt;code&gt;Dispatcher&lt;/code&gt;’s &lt;code&gt;excutorService&lt;/code&gt; is executing &lt;code&gt;mbox: Mailbox&lt;/code&gt;, because &lt;a href=&quot;https://github.com/akka/akka/blob/v2.5.9/akka-actor/src/main/scala/akka/dispatch/Mailbox.scala#L56L57&quot;&gt;&lt;code&gt;Mailbox&lt;/code&gt;&lt;/a&gt; extends &lt;code&gt;ForkJoinTask&lt;/code&gt;, which can be &lt;code&gt;execute&lt;/code&gt;-d by &lt;code&gt;ExecutorService&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -288,18 +288,18 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
   &gt;
     &lt;span
       class=&quot;gatsby-resp-image-background-image&quot;
-      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe3u0A//xAAXEAEAAwAAAAAAAAAAAAAAAAABESAh/9oACAEBAAEFAjWK/wD/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAYEAEBAQEBAAAAAAAAAAAAAAARARAAMf/aAAgBAQABPyGnYSecMIpHf//aAAwDAQACAAMAAAAQwA//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAcEAEAAgEFAAAAAAAAAAAAAAABEBEhAEFRYZH/2gAIAQEAAT8QUKbhh11vrAdAcqzP/9k=&apos;); background-size: cover; display: block;&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIDBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAdqyQA//xAAXEAEAAwAAAAAAAAAAAAAAAAABESAh/9oACAEBAAEFAtWK/wD/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAWEAADAAAAAAAAAAAAAAAAAAABIFH/2gAIAQEABj8Cgb//xAAYEAADAQEAAAAAAAAAAAAAAAABETEAIP/aAAgBAQABPyEN0Eyc/wD/2gAMAwEAAgADAAAAEMAP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAGhABAAEFAAAAAAAAAAAAAAAAAQARIEFhkf/aAAgBAQABPxAPOAJRZretv//Z&apos;); background-size: cover; display: block;&quot;
     &gt;
       &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-1&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-e8976.jpg 148w,
-/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-63df2.jpg 295w,
-/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-f8fb9.jpg 590w,
-/blog/static/fork-join-1-4e5b8282e2b15dfd37966268ebb6b7c4-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-e8976.jpg 148w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-63df2.jpg 295w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg 590w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -355,7 +355,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -367,18 +367,18 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
   &gt;
     &lt;span
       class=&quot;gatsby-resp-image-background-image&quot;
-      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAIF/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB2bAsL//EABkQAAMAAwAAAAAAAAAAAAAAAAECEAAhMf/aAAgBAQABBQIHNRuLP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABcQAAMBAAAAAAAAAAAAAAAAAAERIDH/2gAIAQEABj8CLyv/xAAZEAEAAwEBAAAAAAAAAAAAAAABABEhEKH/2gAIAQEAAT8hQddZcFOPsuEdQhfP/9oADAMBAAIAAwAAABDsz//EABcRAQADAAAAAAAAAAAAAAAAAAEQEWH/2gAIAQMBAT8QLHI//8QAFhEBAQEAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/EFdn/8QAHRABAAMAAQUAAAAAAAAAAAAAAQARITEQUWFxsf/aAAgBAQABPxBDRXYJnHqbws8oBMbhEFlzAAcfOn//2Q==&apos;); background-size: cover; display: block;&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECAwX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAHYV6JDD//EABoQAAICAwAAAAAAAAAAAAAAAAEQAAIREiH/2gAIAQEAAQUC7mmxRgX/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAZEAACAwEAAAAAAAAAAAAAAAABEQAgIjH/2gAIAQEABj8CPVNMV//EABoQAAICAwAAAAAAAAAAAAAAAAEQITEAEXH/2gAIAQEAAT8huEyQM1TyKjf/2gAMAwEAAgADAAAAEFMP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAHBABAQACAgMAAAAAAAAAAAAAAREAIRAxUYGx/9oACAEBAAE/ELEOxDfXzDJKSBNnpeHAnnGtXj//2Q==&apos;); background-size: cover; display: block;&quot;
     &gt;
       &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-3&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-e8976.jpg 148w,
-/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-63df2.jpg 295w,
-/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-f8fb9.jpg 590w,
-/blog/static/fork-join-3-e78ec075a9caacb3f945ea642077c3f3-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-e8976.jpg 148w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-63df2.jpg 295w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg 590w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -403,7 +403,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-db559.jpg&quot;
+    href=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -415,18 +415,18 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
   &gt;
     &lt;span
       class=&quot;gatsby-resp-image-background-image&quot;
-      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBP/EABUBAQEAAAAAAAAAAAAAAAAAAAME/9oADAMBAAIQAxAAAAHe70TFYyhf/8QAGRABAQADAQAAAAAAAAAAAAAAAQIAETEh/9oACAEBAAEFAmr2NuHHsnmf/8QAGBEAAgMAAAAAAAAAAAAAAAAAAQMQETH/2gAIAQMBAT8BC60x/8QAGREAAgMBAAAAAAAAAAAAAAAAAAIBESED/9oACAECAQE/AU7M2QRdaf/EABcQAAMBAAAAAAAAAAAAAAAAAAABMSD/2gAIAQEABj8CpXn/xAAZEAEAAwEBAAAAAAAAAAAAAAABABEhMUH/2gAIAQEAAT8htbVeTUMI7jnBRkAOT//aAAwDAQACAAMAAAAQuA//xAAXEQEAAwAAAAAAAAAAAAAAAAABEBGR/9oACAEDAQE/EHVprH//xAAZEQEAAgMAAAAAAAAAAAAAAAABABEhQWH/2gAIAQIBAT8QTRL7MTaf/8QAHBABAQACAgMAAAAAAAAAAAAAAREAITFBUZHw/9oACAEBAAE/EBKQsgxWF0I7+36yexPI5oJwrcSnYveGwQz/2Q==&apos;); background-size: cover; display: block;&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBP/EABUBAQEAAAAAAAAAAAAAAAAAAAME/9oADAMBAAIQAxAAAAHe70TFYyhf/8QAGhAAAgMBAQAAAAAAAAAAAAAAAQIAETESIf/aAAgBAQABBQK36t4MOqPJ/8QAFxEAAwEAAAAAAAAAAAAAAAAAAQMhEP/aAAgBAwEBPwELtOf/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAIAQIBAT8BS5mOCDc7P//EABYQAQEBAAAAAAAAAAAAAAAAADEAIP/aAAgBAQAGPwJnP//EABgQAQEBAQEAAAAAAAAAAAAAAAEAITER/9oACAEBAAE/IV1sIR6yfs5woyAOX//aAAwDAQACAAMAAAAQ+A//xAAXEQEBAQEAAAAAAAAAAAAAAAABERBx/9oACAEDAQE/EHKWdz//xAAZEQACAwEAAAAAAAAAAAAAAAAAAREhQWH/2gAIAQIBAT8QZkqelTR//8QAHBABAAMAAgMAAAAAAAAAAAAAAQARITFRQcHw/9oACAEBAAE/EL5JwoNmO6xtP3qGbSdjMCcK3Ep0X5htCif/2Q==&apos;); background-size: cover; display: block;&quot;
     &gt;
       &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receiver&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-e8976.jpg 148w,
-/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-63df2.jpg 295w,
-/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-f8fb9.jpg 590w,
-/blog/static/receiver-f0223f90103cfd6c6c14d2fd0a087fd8-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-e8976.jpg 148w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-63df2.jpg 295w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg 590w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
