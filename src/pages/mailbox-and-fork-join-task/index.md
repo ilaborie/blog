@@ -19,7 +19,7 @@ Thanks to Victor who immediately noticed I had wrong assumption about `ForkJoinT
 
 The previous [Dispatcher behavior](../dispatcher-behavior/) article explained how `Dispatcher` and threads are related to each other. In this article, we will go one step further in this regard.
 
-The code example is at [GitHub](https://github.com/richardimaoka/resources/tree/master/local-minimal). This is the same example as 
+The code example is at [GitHub](https://github.com/richardimaoka/resources/tree/master/local-minimal), which is the same example as 
 what's discussed in [the local actor article(s)](http://localhost:8000/local-minimal-sender/).
 
 ## Thread-processing details in Akka
@@ -38,11 +38,13 @@ You might notice that I am skipping some parts (some rows in the above table) in
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/mPmApp5B8s4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-Firstly, let's look at "Thread[2]" from the output table, which is pretty much the sender side. The sender `Actor`'s `Mailbox` was `run()`, 
+Firstly, let's look at "Thread[2]" from the output table. As far as what's explained this article, Thread[2] is pretty the sender side. 
+
+The sender `Actor`'s `Mailbox` was `run()`, 
 
 ![thread2-a](./thread2-a.png)
 
-which triggered [`MessageSender`](https://github.com/richardimaoka/resources/blob/master/local-minimal/src/main/scala/example/Main.scala#L15L20)'s `preStart()` method:
+triggerring [`MessageSender`](https://github.com/richardimaoka/resources/blob/master/local-minimal/src/main/scala/example/Main.scala#L15L20)'s `preStart()` method:
 
 ```scala
 class MessageSender(messageReceiver: ActorRef) ... {
