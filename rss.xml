@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 24 Feb 2018 06:16:45 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 24 Feb 2018 06:19:28 GMT</lastBuildDate><item><title><![CDATA[Dispatcher behavior]]></title><description><![CDATA[Overview The concept of Akka  Dispatcher  might be unfamiliar to you and it is probably difficult to understand. So I am going to explain…]]></description><link>https://richardimaoka.github.io/blog//dispatcher-behavior/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//dispatcher-behavior/</guid><pubDate>Mon, 12 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
@@ -20,7 +20,7 @@
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -39,11 +39,11 @@
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-config&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-e8976.jpg 148w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-63df2.jpg 295w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg 590w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-e8976.jpg 148w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-63df2.jpg 295w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg 590w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -71,7 +71,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -90,11 +90,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-actor&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-e8976.jpg 148w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-63df2.jpg 295w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg 590w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-e8976.jpg 148w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-63df2.jpg 295w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg 590w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -107,7 +107,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -126,11 +126,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-executor-service&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-e8976.jpg 148w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-63df2.jpg 295w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg 590w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-e8976.jpg 148w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-63df2.jpg 295w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg 590w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -149,7 +149,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg&quot;
+    href=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -168,11 +168,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;actor-cell-reference&quot;
         title=&quot;&quot;
-        src=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg&quot;
-        srcset=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-e8976.jpg 148w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-63df2.jpg 295w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg 590w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg 640w&quot;
+        src=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-e8976.jpg 148w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-63df2.jpg 295w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg 590w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -220,7 +220,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg&quot;
+    href=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -239,11 +239,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sender&quot;
         title=&quot;&quot;
-        src=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg&quot;
-        srcset=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-e8976.jpg 148w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-63df2.jpg 295w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg 590w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg 640w&quot;
+        src=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-e8976.jpg 148w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-63df2.jpg 295w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg 590w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -276,7 +276,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -295,11 +295,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-1&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-e8976.jpg 148w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-63df2.jpg 295w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg 590w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-e8976.jpg 148w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-63df2.jpg 295w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg 590w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -310,7 +310,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -329,11 +329,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-2&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-e8976.jpg 148w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-63df2.jpg 295w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg 590w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-e8976.jpg 148w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-63df2.jpg 295w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg 590w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -355,7 +355,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -374,11 +374,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-3&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-e8976.jpg 148w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-63df2.jpg 295w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg 590w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-e8976.jpg 148w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-63df2.jpg 295w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg 590w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -403,7 +403,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg&quot;
+    href=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -422,11 +422,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receiver&quot;
         title=&quot;&quot;
-        src=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg&quot;
-        srcset=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-e8976.jpg 148w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-63df2.jpg 295w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg 590w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-e8976.jpg 148w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-63df2.jpg 295w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg 590w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
