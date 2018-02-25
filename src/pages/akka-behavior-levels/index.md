@@ -7,7 +7,7 @@ date: "2018-02-26T12:31:08.000+0900"
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/hHNmGxf7Mwc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-As we went through Akka internal behavior in previous articles, let's review the behavior from a high/conceptual level to a low/detailed level where you see an Akka application as a huge `ForkJoinTask` application (although it doesn't use fork-join mechanism).
+As we went through the Akka internal behavior in previous articles, let's review it from a high/conceptual level to a low/internal level where you see an Akka application as a huge `ForkJoinTask` application (although it doesn't use fork-join mechanism).
 
 Previous articles related to this post are here:
 
@@ -20,7 +20,7 @@ Previous articles related to this post are here:
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/x5GEmjyJD2U" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-If you ever heard of Akka or an actor model in general, you might know that actors, which consist of your entire application, communicate to each other by passing messages.
+If you ever heard of Akka, or an actor model in general, you might know that actors, which are minimal components consisting of your entire application, communicate to each other by passing messages.
 
 This is usually what people would mention when they try to explain the actor model to those who never heard of it.
 
@@ -28,10 +28,10 @@ This is usually what people would mention when they try to explain the actor mod
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/FNlqhNrKsLQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-The next level touches something specific about Akka. If you have experience programming an application using Akka, you would know that Akka provides:
+The next level touches something specific to Akka. If you have experience programming an application using Akka, you would know that Akka provides:
 
 - The `!` method in `ActorRef` to send a message to an `Actor`
-- The `receive` method in `Actor` which you need to implement in your own concrete `Actor` class, and the `receive` method processes incoming messages
+- The `receive` method in `Actor` which you need to implement in your concrete `Actor` class, and the `receive` method processes incoming messages
 
 For those who don't need to interact with Akka day to day, knowing what the `!` and `receive` methods are helps them understand Akka-based applications written by someone else.
 
@@ -63,26 +63,30 @@ That is illustrated in the above short video, and also discussed in these two ot
 - [Dispatcher behavior](../dispatcher-behavior/)
 - [Mailbox and ForkJoinTask](../mailbox-and-fork-join-task/)
 
-`Dispatcher`'s associated `ExecutorService` schedules a `ForkJointTask` to be run on in a pool of threads, and that `ForkJoinTask` is actually an Akka (internal) `Mailbox` as `Mailbox extends ForkJointTask`. `Mailbox`'s `run` method eventually invokes the `receive` method of your `Actor`.
+`Dispatcher`'s associated `ExecutorService` schedules a `ForkJointTask` to be run on in a pool of threads, and that `ForkJoinTask` is actually an Akka (internal) `Mailbox` as `Mailbox extends ForkJointTask`.
 
-## The lowest level: Akka application as huge fork-join application
+`Mailbox`'s `run` method eventually invokes the `receive` method of your `Actor`.
+
+## The lowest level: Akka application as huge ForkJoinTask application
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/572YLMHWeT4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-Up to this point, you have seen that actual execution of `Actor` code (the `receive` method) is done by calling the `run` method of `ForkJoinTask`. Taking a step further, looking at this from the `Executor`/`ExecutorService` point of view:
+Taking a step further, looking at this from the `Executor`/`ExecutorService` point of view:
 
 - [Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala](../executor-and-execution-context/)
 
-You can see your Akka application as a huge fork-join application, where you excecute your domain/business logic from `ForkJoinTask`'s `run` method. One caveat is that although it is `ForkJoinTask`, Akka does not use fork-join mechanism to execute the `Actor` internal code. (i.e.) Akka doesn't use `fork`, `join` or `invoke(All)` methods from `ForkJoinTask` but use the simple `run` method, in an event style which is described in the middle of `ForkJoinTask`'s [javadoc](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html).
+you can see your Akka application as a huge `ForkJoinTask` application, where you excecute your domain/business logic from `ForkJoinTask`'s `run` method. 
 
-`ForkJoinPool` is the default `ExecutorService` for the default `Dispatcher`. The reason why `ForkJoinPool` was chosen as default was its performance considering Akka's use cases. More detail about it can be found in previous Akka's official blog, LET IT CRASH - [Scalability of Fork Join Pool](http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool).
+One caveat is that although it is `ForkJoinTask`, Akka does not use fork-join mechanism to execute the `Actor` internal code. (i.e.) Akka doesn't use `fork`, `join` or `invokeAll` methods from `ForkJoinTask` but uses the simple `run` method, in an event style which is described in the middle of `ForkJoinTask`'s [javadoc](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html).
 
-From here, you can even go deeper, outside of/below Akka, like how Java's `ForkJoinTask` and `ForkJoinPool` work or even how OS schedules tasks on multiple threads. Those are out of scope of this article, but if you are interested, please go ahead (hopefully I might cover them at some point later).
+`ForkJoinPool` is the default `ExecutorService` for the default `Dispatcher`. The reason why `ForkJoinPool` was chosen as default was its performance considering Akka's use cases. More detail about the reason can be found in previous Akka's official blog, LET IT CRASH - [Scalability of Fork Join Pool](http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool).
+
+From here, you can even go deeper, outside of/below Akka, like how Java's `ForkJoinTask` and `ForkJoinPool` work or even how OS schedules tasks on multiple threads. Those are out of scope of this article, but if you are interested, please go ahead! (hopefully I might cover them at some point later).
 
 ## References 
 
 Javadoc of `java.util.concurrent.ForkJoinTask` at -  https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html
 - Official documentation of Akka Mailbox at https://doc.akka.io/docs/akka/current/mailboxes.html
 - Official documentation of Akka Dispatcher at https://doc.akka.io/docs/akka/2.5/dispatchers.html
-A LET IT CRASH blog post explaining efficiency of `ForkJoinPool` - [Scalability of Fork Join Pool](http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool)
-A discussion with Doug Lea, linked from the above LET IT CRASH blog article, who lead the design and implementation of Java's `ForkJoinPool` - (http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html)
+- A LET IT CRASH blog post explaining efficiency of `ForkJoinPool` - [Scalability of Fork Join Pool](http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool)
+- A discussion with Doug Lea, linked from the above LET IT CRASH blog article, who lead the design and implementation of Java's `ForkJoinPool` - http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html
