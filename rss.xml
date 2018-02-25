@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 25 Feb 2018 21:29:09 GMT</lastBuildDate><item><title><![CDATA[Akka behavior in different levels of detail]]></title><description><![CDATA[Overview As we went through Akka internal behavior in previous articles, let’s review the behavior from a high/conceptual level to a low…]]></description><link>https://richardimaoka.github.io/blog//akka-behavior-levels/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-behavior-levels/</guid><pubDate>Mon, 26 Feb 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 25 Feb 2018 21:43:40 GMT</lastBuildDate><item><title><![CDATA[Akka behavior in different levels of detail]]></title><description><![CDATA[Overview As we went through the Akka internal behavior in previous articles, let’s review it from a high/conceptual level to a low/internal…]]></description><link>https://richardimaoka.github.io/blog//akka-behavior-levels/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-behavior-levels/</guid><pubDate>Mon, 26 Feb 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
@@ -13,7 +13,7 @@
           &quot;&gt;&lt;/iframe&gt;
           &lt;/div&gt;
           &lt;/div&gt;
-&lt;p&gt;As we went through Akka internal behavior in previous articles, let’s review the behavior from a high/conceptual level to a low/detailed level where you see an Akka application as a huge &lt;code&gt;ForkJoinTask&lt;/code&gt; application (although it doesn’t use fork-join mechanism).&lt;/p&gt;
+&lt;p&gt;As we went through the Akka internal behavior in previous articles, let’s review it from a high/conceptual level to a low/internal level where you see an Akka application as a huge &lt;code&gt;ForkJoinTask&lt;/code&gt; application (although it doesn’t use fork-join mechanism).&lt;/p&gt;
 &lt;p&gt;Previous articles related to this post are here:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;../local-minimal-sender/&quot;&gt;Local Actor workflow part 1 - Sender side&lt;/a&gt;&lt;/li&gt;
@@ -36,7 +36,7 @@
           &quot;&gt;&lt;/iframe&gt;
           &lt;/div&gt;
           &lt;/div&gt;
-&lt;p&gt;If you ever heard of Akka or an actor model in general, you might know that actors, which consist of your entire application, communicate to each other by passing messages.&lt;/p&gt;
+&lt;p&gt;If you ever heard of Akka, or an actor model in general, you might know that actors, which are minimal components consisting of your entire application, communicate to each other by passing messages.&lt;/p&gt;
 &lt;p&gt;This is usually what people would mention when they try to explain the actor model to those who never heard of it.&lt;/p&gt;
 &lt;h2&gt;The second level: Actor’s ! and receive methods&lt;/h2&gt;
 &lt;div&gt;
@@ -53,10 +53,10 @@
           &quot;&gt;&lt;/iframe&gt;
           &lt;/div&gt;
           &lt;/div&gt;
-&lt;p&gt;The next level touches something specific about Akka. If you have experience programming an application using Akka, you would know that Akka provides:&lt;/p&gt;
+&lt;p&gt;The next level touches something specific to Akka. If you have experience programming an application using Akka, you would know that Akka provides:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The &lt;code&gt;!&lt;/code&gt; method in &lt;code&gt;ActorRef&lt;/code&gt; to send a message to an &lt;code&gt;Actor&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;receive&lt;/code&gt; method in &lt;code&gt;Actor&lt;/code&gt; which you need to implement in your own concrete &lt;code&gt;Actor&lt;/code&gt; class, and the &lt;code&gt;receive&lt;/code&gt; method processes incoming messages&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;receive&lt;/code&gt; method in &lt;code&gt;Actor&lt;/code&gt; which you need to implement in your concrete &lt;code&gt;Actor&lt;/code&gt; class, and the &lt;code&gt;receive&lt;/code&gt; method processes incoming messages&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;For those who don’t need to interact with Akka day to day, knowing what the &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;receive&lt;/code&gt; methods are helps them understand Akka-based applications written by someone else.&lt;/p&gt;
 &lt;p&gt;Or with this level of knowledge, you can still implement your important (so-called domain or business) logic for your application inside the &lt;code&gt;receive&lt;/code&gt; method. Then Akka takes care of actual execution of the &lt;code&gt;receive&lt;/code&gt; method in a multi-threaded environment, but you are not yet exposed to how threads are employed by Akka to power your application.&lt;/p&gt;
@@ -102,8 +102,9 @@
 &lt;li&gt;&lt;a href=&quot;../dispatcher-behavior/&quot;&gt;Dispatcher behavior&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;../mailbox-and-fork-join-task/&quot;&gt;Mailbox and ForkJoinTask&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt;’s associated &lt;code&gt;ExecutorService&lt;/code&gt; schedules a &lt;code&gt;ForkJointTask&lt;/code&gt; to be run on in a pool of threads, and that &lt;code&gt;ForkJoinTask&lt;/code&gt; is actually an Akka (internal) &lt;code&gt;Mailbox&lt;/code&gt; as &lt;code&gt;Mailbox extends ForkJointTask&lt;/code&gt;. &lt;code&gt;Mailbox&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; method eventually invokes the &lt;code&gt;receive&lt;/code&gt; method of your &lt;code&gt;Actor&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;The lowest level: Akka application as huge fork-join application&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Dispatcher&lt;/code&gt;’s associated &lt;code&gt;ExecutorService&lt;/code&gt; schedules a &lt;code&gt;ForkJointTask&lt;/code&gt; to be run on in a pool of threads, and that &lt;code&gt;ForkJoinTask&lt;/code&gt; is actually an Akka (internal) &lt;code&gt;Mailbox&lt;/code&gt; as &lt;code&gt;Mailbox extends ForkJointTask&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Mailbox&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; method eventually invokes the &lt;code&gt;receive&lt;/code&gt; method of your &lt;code&gt;Actor&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;The lowest level: Akka application as huge ForkJoinTask application&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
@@ -118,20 +119,21 @@
           &quot;&gt;&lt;/iframe&gt;
           &lt;/div&gt;
           &lt;/div&gt;
-&lt;p&gt;Up to this point, you have seen that actual execution of &lt;code&gt;Actor&lt;/code&gt; code (the &lt;code&gt;receive&lt;/code&gt; method) is done by calling the &lt;code&gt;run&lt;/code&gt; method of &lt;code&gt;ForkJoinTask&lt;/code&gt;. Taking a step further, looking at this from the &lt;code&gt;Executor&lt;/code&gt;/&lt;code&gt;ExecutorService&lt;/code&gt; point of view:&lt;/p&gt;
+&lt;p&gt;Taking a step further, looking at this from the &lt;code&gt;Executor&lt;/code&gt;/&lt;code&gt;ExecutorService&lt;/code&gt; point of view:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;../executor-and-execution-context/&quot;&gt;Executor/ExecutorService in Java, and ExecutionContext behind Future in Scala&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;You can see your Akka application as a huge fork-join application, where you excecute your domain/business logic from &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; method. One caveat is that although it is &lt;code&gt;ForkJoinTask&lt;/code&gt;, Akka does not use fork-join mechanism to execute the &lt;code&gt;Actor&lt;/code&gt; internal code. (i.e.) Akka doesn’t use &lt;code&gt;fork&lt;/code&gt;, &lt;code&gt;join&lt;/code&gt; or &lt;code&gt;invoke(All)&lt;/code&gt; methods from &lt;code&gt;ForkJoinTask&lt;/code&gt; but use the simple &lt;code&gt;run&lt;/code&gt; method, in an event style which is described in the middle of &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html&quot;&gt;javadoc&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ForkJoinPool&lt;/code&gt; is the default &lt;code&gt;ExecutorService&lt;/code&gt; for the default &lt;code&gt;Dispatcher&lt;/code&gt;. The reason why &lt;code&gt;ForkJoinPool&lt;/code&gt; was chosen as default was its performance considering Akka’s use cases. More detail about it can be found in previous Akka’s official blog, LET IT CRASH - &lt;a href=&quot;http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool&quot;&gt;Scalability of Fork Join Pool&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;From here, you can even go deeper, outside of/below Akka, like how Java’s &lt;code&gt;ForkJoinTask&lt;/code&gt; and &lt;code&gt;ForkJoinPool&lt;/code&gt; work or even how OS schedules tasks on multiple threads. Those are out of scope of this article, but if you are interested, please go ahead (hopefully I might cover them at some point later).&lt;/p&gt;
+&lt;p&gt;you can see your Akka application as a huge &lt;code&gt;ForkJoinTask&lt;/code&gt; application, where you excecute your domain/business logic from &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;code&gt;run&lt;/code&gt; method. &lt;/p&gt;
+&lt;p&gt;One caveat is that although it is &lt;code&gt;ForkJoinTask&lt;/code&gt;, Akka does not use fork-join mechanism to execute the &lt;code&gt;Actor&lt;/code&gt; internal code. (i.e.) Akka doesn’t use &lt;code&gt;fork&lt;/code&gt;, &lt;code&gt;join&lt;/code&gt; or &lt;code&gt;invokeAll&lt;/code&gt; methods from &lt;code&gt;ForkJoinTask&lt;/code&gt; but uses the simple &lt;code&gt;run&lt;/code&gt; method, in an event style which is described in the middle of &lt;code&gt;ForkJoinTask&lt;/code&gt;’s &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html&quot;&gt;javadoc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ForkJoinPool&lt;/code&gt; is the default &lt;code&gt;ExecutorService&lt;/code&gt; for the default &lt;code&gt;Dispatcher&lt;/code&gt;. The reason why &lt;code&gt;ForkJoinPool&lt;/code&gt; was chosen as default was its performance considering Akka’s use cases. More detail about the reason can be found in previous Akka’s official blog, LET IT CRASH - &lt;a href=&quot;http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool&quot;&gt;Scalability of Fork Join Pool&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;From here, you can even go deeper, outside of/below Akka, like how Java’s &lt;code&gt;ForkJoinTask&lt;/code&gt; and &lt;code&gt;ForkJoinPool&lt;/code&gt; work or even how OS schedules tasks on multiple threads. Those are out of scope of this article, but if you are interested, please go ahead! (hopefully I might cover them at some point later).&lt;/p&gt;
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;p&gt;Javadoc of &lt;code&gt;java.util.concurrent.ForkJoinTask&lt;/code&gt; at -  &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html&quot;&gt;https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinTask.html&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Official documentation of Akka Mailbox at &lt;a href=&quot;https://doc.akka.io/docs/akka/current/mailboxes.html&quot;&gt;https://doc.akka.io/docs/akka/current/mailboxes.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Official documentation of Akka Dispatcher at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/dispatchers.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/dispatchers.html&lt;/a&gt;
-A LET IT CRASH blog post explaining efficiency of &lt;code&gt;ForkJoinPool&lt;/code&gt; - &lt;a href=&quot;http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool&quot;&gt;Scalability of Fork Join Pool&lt;/a&gt;
-A discussion with Doug Lea, linked from the above LET IT CRASH blog article, who lead the design and implementation of Java’s &lt;code&gt;ForkJoinPool&lt;/code&gt; - (&lt;a href=&quot;http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html&quot;&gt;http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Official documentation of Akka Dispatcher at &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/dispatchers.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/dispatchers.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A LET IT CRASH blog post explaining efficiency of &lt;code&gt;ForkJoinPool&lt;/code&gt; - &lt;a href=&quot;http://letitcrash.com/post/17607272336/scalability-of-fork-join-pool&quot;&gt;Scalability of Fork Join Pool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A discussion with Doug Lea, linked from the above LET IT CRASH blog article, who lead the design and implementation of Java’s &lt;code&gt;ForkJoinPool&lt;/code&gt; - &lt;a href=&quot;http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html&quot;&gt;http://cs.oswego.edu/pipermail/concurrency-interest/2012-January/008987.html&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Mailbox and ForkJoinTask]]></title><description><![CDATA[Update to the article and the video Thanks to Victor who immediately noticed I had wrong assumption about  ForkJoinTask  behavior in akka…]]></description><link>https://richardimaoka.github.io/blog//mailbox-and-fork-join-task/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//mailbox-and-fork-join-task/</guid><pubDate>Sat, 24 Feb 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Update to the article and the video&lt;/h2&gt;
 &lt;p&gt;Thanks to Victor who immediately noticed I had wrong assumption about &lt;code&gt;ForkJoinTask&lt;/code&gt; behavior in akka, now this article and videos were corrected.&lt;/p&gt;
 &lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;ja&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Only one FJT should be created.&lt;/p&gt;&amp;mdash; ⎷ (@viktorklang) &lt;a href=&quot;https://twitter.com/viktorklang/status/967066161899819008?ref_src=twsrc%5Etfw&quot;&gt;2018年2月23日&lt;/a&gt;&lt;/blockquote&gt;
