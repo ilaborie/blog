@@ -158,7 +158,7 @@ object HttpServer {
 
 Same as the akka-user discussion, I used [wrk](https://github.com/wg/wrk) to test the servers. On my Macbook (with Intel CPU Core i5 2.6GHz 2 cores), and got the following results for req/sec. This is the same table as I pasted at the beginning of the article. 
 
-The reason I tried 3 attempts weach was that due to JVM's JIT (Just-in-time) compilation, the frist and probably second attemps might not be at at the possible best performance. 
+The reason I tried 3 attempts each was that due to JVM's JIT (Just-in-time) compilation, the frist and probably second attemps might not be at at the possible best performance. 
 
 | Attempt    |  Akka HTTP      | Spray          |
 |:-----------|----------------:|:--------------:|
@@ -234,7 +234,9 @@ Transfer/sec:     12.32MB
 
 Here's the CPU usage profile on Windows at one point running the benchmark. The "Java" one is the Akka HTTP server. 
 
-![win-cpu](./win-cpu.png)
+![win-cpu-utilization](./win-cpu-utilization.png)
+
+In a realistic situation where you, typically need to read and write to and from databases, etc, your web server won't be using CPU up to 100%, but for now this tells us how the server behaves in the best possible situation where the CPU becomes the bottleneck.
 
 ## Lessons learned and plans going forward ...
 
