@@ -236,7 +236,9 @@ Here's the CPU usage profile on Windows at one point running the benchmark. The 
 
 ![win-cpu-utilization](./win-cpu-utilization.png)
 
-In a realistic situation where you, typically need to read and write to and from databases, etc, your web server won't be using CPU up to 100%, but for now this tells us how the server behaves in the best possible situation where the CPU becomes the bottleneck.
+In a realistic situation where you, typically need to read and write to and from databases, etc, your web server won't be using CPU up to 100%, but network/database I/O tend to be bottlenecks. 
+
+For now the experiment in this article tells us how the server behaves in the best possible situation where the CPU becomes the bottleneck.
 
 ## Lessons learned and plans going forward ...
 
