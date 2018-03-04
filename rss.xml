@@ -1,4 +1,356 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 25 Feb 2018 21:43:40 GMT</lastBuildDate><item><title><![CDATA[Akka behavior in different levels of detail]]></title><description><![CDATA[Overview As we went through the Akka internal behavior in previous articles, let’s review it from a high/conceptual level to a low/internal…]]></description><link>https://richardimaoka.github.io/blog//akka-behavior-levels/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-behavior-levels/</guid><pubDate>Mon, 26 Feb 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 04 Mar 2018 16:05:05 GMT</lastBuildDate><item><title><![CDATA[Benchmarking Spray and Akka HTTP Hello World servers]]></title><description><![CDATA[Overview TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference. On Macbook, with…]]></description><link>https://richardimaoka.github.io/blog//hello-world-http-bench/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//hello-world-http-bench/</guid><pubDate>Sat, 03 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On Macbook, with Intel CPU Core i5 2.6GHz 2 cores&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Akka HTTP&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;Spray&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;1st attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;34,494 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;37,005 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;41,469 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;41,586 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;41,535 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;42,438 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;On Windows, with Intel CPU Core i7-6700 3.4GHz 4 cores/8 threads&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Akka HTTP&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;Spray&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;1st attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;75,439 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;80,108 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;80,106 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;80,453 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;79,608 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;84,446 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I am planning to write up articles analyzing Akka HTTP performance going forward, (probably about Akka internals too) so wanted to get familiar with tooling and procedure.&lt;/p&gt;
+&lt;p&gt;So this very first article is pretty “rough”, but still this gives me an insight about Akka HTTP’s performance relative to Spray. I was interested in this relative performance analysis because one of Akka HTTP’s performance goals was to catch up with Spray’s performance.&lt;/p&gt;
+&lt;p&gt;If you are conducting a serious performance analysis, you would not take benchmark in this way, as my “Hello World” server was too simple and I only used a single machine to run the server and the client, which hides whether the bottleneck was on the client or the server.&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;h3&gt;akka-user discussion&lt;/h3&gt;
+&lt;p&gt;There is a similiar discussion about Akka HTTP performance in the &lt;a href=&quot;https://groups.google.com/forum/#!topic/akka-user/qhZlh0KBl2A&quot;&gt;akka-user mailing list&lt;/a&gt;, where the benchmark was taken using a tool called &lt;a href=&quot;https://github.com/wg/wrk&quot;&gt;wrk&lt;/a&gt; against a simple serve doing hell-world json marshalling.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Whereas for the Akka HTTP version I saw each core using ~40% CPU throughout the test and I had the following results:
+…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;  2 threads and 100 connections
+  Thread calibration: mean lat.: 5.044ms, rate sampling interval: 10ms
+  Thread calibration: mean lat.: 5.308ms, rate sampling interval: 10ms
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.83ms    1.27ms  78.91ms   95.96%
+    Req/Sec    10.55k     1.79k   28.22k    75.98%
+  5997552 requests in 5.00m, 1.00GB read
+Requests/sec:  19991.72
+Transfer/sec:      3.41MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The number I foncus on this time, was &lt;strong&gt;req/sec: 19991.72&lt;/strong&gt;. Of course we have to look at various characteristics of performance in more serious analsys, but this is just a starting point for now.&lt;/p&gt;
+&lt;h3&gt;Spray team blog&lt;/h3&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.92124814264488%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAA7CAAAOwgEVKEqAAAABgklEQVQoz51TS27CMBDlaG1VxBb1EFwDdog114ArsOsRKrVSSwVJydeOncSfJEivtqNAK6WldDEajUfz/ObNzIBzDq00jscjpJTQWjuvVOcVqqpy+T6LWQ5Kqauz8cAGjHEXWPAwjOD7HwiC0PnIxGlKUJblCaSua6zXa6xWq5NtNpsWkJAzICEBdrs9DocA+hdWQgiMH8YYjUa4ub3D/XCIyWTSAlpWlGY/FveZbW82m2GxWGA6nWI+n2O5XKJpGguYI7sSsDMmNYLnR6SmSwvmGGYZc9r9FURkAQhtARSLjLbiW94N5RKI5Al44kGaiUsewZJgUrkNaCoFHrwgSdLzUC5qpgRoKR0brio3lC7XCIKMsa8M+/VrKokojVEUhWORk7DdtyIx20DA87y37gRYG02quoEoUhChsYsP5vcUDX29alCDbge3KcX24w1xzl1b/5m6A7QtPXl7vIcJpJDITWxXSRrRrc+NCfPOzcdFUbqLoUZ3e1Ge58P3zldl3z4B3ayPJF2nR+IAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;spray bench&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png&quot;
+        srcset=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-1a291.png 148w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-2bc4a.png 295w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png 590w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png 673w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Also there is a &lt;a href=&quot;http://spray.io/blog/2013-05-24-benchmarking-spray/&quot;&gt;Spray team blog entry&lt;/a&gt; which shows its performance. As it says the benchmark server was doing JSON serialization without db access, it was probably similar to the above akka-user discussion.&lt;/p&gt;
+&lt;p&gt;The req/sec was 33.8K in Spray but 19.9K in Akka HTTP. So my question was,
+”&lt;strong&gt;how do they perform on the same machine, doing the same thing?&lt;/strong&gt;”&lt;/p&gt;
+&lt;p&gt;Maybe the difference in their performance was due to the difference on the machines the benchmark was run, and probably because the code of one experiment was bit more complicated than the other.&lt;/p&gt;
+&lt;h2&gt;My Bencmarking setup&lt;/h2&gt;
+&lt;p&gt;I set up a very, very simple HTTP server in both in Akka HTTP and Spray, where the Spray one was inspired by its &lt;a href=&quot;https://github.com/spray/spray-template&quot;&gt;official template&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Akka HTTP&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-minimal&quot;&gt;full code here&lt;/a&gt; &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;io&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;PrintWriter&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; StringWriter&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorSystem
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Route
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stream&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorMaterializer
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Await
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;duration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Duration
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; HttpServer &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;args&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorSystem &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;HttpServer&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorMaterializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+      pathEndOrSingleSlash &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandle&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8088&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;token string&quot;&gt;&quot;Server online at http://localhost:8088/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    Await&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;result&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;whenTerminated&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Duration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Inf&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h3&gt;Spray&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/spray-minimal&quot;&gt;full code here&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;Actor&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Props&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;io&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;IO
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;pattern&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ask
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Timeout
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;can&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;routing&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;HttpService
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;duration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+
+&lt;span class=&quot;token comment&quot;&gt;// this trait defines our service behavior independently from the service actor&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; MyService &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; HttpService &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; myRoute &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// we don&apos;t implement our route structure directly in the service actor because&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// we want to be able to test it independently, without having to spin up an actor&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; MyServiceActor &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Actor &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; MyService &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;token comment&quot;&gt;// the HttpService trait defines only one abstract member, which&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// connects the services environment to the enclosing actor or test&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; actorRefFactory &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; context
+
+  &lt;span class=&quot;token comment&quot;&gt;// this actor only runs our route, but you could add&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// other things here, like request stream processing&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// or timeout handling&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receive &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; runRoute&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;myRoute&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; HttpServer &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;args&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// we need an ActorSystem to host our application in&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;on-spray-can&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token comment&quot;&gt;// create and start our service actor&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; service &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Props&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;MyServiceActor&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;demo-service&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; timeout &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Timeout&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;seconds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// start a new HTTP server on port 8090 with our service actor as the handler&lt;/span&gt;
+    IO&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Http&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; Http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Bind&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;service&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; interface &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; port &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8090&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h3&gt;Benchmarking method in detail&lt;/h3&gt;
+&lt;p&gt;Same as the akka-user discussion, I used &lt;a href=&quot;https://github.com/wg/wrk&quot;&gt;wrk&lt;/a&gt; to test the servers. On my Macbook (with Intel CPU Core i5 2.6GHz 2 cores), and got the following results for req/sec. This is the same table as I pasted at the beginning of the article. &lt;/p&gt;
+&lt;p&gt;The reason I tried 3 attempts weach was that due to JVM’s JIT (Just-in-time) compilation, the frist and probably second attemps might not be at at the possible best performance. &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Akka HTTP&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;Spray&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;1st attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;34,494 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;37,005 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;41,469 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;41,586 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;41,535 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;42,438 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Taking more detailed results from the 3rd attempts, for &lt;strong&gt;Akka HTTP&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; wrk -t2 -c100 -d30s http://127.0.0.1:8088
+Running 30s test @ http://127.0.0.1:8088
+  2 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.88ms   18.33ms 485.74ms   97.91%
+    Req/Sec    21.02k     4.59k   35.18k    82.57%
+  1248199 requests in 30.05s, 184.51MB read
+Requests/sec:  41535.58
+Transfer/sec:      6.14MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and for &lt;strong&gt;Spray&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; wrk -t2 -c100 -d30s http://127.0.0.1:8090
+Running 30s test @ http://127.0.0.1:8090
+  2 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.98ms   11.38ms 163.62ms   94.70%
+    Req/Sec    21.60k     5.89k   48.67k    77.40%
+  1273545 requests in 30.01s, 185.83MB read
+Requests/sec:  42438.22
+Transfer/sec:      6.19MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;They look like performing in a similar level. &lt;/p&gt;
+&lt;p&gt;Then I did the same thing on my Windows machine as well (with Intel CPU Core i7-6700 3.4GHz 4 cores/8 threads), and results were as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;Akka HTTP&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;Spray&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;1st attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;75,439 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;80,108 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;80,106 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;80,453 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;79,608 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;84,446 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Detailed results from the 3rd attempt for &lt;strong&gt;Akka HTTP&lt;/strong&gt;,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; wrk -t2 -c100 -d30s http://127.0.0.1:8095/
+Running 30s test @ http://127.0.0.1:8095/
+  2 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.46ms    6.53ms 260.11ms   98.93%
+    Req/Sec     40.08k    6.85k   59.53k    64.67%
+  2395691 requests in 30.09s, 354.13MB read
+Requests/sec:  79608.66
+Transfer/sec:     11.77MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and for &lt;strong&gt;Spray&lt;/strong&gt;, and these also gave similar perforamance.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; wrk -t2 -c100 -d30s http://127.0.0.1:8093/
+Running 30s test @ http://127.0.0.1:8093/
+  2 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.18ms    2.68ms  61.62ms   98.26%
+    Req/Sec    42.55k     8.20k   61.00k    61.10%
+  2542858 requests in 30.11s, 371.03MB read
+Requests/sec:  84446.09
+Transfer/sec:     12.32MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Here’s the CPU usage profile on Windows at one point running the benchmark. The “Java” one is the Akka HTTP server. &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-8290b.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 93.01675977653632%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAA7CAAAOwgEVKEqAAAACaElEQVQ4y52U3W7TQBCF/cxc8QJc8QZcc8MFIEBF4goJVBWpQqqqlJI0aey14/gn9saOvd71Tw4zDg1JACWw0sg7u86Xs+PZYxljEMcx6rrGsbFer9G2LbquQ9M02+D8IaxKKXiehzzPjwKX2RKLJEGSpkhliizLIKVESnlC60EYwlJ1g6puTwo7KeFJBTdV/fMw/GW1Abbd+mgoAiaFgaRIfz4Pg/f/ChSuiyAItzHz5xAzH2I6xeTrBa4+f4QtPFxdD/r1we0QIkh+B+qm65/D8RR5qaFMuxdlEkJfvoa8eIVlTrWTMbRRkJnEcOruA03bIas2+VgEmHgRZkmBpcY2stRHdvMU7pcnmDkfMLp5g0VwjtG39wQU9JUJ2FE7cHCdSlLB8yAIEEYxFHXBXusULprRYywuH6Hwn8O7fQYVn8G/e7EB7ipk2Eo3qEmpbdsY0wu2IyCES/VycW9Tfv8d9vAt7q5fYnx7huHgHZzJOcbDT7D9iICm3gIL0yCnI6flZm2xMvCzqp8vVb39mid/ZVbnUK8taIPzeKUhqOf+C9iwIlpYEMSVG0iY6x7Kc1n+A7ChO5iTujkdjzdYJdcx2gOa04AFgQICzena8PVhCCvja8Rz3osIyn/G+Wb/1/wwrLo2iKKob4+yLLftwc5RFAUqrfucjWB3/0+DnchqyX5s24GuKvi+j/l8DkNW1nVt7yIdHZcH29wpw2IfDMl2NCnxPBeKwAxlNeyTbE9VpSFTeRLUMkb3R+Yj8o8bkl2WRV8CzpWq+heF42C1Ko4DWZkQAq4repW7NWTTfXDymK4hl+XY+AGx3bVvnR6VswAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;win-cpu&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-fb8a0.png&quot;
+        srcset=&quot;/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-1a291.png 148w,
+/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-2bc4a.png 295w,
+/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-fb8a0.png 590w,
+/blog/static/win-cpu-8606513a030db443d74a33bdfdd8810d-8290b.png 716w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h2&gt;Lessons learned and plans going forward …&lt;/h2&gt;
+&lt;p&gt;Just don’t rely on these results and assume like “Akka HTTP and Spray can perform at this level!“.&lt;/p&gt;
+&lt;p&gt;As you saw here, benchmark results could significantly vary based on machines you run the bench. We have to keep in mind that the benchmark results are specific to the setup, including machines you run the bench, the server implementation and what kind of work the server does, latency and throughput between components if there are multiple components involved, etc.&lt;/p&gt;
+&lt;p&gt;Also, what “realistic” benchmark actually means depends on what your target application (web server) is. We have to pay attention that the difference between application’s production environment and the benchmark environment.&lt;/p&gt;
+&lt;p&gt;Although having realistic setup, close to your production environment is important, another thing to note is that there is no one-size-fits-all benchmark method. Like anything else in software engineering, you should have differnt tooling for different aspects of benchmarking. You might think that if you make the benchmark environment as close as your production environment, you will get the most accurate results and that’s it. However, that way, you cannot identify which component is the bottleneck of the performance when you see your entire application’s performance is not satisfactory. You need more granular results from different parts of the system.&lt;/p&gt;
+&lt;p&gt;That is why I did this very simple, ridiculously simple benchmarking. This didn’t give us any realistic performance figure which we can guess the production performance from, but it gave me a sense on maximum possible performance of Akka HTTP web server. (Actually, better experiment is to run the client and the server on different machines though.)&lt;/p&gt;
+&lt;p&gt;By testing each component individually, also testing in small groups of components, you will then realize the performance cap of each part of your entire application. Comparing that with your benchmark agains the whole application system, you will be able to figure out what is the bottleneck, and what part of the application is not scaling as you would have expected.&lt;/p&gt;
+&lt;p&gt;So I am going to write up other articles to cover these aspects to show procedure on performing (web) application performance testing, and hopefully micro benchmarking internals of akka application/service too.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Akka behavior in different levels of detail]]></title><description><![CDATA[Overview As we went through the Akka internal behavior in previous articles, let’s review it from a high/conceptual level to a low/internal…]]></description><link>https://richardimaoka.github.io/blog//akka-behavior-levels/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-behavior-levels/</guid><pubDate>Mon, 26 Feb 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;div&gt;
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
