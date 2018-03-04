@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 04 Mar 2018 16:17:23 GMT</lastBuildDate><item><title><![CDATA[Benchmarking Spray and Akka HTTP Hello World servers]]></title><description><![CDATA[Overview TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference. On Macbook, with…]]></description><link>https://richardimaoka.github.io/blog//hello-world-http-bench/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//hello-world-http-bench/</guid><pubDate>Sat, 03 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 04 Mar 2018 16:19:24 GMT</lastBuildDate><item><title><![CDATA[Benchmarking Spray and Akka HTTP Hello World servers]]></title><description><![CDATA[Overview TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference. On Macbook, with…]]></description><link>https://richardimaoka.github.io/blog//hello-world-http-bench/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//hello-world-http-bench/</guid><pubDate>Sat, 03 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;On Macbook, with Intel CPU Core i5 2.6GHz 2 cores&lt;/li&gt;
@@ -85,7 +85,7 @@ Transfer/sec:      3.41MB&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png&quot;
+    href=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -104,11 +104,11 @@ Transfer/sec:      3.41MB&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;spray bench&quot;
         title=&quot;&quot;
-        src=&quot;/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png&quot;
-        srcset=&quot;/static/spray-bench-528d4a6d6788732badde292e0479e2a5-1a291.png 148w,
-/static/spray-bench-528d4a6d6788732badde292e0479e2a5-2bc4a.png 295w,
-/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png 590w,
-/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png 673w&quot;
+        src=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png&quot;
+        srcset=&quot;/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-1a291.png 148w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-2bc4a.png 295w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-fb8a0.png 590w,
+/blog/static/spray-bench-528d4a6d6788732badde292e0479e2a5-bb366.png 673w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -312,7 +312,7 @@ Transfer/sec:     12.32MB&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-8290b.png&quot;
+    href=&quot;/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-8290b.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -331,11 +331,11 @@ Transfer/sec:     12.32MB&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;win-cpu-utilization&quot;
         title=&quot;&quot;
-        src=&quot;/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-fb8a0.png&quot;
-        srcset=&quot;/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-1a291.png 148w,
-/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-2bc4a.png 295w,
-/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-fb8a0.png 590w,
-/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-8290b.png 716w&quot;
+        src=&quot;/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-fb8a0.png&quot;
+        srcset=&quot;/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-1a291.png 148w,
+/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-2bc4a.png 295w,
+/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-fb8a0.png 590w,
+/blog/static/win-cpu-utilization-8606513a030db443d74a33bdfdd8810d-8290b.png 716w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -516,7 +516,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/whole-threads-066b39612b4321a93f47380f6f47c120-1c2a9.png&quot;
+    href=&quot;/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-1c2a9.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -535,11 +535,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;whole-threads&quot;
         title=&quot;&quot;
-        src=&quot;/static/whole-threads-066b39612b4321a93f47380f6f47c120-fb8a0.png&quot;
-        srcset=&quot;/static/whole-threads-066b39612b4321a93f47380f6f47c120-1a291.png 148w,
-/static/whole-threads-066b39612b4321a93f47380f6f47c120-2bc4a.png 295w,
-/static/whole-threads-066b39612b4321a93f47380f6f47c120-fb8a0.png 590w,
-/static/whole-threads-066b39612b4321a93f47380f6f47c120-1c2a9.png 614w&quot;
+        src=&quot;/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-fb8a0.png&quot;
+        srcset=&quot;/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-1a291.png 148w,
+/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-2bc4a.png 295w,
+/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-fb8a0.png 590w,
+/blog/static/whole-threads-066b39612b4321a93f47380f6f47c120-1c2a9.png 614w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -569,7 +569,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png&quot;
+    href=&quot;/blog/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -588,10 +588,10 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread2-a&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png&quot;
-        srcset=&quot;/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-8837c.png 148w,
-/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-15c1b.png 295w,
-/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png 589w&quot;
+        src=&quot;/blog/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png&quot;
+        srcset=&quot;/blog/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-8837c.png 148w,
+/blog/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-15c1b.png 295w,
+/blog/static/thread2-a-8d985489252cb6d3290c795e05ff2f0a-01aca.png 589w&quot;
         sizes=&quot;(max-width: 589px) 100vw, 589px&quot;
       /&gt;
     &lt;/span&gt;
@@ -621,7 +621,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread2-b-114a78e2ede459443c8403dbf47add14-1c156.png&quot;
+    href=&quot;/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-1c156.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -640,11 +640,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread2-b&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread2-b-114a78e2ede459443c8403dbf47add14-fb8a0.png&quot;
-        srcset=&quot;/static/thread2-b-114a78e2ede459443c8403dbf47add14-1a291.png 148w,
-/static/thread2-b-114a78e2ede459443c8403dbf47add14-2bc4a.png 295w,
-/static/thread2-b-114a78e2ede459443c8403dbf47add14-fb8a0.png 590w,
-/static/thread2-b-114a78e2ede459443c8403dbf47add14-1c156.png 621w&quot;
+        src=&quot;/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-1a291.png 148w,
+/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-2bc4a.png 295w,
+/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-fb8a0.png 590w,
+/blog/static/thread2-b-114a78e2ede459443c8403dbf47add14-1c156.png 621w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -678,7 +678,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-ef06d.png&quot;
+    href=&quot;/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-ef06d.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -697,11 +697,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread2-c&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-fb8a0.png&quot;
-        srcset=&quot;/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-1a291.png 148w,
-/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-2bc4a.png 295w,
-/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-fb8a0.png 590w,
-/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-ef06d.png 619w&quot;
+        src=&quot;/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-1a291.png 148w,
+/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-2bc4a.png 295w,
+/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-fb8a0.png 590w,
+/blog/static/thread2-c-99271c77c10ff7f19b21c01ad4dae08a-ef06d.png 619w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -739,7 +739,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread4-a-9e49aae18351df1e05777b6435f0512a-aa5e8.png&quot;
+    href=&quot;/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-aa5e8.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -758,11 +758,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread4-a&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread4-a-9e49aae18351df1e05777b6435f0512a-fb8a0.png&quot;
-        srcset=&quot;/static/thread4-a-9e49aae18351df1e05777b6435f0512a-1a291.png 148w,
-/static/thread4-a-9e49aae18351df1e05777b6435f0512a-2bc4a.png 295w,
-/static/thread4-a-9e49aae18351df1e05777b6435f0512a-fb8a0.png 590w,
-/static/thread4-a-9e49aae18351df1e05777b6435f0512a-aa5e8.png 623w&quot;
+        src=&quot;/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-1a291.png 148w,
+/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-2bc4a.png 295w,
+/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-fb8a0.png 590w,
+/blog/static/thread4-a-9e49aae18351df1e05777b6435f0512a-aa5e8.png 623w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -774,7 +774,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-9eb69.png&quot;
+    href=&quot;/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-9eb69.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -793,11 +793,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread4-b&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-fb8a0.png&quot;
-        srcset=&quot;/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-1a291.png 148w,
-/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-2bc4a.png 295w,
-/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-fb8a0.png 590w,
-/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-9eb69.png 620w&quot;
+        src=&quot;/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-1a291.png 148w,
+/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-2bc4a.png 295w,
+/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-fb8a0.png 590w,
+/blog/static/thread4-b-6d1b838c9c19c60825f7c99260c0d880-9eb69.png 620w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -818,7 +818,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread4-c-361a5920b601649cced526ed2f99c923-02b2c.png&quot;
+    href=&quot;/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-02b2c.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -837,11 +837,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread4-c&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread4-c-361a5920b601649cced526ed2f99c923-fb8a0.png&quot;
-        srcset=&quot;/static/thread4-c-361a5920b601649cced526ed2f99c923-1a291.png 148w,
-/static/thread4-c-361a5920b601649cced526ed2f99c923-2bc4a.png 295w,
-/static/thread4-c-361a5920b601649cced526ed2f99c923-fb8a0.png 590w,
-/static/thread4-c-361a5920b601649cced526ed2f99c923-02b2c.png 617w&quot;
+        src=&quot;/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-1a291.png 148w,
+/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-2bc4a.png 295w,
+/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-fb8a0.png 590w,
+/blog/static/thread4-c-361a5920b601649cced526ed2f99c923-02b2c.png 617w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -866,7 +866,7 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-ef06d.png&quot;
+    href=&quot;/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-ef06d.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -885,11 +885,11 @@ what’s discussed in &lt;a href=&quot;http://localhost:8000/local-minimal-sende
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread4-d&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-fb8a0.png&quot;
-        srcset=&quot;/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-1a291.png 148w,
-/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-2bc4a.png 295w,
-/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-fb8a0.png 590w,
-/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-ef06d.png 619w&quot;
+        src=&quot;/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-fb8a0.png&quot;
+        srcset=&quot;/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-1a291.png 148w,
+/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-2bc4a.png 295w,
+/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-fb8a0.png 590w,
+/blog/static/thread4-d-277e3712f0d47a8446f144afc35b9a44-ef06d.png 619w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1035,7 +1035,7 @@ ForkJoinPool javadoc - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/ap
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1054,11 +1054,11 @@ ForkJoinPool javadoc - &lt;a href=&quot;https://docs.oracle.com/javase/8/docs/ap
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-config&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-e8976.jpg 148w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-63df2.jpg 295w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg 590w,
-/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-e8976.jpg 148w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-63df2.jpg 295w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-f8fb9.jpg 590w,
+/blog/static/dispatcher-config-71bb79f013295f371bbb154394bc0b8e-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1086,7 +1086,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1105,11 +1105,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-actor&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-e8976.jpg 148w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-63df2.jpg 295w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg 590w,
-/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-e8976.jpg 148w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-63df2.jpg 295w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-f8fb9.jpg 590w,
+/blog/static/dispatcher-actor-7b6a80fb086b1889109bdb71e0f6f72f-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1122,7 +1122,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1141,11 +1141,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher-executor-service&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-e8976.jpg 148w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-63df2.jpg 295w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg 590w,
-/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-e8976.jpg 148w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-63df2.jpg 295w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-f8fb9.jpg 590w,
+/blog/static/dispatcher-executor-service-35308dce71584aa4d7cdfad5c6d455dd-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1164,7 +1164,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg&quot;
+    href=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1183,11 +1183,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;actor-cell-reference&quot;
         title=&quot;&quot;
-        src=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg&quot;
-        srcset=&quot;/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-e8976.jpg 148w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-63df2.jpg 295w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg 590w,
-/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg 640w&quot;
+        src=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-e8976.jpg 148w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-63df2.jpg 295w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-f8fb9.jpg 590w,
+/blog/static/actor-cell-reference-6638f57fa06f7a2f08d0bd841a7eb514-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1235,7 +1235,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg&quot;
+    href=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1254,11 +1254,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sender&quot;
         title=&quot;&quot;
-        src=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg&quot;
-        srcset=&quot;/static/sender-82d6c008ac87adf2e72a0389eab07010-e8976.jpg 148w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-63df2.jpg 295w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg 590w,
-/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg 640w&quot;
+        src=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-e8976.jpg 148w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-63df2.jpg 295w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-f8fb9.jpg 590w,
+/blog/static/sender-82d6c008ac87adf2e72a0389eab07010-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1291,7 +1291,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1310,11 +1310,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-1&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-e8976.jpg 148w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-63df2.jpg 295w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg 590w,
-/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-e8976.jpg 148w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-63df2.jpg 295w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-f8fb9.jpg 590w,
+/blog/static/fork-join-1-a6354b55480d0404f2a1e8cc8cf61656-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1325,7 +1325,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1344,11 +1344,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-2&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-e8976.jpg 148w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-63df2.jpg 295w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg 590w,
-/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-e8976.jpg 148w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-63df2.jpg 295w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-f8fb9.jpg 590w,
+/blog/static/fork-join-2-05d3f1320821da8a2108754cfb8375e2-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1370,7 +1370,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg&quot;
+    href=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1389,11 +1389,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;fork-join-3&quot;
         title=&quot;&quot;
-        src=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg&quot;
-        srcset=&quot;/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-e8976.jpg 148w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-63df2.jpg 295w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg 590w,
-/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg 640w&quot;
+        src=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-e8976.jpg 148w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-63df2.jpg 295w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-f8fb9.jpg 590w,
+/blog/static/fork-join-3-b8aff16a96f1775898c83f3ca43c0658-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1418,7 +1418,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg&quot;
+    href=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1437,11 +1437,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receiver&quot;
         title=&quot;&quot;
-        src=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg&quot;
-        srcset=&quot;/static/receiver-80a6300d25cf7552f05cceef167e99a5-e8976.jpg 148w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-63df2.jpg 295w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg 590w,
-/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-e8976.jpg 148w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-63df2.jpg 295w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-f8fb9.jpg 590w,
+/blog/static/receiver-80a6300d25cf7552f05cceef167e99a5-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1483,7 +1483,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
+    href=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1502,11 +1502,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;netty&quot;
         title=&quot;&quot;
-        src=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
-        srcset=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
+        src=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1518,7 +1518,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg&quot;
+    href=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1537,11 +1537,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;tcphandler&quot;
         title=&quot;&quot;
-        src=&quot;/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg&quot;
-        srcset=&quot;/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-e8976.jpg 148w,
-/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-63df2.jpg 295w,
-/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg 590w,
-/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg 640w&quot;
+        src=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-e8976.jpg 148w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-63df2.jpg 295w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg 590w,
+/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1580,7 +1580,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg&quot;
+    href=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1599,11 +1599,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;deserialize&quot;
         title=&quot;&quot;
-        src=&quot;/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg&quot;
-        srcset=&quot;/static/deserialize-de187b0aca391605b3c8af965f49e7a7-e8976.jpg 148w,
-/static/deserialize-de187b0aca391605b3c8af965f49e7a7-63df2.jpg 295w,
-/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg 590w,
-/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg 640w&quot;
+        src=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-e8976.jpg 148w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-63df2.jpg 295w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg 590w,
+/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1646,7 +1646,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg&quot;
+    href=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1665,11 +1665,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatchers&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receiver&quot;
         title=&quot;&quot;
-        src=&quot;/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg&quot;
-        srcset=&quot;/static/receiver-5310b90ed8761a134f9b10a3a878337f-e8976.jpg 148w,
-/static/receiver-5310b90ed8761a134f9b10a3a878337f-63df2.jpg 295w,
-/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg 590w,
-/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-e8976.jpg 148w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-63df2.jpg 295w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg 590w,
+/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1769,7 +1769,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg&quot;
+    href=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1788,11 +1788,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;thread&quot;
         title=&quot;&quot;
-        src=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg&quot;
-        srcset=&quot;/static/thread-46cd166852cb3bb57e031d8bab405132-e8976.jpg 148w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-63df2.jpg 295w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg 590w,
-/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg 640w&quot;
+        src=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/thread-46cd166852cb3bb57e031d8bab405132-e8976.jpg 148w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-63df2.jpg 295w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-f8fb9.jpg 590w,
+/blog/static/thread-46cd166852cb3bb57e031d8bab405132-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1833,7 +1833,7 @@ t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;start&lt;span cla
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg&quot;
+    href=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1852,11 +1852,11 @@ t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;start&lt;span cla
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;interfaces&quot;
         title=&quot;&quot;
-        src=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg&quot;
-        srcset=&quot;/static/interfaces-58c9ff9873a22582e5b84a6f127af378-e8976.jpg 148w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-63df2.jpg 295w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg 590w,
-/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg 640w&quot;
+        src=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-e8976.jpg 148w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-63df2.jpg 295w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-f8fb9.jpg 590w,
+/blog/static/interfaces-58c9ff9873a22582e5b84a6f127af378-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1914,7 +1914,7 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg&quot;
+    href=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1933,11 +1933,11 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executorService&quot;
         title=&quot;&quot;
-        src=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg&quot;
-        srcset=&quot;/static/executorService-91862e98b381bb414a432b8afa9ae502-e8976.jpg 148w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-63df2.jpg 295w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg 590w,
-/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-e8976.jpg 148w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-63df2.jpg 295w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-f8fb9.jpg 590w,
+/blog/static/executorService-91862e98b381bb414a432b8afa9ae502-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1948,7 +1948,7 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg&quot;
+    href=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -1967,11 +1967,11 @@ executor.execute(new PrintRunnable)&lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executorService2&quot;
         title=&quot;&quot;
-        src=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg&quot;
-        srcset=&quot;/static/executorService2-41484c3a90ad5f1e855f031beb002e89-e8976.jpg 148w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-63df2.jpg 295w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg 590w,
-/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-e8976.jpg 148w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-63df2.jpg 295w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-f8fb9.jpg 590w,
+/blog/static/executorService2-41484c3a90ad5f1e855f031beb002e89-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -1987,7 +1987,7 @@ Note that you didn’t specify which exact thread the &lt;code&gt;PrintRunnable&
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg&quot;
+    href=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2006,11 +2006,11 @@ Note that you didn’t specify which exact thread the &lt;code&gt;PrintRunnable&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;executionContext&quot;
         title=&quot;&quot;
-        src=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg&quot;
-        srcset=&quot;/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-e8976.jpg 148w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-63df2.jpg 295w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg 590w,
-/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg 640w&quot;
+        src=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-e8976.jpg 148w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-63df2.jpg 295w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-f8fb9.jpg 590w,
+/blog/static/executionContext-be4b22319ed9bc62a679ef6265984d2d-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2029,7 +2029,7 @@ It has the following &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg&quot;
+    href=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2048,11 +2048,11 @@ It has the following &lt;code&gt;execute&lt;/code&gt; method.&lt;/p&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;future&quot;
         title=&quot;&quot;
-        src=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg&quot;
-        srcset=&quot;/static/future-e7f56e76d0381aaa9c0f3945591632c5-e8976.jpg 148w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-63df2.jpg 295w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg 590w,
-/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg 640w&quot;
+        src=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-e8976.jpg 148w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-63df2.jpg 295w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-f8fb9.jpg 590w,
+/blog/static/future-e7f56e76d0381aaa9c0f3945591632c5-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2083,7 +2083,7 @@ val f = Future{ printThreadInsideFuture() }  &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg&quot;
+    href=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2102,11 +2102,11 @@ val f = Future{ printThreadInsideFuture() }  &lt;/code&gt;&lt;/pre&gt;
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;onComplete&quot;
         title=&quot;&quot;
-        src=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg&quot;
-        srcset=&quot;/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-e8976.jpg 148w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-63df2.jpg 295w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg 590w,
-/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg 640w&quot;
+        src=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-e8976.jpg 148w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-63df2.jpg 295w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-f8fb9.jpg 590w,
+/blog/static/onComplete-385cb92e7c1a00a9b73343a2e2150e71-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2278,7 +2278,7 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg&quot;
+    href=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2297,11 +2297,11 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;path&quot;
         title=&quot;&quot;
-        src=&quot;/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg&quot;
-        srcset=&quot;/static/path-95b81a72016011952a4d619f7c43c935-e8976.jpg 148w,
-/static/path-95b81a72016011952a4d619f7c43c935-63df2.jpg 295w,
-/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg 590w,
-/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg 640w&quot;
+        src=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/path-95b81a72016011952a4d619f7c43c935-e8976.jpg 148w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-63df2.jpg 295w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-f8fb9.jpg 590w,
+/blog/static/path-95b81a72016011952a4d619f7c43c935-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2334,7 +2334,7 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg&quot;
+    href=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2353,11 +2353,11 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;actorselectionmessage&quot;
         title=&quot;&quot;
-        src=&quot;/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg&quot;
-        srcset=&quot;/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-e8976.jpg 148w,
-/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-63df2.jpg 295w,
-/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg 590w,
-/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg 640w&quot;
+        src=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-e8976.jpg 148w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-63df2.jpg 295w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-f8fb9.jpg 590w,
+/blog/static/actorselectionmessage-8056069cb9493407ef88daac5b0c582c-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2389,7 +2389,7 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg&quot;
+    href=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2408,11 +2408,11 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;endpointmanager&quot;
         title=&quot;&quot;
-        src=&quot;/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg&quot;
-        srcset=&quot;/static/endpointmanager-2560d7337fa371cd16000085e636fded-e8976.jpg 148w,
-/static/endpointmanager-2560d7337fa371cd16000085e636fded-63df2.jpg 295w,
-/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg 590w,
-/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg 640w&quot;
+        src=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-e8976.jpg 148w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-63df2.jpg 295w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-f8fb9.jpg 590w,
+/blog/static/endpointmanager-2560d7337fa371cd16000085e636fded-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2456,7 +2456,7 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg&quot;
+    href=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2475,11 +2475,11 @@ selection &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span c
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;serialize&quot;
         title=&quot;&quot;
-        src=&quot;/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg&quot;
-        srcset=&quot;/static/serialize-c15d3e21df298bae63af63ee49bfbe24-e8976.jpg 148w,
-/static/serialize-c15d3e21df298bae63af63ee49bfbe24-63df2.jpg 295w,
-/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg 590w,
-/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg 640w&quot;
+        src=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-e8976.jpg 148w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-63df2.jpg 295w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-f8fb9.jpg 590w,
+/blog/static/serialize-c15d3e21df298bae63af63ee49bfbe24-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2518,7 +2518,7 @@ private[remote] class TcpAssociationHandle(
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
+    href=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2537,11 +2537,11 @@ private[remote] class TcpAssociationHandle(
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;netty&quot;
         title=&quot;&quot;
-        src=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
-        srcset=&quot;/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
-/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
+        src=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
+/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2769,7 +2769,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg&quot;
+    href=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2788,11 +2788,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;processmailbox&quot;
         title=&quot;&quot;
-        src=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg&quot;
-        srcset=&quot;/static/processmailbox-94910b51aebb7b417483b0a787ba8151-e8976.jpg 148w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-63df2.jpg 295w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg 590w,
-/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg 640w&quot;
+        src=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-e8976.jpg 148w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-63df2.jpg 295w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-f8fb9.jpg 590w,
+/blog/static/processmailbox-94910b51aebb7b417483b0a787ba8151-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2818,7 +2818,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg&quot;
+    href=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2837,11 +2837,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receivemessage&quot;
         title=&quot;&quot;
-        src=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg&quot;
-        srcset=&quot;/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-e8976.jpg 148w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-63df2.jpg 295w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg 590w,
-/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-e8976.jpg 148w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-63df2.jpg 295w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-f8fb9.jpg 590w,
+/blog/static/receivemessage-e0b1f55a0e7451ee216a1da37f8b2e9c-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -2874,7 +2874,7 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg&quot;
+    href=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -2893,11 +2893,11 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;receive&quot;
         title=&quot;&quot;
-        src=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg&quot;
-        srcset=&quot;/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-e8976.jpg 148w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-63df2.jpg 295w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg 590w,
-/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg 640w&quot;
+        src=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-e8976.jpg 148w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-63df2.jpg 295w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-f8fb9.jpg 590w,
+/blog/static/receive-9bf14710a79d18dd691d0599f5f6ee4d-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3005,7 +3005,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg&quot;
+    href=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3024,11 +3024,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;message&quot;
         title=&quot;&quot;
-        src=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg&quot;
-        srcset=&quot;/static/message-4093dc1854d0d519ddf1fc745d96b789-e8976.jpg 148w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-63df2.jpg 295w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg 590w,
-/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg 640w&quot;
+        src=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-e8976.jpg 148w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-63df2.jpg 295w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-f8fb9.jpg 590w,
+/blog/static/message-4093dc1854d0d519ddf1fc745d96b789-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3056,7 +3056,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
+    href=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3075,10 +3075,10 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;envelope&quot;
         title=&quot;&quot;
-        src=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
-        srcset=&quot;/static/envelope-91cfa7f809e99172f6902691b880c231-83678.jpg 148w,
-/static/envelope-91cfa7f809e99172f6902691b880c231-04048.jpg 295w,
-/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg 298w&quot;
+        src=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg&quot;
+        srcset=&quot;/blog/static/envelope-91cfa7f809e99172f6902691b880c231-83678.jpg 148w,
+/blog/static/envelope-91cfa7f809e99172f6902691b880c231-04048.jpg 295w,
+/blog/static/envelope-91cfa7f809e99172f6902691b880c231-85b28.jpg 298w&quot;
         sizes=&quot;(max-width: 298px) 100vw, 298px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3097,7 +3097,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg&quot;
+    href=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3116,11 +3116,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sendMessage&quot;
         title=&quot;&quot;
-        src=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg&quot;
-        srcset=&quot;/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-e8976.jpg 148w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-63df2.jpg 295w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg 590w,
-/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg 640w&quot;
+        src=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-e8976.jpg 148w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-63df2.jpg 295w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-f8fb9.jpg 590w,
+/blog/static/sendMessage-97c0ac69e59e5122c722926a1e80a4e4-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3153,7 +3153,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg&quot;
+    href=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3172,11 +3172,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;dispatcher&quot;
         title=&quot;&quot;
-        src=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg&quot;
-        srcset=&quot;/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-e8976.jpg 148w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-63df2.jpg 295w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg 590w,
-/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg 640w&quot;
+        src=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-e8976.jpg 148w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-63df2.jpg 295w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-f8fb9.jpg 590w,
+/blog/static/dispatcher-ed3db186b54b5f43bbc7ddf384206e5e-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3192,7 +3192,7 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg&quot;
+    href=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3211,11 +3211,11 @@ system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;s
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;enqueue&quot;
         title=&quot;&quot;
-        src=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg&quot;
-        srcset=&quot;/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-e8976.jpg 148w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-63df2.jpg 295w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg 590w,
-/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg 640w&quot;
+        src=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-e8976.jpg 148w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-63df2.jpg 295w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-f8fb9.jpg 590w,
+/blog/static/enqueue-9a6b0df6f94bee8c851810e8e5a0d95a-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3414,7 +3414,7 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
+    href=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3433,11 +3433,11 @@ There is also an &lt;a href=&quot;https://github.com/okumin/akka-persistence-sql
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;sql&quot;
         title=&quot;&quot;
-        src=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
-        srcset=&quot;/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
-/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
+        src=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png&quot;
+        srcset=&quot;/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-1a291.png 148w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-2bc4a.png 295w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-fb8a0.png 590w,
+/blog/static/sql-261553d2948cdc8dfb9ce07f93dbbd86-287be.png 715w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -3537,7 +3537,7 @@ persist callback: current state = 15
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
+    href=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -3556,11 +3556,11 @@ persist callback: current state = 15
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;cqlsh&quot;
         title=&quot;&quot;
-        src=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
-        srcset=&quot;/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
-/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
+        src=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png&quot;
+        srcset=&quot;/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-1a291.png 148w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-2bc4a.png 295w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fb8a0.png 590w,
+/blog/static/cqlsh-43c57ec5e10939f5112d19aa98ca4a50-fcf37.png 740w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
