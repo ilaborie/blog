@@ -1,4 +1,589 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 04 Mar 2018 16:19:24 GMT</lastBuildDate><item><title><![CDATA[Benchmarking Spray and Akka HTTP Hello World servers]]></title><description><![CDATA[Overview TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference. On Macbook, with…]]></description><link>https://richardimaoka.github.io/blog//hello-world-http-bench/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//hello-world-http-bench/</guid><pubDate>Sat, 03 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Mar 2018 13:07:34 GMT</lastBuildDate><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;TL;DR)&lt;/strong&gt; You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.&lt;/p&gt;
+&lt;p&gt;Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Swagger spec file can generate Akka HTTP server code&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;or &lt;code&gt;@Annotations&lt;/code&gt; in the server code generate the Swagger specification&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;but there are limitations to both 1) and 2), which I will explain later in the article.&lt;/p&gt;
+&lt;h2&gt;Top-down and bottom-up approaches&lt;/h2&gt;
+&lt;p&gt;Let me firstly introduce so-called top-down and bottom-up approaches in terms of how to use Swagger, which is also explained in the official &lt;a href=&quot;https://swagger.io/getting-started/&quot;&gt;getting started guide&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A top-down approach where you would use the Swagger Editor to create your Swagger definition and then use the integrated Swagger Codegen tools to generate server implementation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A bottom-up approach where you have an existing REST API for which you want to create a Swagger definition&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://editor.swagger.io/&quot;&gt;Swagger Editor&lt;/a&gt; is a browser based tool for editing the swagger specification file in json or yaml. For &lt;a href=&quot;https://github.com/swagger-api/swagger-codegen&quot;&gt;Swagger codegen&lt;/a&gt;, it already officially supports a bunch of languages and frameworks,&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-69289.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 43.87755102040816%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABCklEQVQoz5VR2W6EMAzk/39yERBIfOVYBSgqdCfwXrWWsYzlGY+dboYtft+/fv5vXco5xhRjVDNDlktMb0uIOd0WmyEmNOC3lALIum03OCXvPREvi1+8D0RzUNJiNxh8qiqqxKwtSggEF7Vt37t1XYdxmiY3OQe8c7NrewQfYORbQqBGDV2IzRcPLkjrQHB3BBZFwizQMbkZXEAFYmCGcQTmoUZRRBmfWVdrVbVGLsLQBolm8Ng0m6Ao5lkxDEKgCHdBEeuf54nJh5fCsZJViW+6WUH/7A8hxMoaMYiFMYEka9rq1l6nTUbffeh20pxKzs+prK7rdV2/PRVa+354vXqNWfJxfF9/f+cPYzr8CpRImhcAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;swagger-codege-support&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-fb8a0.png&quot;
+        srcset=&quot;/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-1a291.png 148w,
+/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-2bc4a.png 295w,
+/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-fb8a0.png 590w,
+/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-526de.png 885w,
+/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-69289.png 980w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt; and also a lot of community plugins available for other frameworks.&lt;/p&gt;
+&lt;h3&gt;When to use which approach?&lt;/h3&gt;
+&lt;p&gt;The top-down approach is suitable when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;you have an automatic tool to generate the server-side code&lt;/li&gt;
+&lt;li&gt;or you are developing a brand new API-based service, and the client wants to start development without waiting for the server side implementation ready&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To automatically generate the server side implementation, it usually doesn’t produce fully detailed implementation, but it generates interfaces (in Scala, it would be traits) which you can extend to hook up detailed behaivor in a later phase.&lt;/p&gt;
+&lt;p&gt;On the other hand, the bottom-up approach would be suitable when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a Swagger spec-gen tool is avaialble from the server side code&lt;/li&gt;
+&lt;li&gt;or you already have the server side implementation, and want to start using Swagger for better API management, and leverage Swagger toolset&lt;/li&gt;
+&lt;li&gt;even for a brand new API service, if you can quickly write up a server mock to generate the Swagger spec file, or manually write down Swagger spec until the server impelentation is ready, bottom-up is useful&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In both cases, the automated generation tool is very important, to make sure there is only one source of truth and the other generated side is compliant with the original. If the automated tool is not avaialble no matter whether it is for the top-down or bottom-up approach, you need a lot more effort to make sure the server implementation is compliant with the API. &lt;/p&gt;
+&lt;p&gt;Probably you can leverage the swagger specification file to generate automated test cases, but it is still much better to have an auto-gen tool for either the spec file or the server implementation.&lt;/p&gt;
+&lt;h2&gt;The current status of Akka HTTP and Swagger integration&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/swagger-akka-http/swagger-akka-http&quot;&gt;swagger-akka-http&lt;/a&gt; already exists and this is for the bottom-up approach, which will generate the specification from &lt;code&gt;@Annotation&lt;/code&gt;s in the Akka HTTP server-side code.&lt;/p&gt;
+&lt;p&gt;To see how it works, I did some experiment - I tried to generate the same specification as &lt;a href=&quot;http://petstore.swagger.io/&quot;&gt;the official Swagger PetStore sample&lt;/a&gt; from the server &lt;code&gt;@Annotation&lt;/code&gt;. Looking at the sample, the top section of the spec can be generated by the following &lt;code&gt;SwaggerDocService&lt;/code&gt; implementation.  &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;github&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SwaggerHttpService
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;github&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;endpoints&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;PetEndPoint
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; io&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;models&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ExternalDocs
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; io&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;models&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;auth&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;ApiKeyAuthDefinition&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; In&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; OAuth2Definition&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; SwaggerDocService &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; SwaggerHttpService &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; apiClasses &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Set&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;classOf&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;PetEndPoint&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; host &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost:9999&quot;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; basePath &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;v2&quot;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; info &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Info&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    version &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;1.0.0&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    description &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&quot;This is a sample server Petstore server.  You can find out more about
+        |Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
+        |For this sample, you can use the api key `special-key` to test the authorization filters.&quot;
+      &quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stripMargin&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    title &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Swagger Petstore&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    termsOfService &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://swagger.io/terms/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    contact &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Some&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Contact&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;apiteam@swagger.io&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    license &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Some&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;License&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Apache 2.0&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://www.apache.org/licenses/LICENSE-2.0.html&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; externalDocs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Some&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; ExternalDocs&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Core Docs&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://acme.com/docs&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; oAuth2Definition &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; OAuth2Definition&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scope&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;write:pets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;modify pets in your account&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scope&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;read:pets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;read your pets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  oAuth2Definition&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;setAuthorizationUrl&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;http://petstore.swagger.io/oauth/dialog&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  oAuth2Definition&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;setFlow&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;implicit&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; securitySchemeDefinitions &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Map&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;petsotre_auth&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; oAuth2Definition&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;api_key&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; ApiKeyAuthDefinition&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;api_key&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; In&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;HEADER&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; unwantedDefinitions &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Seq&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Function1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Function1RequestContextFutureRouteResult&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Interestingly, in swagger-akka-http, you extend this &lt;code&gt;SwaggerHttpService&lt;/code&gt; to supply application-wide information, instead of using &lt;a href=&quot;https://github.com/swagger-api/swagger-core/wiki/annotations-1.5.x#swaggerdefinition&quot;&gt;&lt;code&gt;@SwaggerDefinition&lt;/code&gt;&lt;/a&gt; annotation like other Java frameworks.&lt;/p&gt;
+&lt;p&gt;The generated schema is this (I will explain how to generate the spec later): &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-yaml&quot;&gt;&lt;code&gt;&lt;span class=&quot;token key atrule&quot;&gt;swagger&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;2.0&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &quot;This is a sample server Petstore server.  You can find out more about\r\
+    \nSwagger at &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//swagger.io&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;(http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//swagger.io) or on &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;irc.freenode.net&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;#swagger](http://swagger.io/irc/).\r\&lt;/span&gt;
+    \nFor this sample&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; you can use the api key `special&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;key` to test the authorization\
+    \ filters.\&quot;\r\n      &quot;
+  &lt;span class=&quot;token key atrule&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;1.0.0&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Swagger Petstore&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;termsOfService&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://swagger.io/terms/&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;contact&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;apiteam@swagger.io&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;license&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Apache 2.0&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://www.apache.org/licenses/LICENSE-2.0.html&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost:9939&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/v2&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;pet&quot;&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;schemes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;which is (almost) same as that of &lt;a href=&quot;https://editor.swagger.io/&quot;&gt;the Petstore sample&lt;/a&gt; I modeled after. &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-26c84.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 52.823920265780735%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABnUlEQVQoz41RyW4UMRDtC+IU8QEgERYRlFF62mu7ysuMu6dnmASiaKQIDiDBBSE+BQSnJAiuCCG+IgGR5cLySbxmDpyiUCqXq+x69nt2sf/97udfky+/7338kT799K8OL739dmXv+OqbrysHJ6uvjy6/P7vz4Wzt4OT63vG1vjzty3enN9FTLJ7cePl8fffp7cWLte1nt7Yer/6/F7osF8RjpbLSSgiXnDRSWcUNa6dtsIZNHewyR5RWIRoyKIvBYIBuF2vAKLNxWigRppEz2VBzQ5SJGo5dsNHRGE51qsMkYLcHazY8pjhPaEqbKXSBW+bWN9s5zSIoxFkcbY6anbaOtW8ZYE26UqIHj8jO24hr0aSdElqCp6rVxkXWg6G2gYrk0gyjxvHQs9wuhyXisBqeC95x9JA5a5OkhGDr+2tBHtzwWm5E54KFEFPnHsXog49tzFs5dSlNEyWSF1lRlmXU5j6xz56zt2zxDZWoYEIup0oqiRxWYSwX/1phy7I1NkVK8+Qnvtvt8oOMHMoNabwcVMDBHyqwOBT/JPwBVomgM9pHur4AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Sawgger-Editor-top&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-fb8a0.png&quot;
+        srcset=&quot;/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-1a291.png 148w,
+/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-2bc4a.png 295w,
+/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-fb8a0.png 590w,
+/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-26c84.png 602w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Next, look at the &lt;code&gt;pet&lt;/code&gt; endpoint. This is how the sample PetStore specification looks when you load it in Swagger Editor.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-26c84.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 79.734219269103%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABOklEQVQoz51S7U7DMAzcC61pEn/ESdq1bCqaYBJCAon3fxGuZPyD0RFZsZvqdD6fd7XWMdKT2v7+syMipEOMNcR/gp1zU0mBQ+e6fff9s9u3uuu6n8GqihRd/1HKRe00ZjJmRGZKREZS5FdwSmkF9/2b5fdcoB/gNKa1hT/bbsxoW6vWZSingrB50/wAFqTg3GJ6LBY5evI++k3glK7MaHV6msbziMgbmUvOX8z9Jdl5yHVId1hllpoZC/OJeTlWlhglslGggAIzh4UITB6fQcL6rutS7JipgedIz6KHSA/iocIH73ok1/t+LXCFa9GiMVsDG9FLLqSkg0oVGRTFbcOguSCB69XsxCvpHZpFVqvQCNb7ommKNIYISSDHkuG+CWZpVs1EjzlNKnOSzczMTTNmgN2qS5XCG8GfUpm3iEM+tSUAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Sawgger-Editor-pet&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-fb8a0.png&quot;
+        srcset=&quot;/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-1a291.png 148w,
+/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-2bc4a.png 295w,
+/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-fb8a0.png 590w,
+/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-26c84.png 602w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;To get the same spec as above, you need these annotations to be added at the class or trait level to give information across different HTTP methods, &lt;code&gt;POST&lt;/code&gt;, &lt;code&gt;GET&lt;/code&gt;, &lt;code&gt;PUT&lt;/code&gt;, &lt;code&gt;PATCH&lt;/code&gt; and &lt;code&gt;DELETE&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Api&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/pet&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//tags in endpoint&lt;/span&gt;
+  consumes &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;application/json, application/xml&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  produces &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;application/json, application/xml&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token annotation punctuation&quot;&gt;@Path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;/pet&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; PetEndPoint &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Directives &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; DefaultJsonFormats &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and for each HTTP method, you typically add a method in the trait like this … ugh it is really a lot of verbose &lt;code&gt;@Annotation&lt;/code&gt;’s to explain this single HTTP &lt;code&gt;POST&lt;/code&gt; method!!&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;  &lt;span class=&quot;token annotation punctuation&quot;&gt;@ApiOperation&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Add a new pet to the store&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    nickname &lt;span class=&quot;token comment&quot;&gt;/*operationId*/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;addPet&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    httpMethod &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    response &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; classOf&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Pet&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    authorizations &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; Authorization&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;petstore_auth&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; scopes &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+          &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; AuthorizationScope&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;scope &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;write:pets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; description &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; AuthorizationScope&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;scope &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;read:pets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;  description &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token annotation punctuation&quot;&gt;@ApiImplicitParams&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Array&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; ApiImplicitParam&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;body&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      paramType &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;body&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Pet object that needs to be added to the store&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      required &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      dataTypeClass &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; classOf&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Pet&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token annotation punctuation&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Array&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; ApiResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;code &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;405&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; message &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Invalid Input&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; addPet &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+      post &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//stub implementation&lt;/span&gt;
+        complete &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;pet&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;With these many annotations, you get the (almost) same specification as the sample, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;paths:
+  /pet:
+    post:
+      tags:
+      - &quot;pet&quot;
+      summary: &quot;Add a new pet to the store&quot;
+      description: &quot;&quot;
+      operationId: &quot;addPet&quot;
+      consumes:
+      - &quot;application/json&quot;
+      - &quot;application/xml&quot;
+      produces:
+      - &quot;application/json&quot;
+      - &quot;application/xml&quot;
+      parameters:
+      - in: &quot;body&quot;
+        name: &quot;body&quot;
+        description: &quot;Pet object that needs to be added to the store&quot;
+        required: true
+        schema:
+          $ref: &quot;#/definitions/Pet&quot;
+      responses:
+        200:
+          description: &quot;successful operation&quot;
+          schema:
+            $ref: &quot;#/definitions/Pet&quot;
+        405:
+          description: &quot;Invalid Input&quot;
+      security:
+      - petstore_auth:
+        - &quot;write:pets&quot;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;but you need to repeat the same &lt;code&gt;@Annotation&lt;/code&gt; for all available HTTP methods, multiplied by the number of endpoints. In the sample applicatoin, there are endpoints, &lt;code&gt;/pet&lt;/code&gt;, &lt;code&gt;/pet/{petID}&lt;/code&gt;, &lt;code&gt;/store&lt;/code&gt;, &lt;code&gt;/store/inventory&lt;/code&gt;, …&lt;/p&gt;
+&lt;p&gt;Is there a way to avoid it? Unfortunately, even for repetitive &lt;code&gt;@Annotation&lt;/code&gt;s, you cannot do like below,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;val reuseParam1 = @ApiImplicitParam //or 
+val reuseParam2 = new ApiImplicitParam
+
+@ApiImplicitParams(Array(reuseParam))
+def ...&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;because you get a Scala compilation error saying:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[Error] annotation argument needs to be a constant&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To be honest, I felt like writing up the specification directly in json or yaml would have been easier, however, there is no top-down approach tool exists for Akka HTTP to generate the Akka HTTP server code from the spec file at the moment..&lt;/p&gt;
+&lt;p&gt;Another thing I expected to just work fine earlier, but not avaialble at the moment is that those Swagger &lt;code&gt;@Annotation&lt;/code&gt;’s compilation errors do not detect almost any type of specification (&lt;code&gt;@Annotation&lt;/code&gt;) and implementation (e.g. parameters and their types) mismatch. So again, it’s all your manual effort to make sure your server implementation is compliant with the specification.&lt;/p&gt;
+&lt;p&gt;Now, let’s talk about how to generate the specification file with from the server code &lt;code&gt;@Annoation&lt;/code&gt;s. You need to run the Akka HTTP web server, and access to a resource &lt;a href=&quot;http://localhost:9999/api-docs/swagger.yaml&quot;&gt;http://localhost:9999/api-docs/swagger.yaml&lt;/a&gt; (or swagger.json). &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 581px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 72.28915662650603%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABcklEQVQoz5VSa2+jMBDk//+kqlXJQ5dEaqV8Oek4NabBbxsbMARIBLRD79NVrVQGyVrtMrs7Y0dFUdCMpmmqtfr95zne3K/i1W63+/V0t94+3j887Pf74/G43W7Wmw3iw+GwXq/iOEYQKaXKsmSMIQCfcZa73DmHJPraPMfZdd3tK0Rt214/0C9HxDk7n8/tjMvbQkSYKYU8kRdjDONcSWmNTpJEaw0tggu05kKgChkSUIrSjDEulYzQAMJOhCitUvLq7CwZ/8yCnTXGeu+EFLm1zvlQB5tb5/GhpufJlFKlJaPUaFPXNQT8dO2u71NCwM+yrK4D59x7LwQPofJFUVbVNE3fksdxPGcZ7gbBYsPGacKcuqkhRBvYNN83lv8ReRgGQlJjtLU53sWlbf+tOQ4DTlTxGLAUlh8+Mv+RQxXgLxf89EJwK5RRuAogD09DCHD70lwg/3q7fSa/pimYfdc1TbNYs/d5kvytqrK/XpeS3wEiXRwgJkfCQQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;swagger-spec-browser&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png&quot;
+        srcset=&quot;/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-3532c.png 148w,
+/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-3fdea.png 295w,
+/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png 581w&quot;
+        sizes=&quot;(max-width: 581px) 100vw, 581px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Yes, this is another interesting point, but the conventional way in the JVM world to generate the swagger spec from server code’s &lt;code&gt;@Annotation&lt;/code&gt;, even in Java frameworks like &lt;a href=&quot;https://springfox.github.io/springfox/docs/current/#springfox-swagger-ui&quot;&gt;Spring&lt;/a&gt;, is to run the web server and access to the rendered page. &lt;/p&gt;
+&lt;p&gt;This is NOT very Continuous-Integration friendly as your build tool won’t usually bring up the web server, so it is difficult to put the generated specification file in the build pipeline, like automated testing. &lt;/p&gt;
+&lt;p&gt;Don’t get me wrong - I am not saying  &lt;a href=&quot;https://github.com/swagger-akka-http/swagger-akka-http&quot;&gt;swagger-akka-http&lt;/a&gt; is not a satisfactory tool. It is still a nice tool when you need to integrate Swagger with Akka HTTP, and the way &lt;code&gt;@Annotation&lt;/code&gt; works is coming from Swagger &lt;code&gt;@Annotation&lt;/code&gt;, not something swagger-akka-http did in its own. &lt;/p&gt;
+&lt;p&gt;And there is one nice thing about the current integration. With &lt;code&gt;@ApiOperation&lt;/code&gt;, you can specify the type of response with &lt;code&gt;classOf&lt;/code&gt; as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@ApiOperation&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; response &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; classOf&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Pet&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and having the case classes defined:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Pet&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    category&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Category&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    photoUrls&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    tags&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Tag&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    status&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Category&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Tag&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;you don’t need to add &lt;code&gt;@Annotation&lt;/code&gt; to the case classes, but Swagger UI nicely generate this much of model definition. Note that the &lt;code&gt;Pet&lt;/code&gt; case class has some parameters in other case classes, and that is correctly and automatically handled by swagger spec generation.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-b91be.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 103.84615384615385%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAACh0lEQVQ4y3WUy27TQBSGs+QiFmxQEUjADiE8sT2eiZ22OGrrkLJEKq26qiqx4x14AKgEDYIFC56BN2hFWgnxABUSCW4qNbZj10naNFdV/BNXqanTo7MYj+ab85/LOPX2+43N7UffftGvP58US3c3tm9tbN/8WLqDxaed+8XS1Put69gv7tz78OP2Zmnq8+4D+Jfdh++2rqVmFyRrXnpVUF88V3Tzcdxfv1kK25Vmx57o4enfFOOcSFKesfnstKqqUszW19e73W6tVuv1+2f/W6/XGw6HKcMw0oQwWbZMk0jkEjwYDHCumzBsDgBnMjohxFAUk2q4KB4cMK4/CoLfe3uO6zYaTbjjBNDSbDaHY5im5QLjOs9QSi/BJycnnuO2RgbGdQMsjo+PBazrupImCJszsmKtKEk4ae12W8DQiUSzipp/ZiYLhhOdTuc0YdgUMOcZyE6n05ZlTYQD3z+oHrRGgh3HrdfrkI3gAtY0hsjgLSsvy3ISxjnXdX3ft227Ui5X92uO44SNxnlktCpHaY5qVFUhIQlH1QrD0PfqqPZFZDEkREK1l7JZc2aWc5aE7Yrtud7hoQflKPgFTKkWwXPoU0bTdOEsy2RVvtQqZFv+U/E8PwhEcMwJ+pyJJuylYcyZOVVVrpZ9VHe9fdsFjPiYsxRjjIxsEdkzjs8xvLq6ihNRwRphWKvVw7AZXYTNCD7PucAhQo9Xe3l5Gf1sTbJzWLRqNJ6LuoFyRznDxzAOdRIWPQ/AmkwIlxU8SM55POcIHg1JNSpy/GEIWNcNMV6MjcZTScq+6mEImGpQ+BSzvTA9g7LH4ZWVlQie+DAEHLVKw8+A8VkMSazaa2traNXZFdbv9/8BAzXWfz/z21MAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;swagger-model&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-fb8a0.png&quot;
+        srcset=&quot;/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-1a291.png 148w,
+/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-2bc4a.png 295w,
+/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-fb8a0.png 590w,
+/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-b91be.png 832w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h3&gt;Summary of the current status&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;No top-down tool available for Akka HTTP, so top-down is fully manual&lt;/li&gt;
+&lt;li&gt;There is a bottom-up tool, &lt;a href=&quot;https://github.com/swagger-akka-http/swagger-akka-http&quot;&gt;swagger-akka-http&lt;/a&gt; but writing &lt;code&gt;@Annotation&lt;/code&gt; is pretty much writing specification manually inside the code&lt;/li&gt;
+&lt;li&gt;Compile time errors to detect specification and implementation difference are not generated by Swagger &lt;code&gt;@Annotation&lt;/code&gt;s&lt;/li&gt;
+&lt;li&gt;Model definition works nicely for bottom-up&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So if you still feel it is beneficial that the endpoint specification (&lt;code&gt;@Annotation&lt;/code&gt;) being close to the Akka HTTP route implementation, rather than a separate .json/.yaml file, swagger-akka-http is the way to go.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 553px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 93.85171790235081%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAA7CAAAOwgEVKEqAAAACPElEQVQ4y61Ua1MTQRDMLzEREqHubvd29557eZG3SqhIAMtSQaDAsvz/39uZuYAUH6hE+dCZS3ar09M9cw1rQ5RlgLIIkGUBlFIIw3BnlOWh1AZ/FL5CdzCEyxySlEA1zR2MM0gKQmmhdfQi4frTXk0YRRHy0qNHhHlRwCVMaGGsBp8prUg1VXqOXsD5el9qI45j9I/GGM/mQjocTTAcTzGaT+EcK9Nb4WLdkSoKjQrhU4PSe2mfFTMyUmwTS1aQYqdhsxjGaDlL0qy+kxcIoxBnp+2/HjKcDjGuEvGy2x8IesORqB5QB5a9ZT8LIjcR3TuiO/Xd2BgsZgG61UGtMIoUon9M9wFKBVid7NeESun/IntMekWESapR5IEg50rzmBeJeMR/tj1hgNPVRmHlQjI3p0A80iynMEoan2QndZU/wHj0rg7FugRHkxmqfh8utZSsJht2a5f9Yx+FMI4Nqt6AyFJqNUZGNmijENOoxJahoDeVv/OZnMvwP9sUITRWRsD3+vDcto0fWy8HfrtAHgjVZtJfI2EhdC4iVfS2KUMBT35CrcvF5ylHWxCywm6inqxSKc/WOfLJSdqcPttS+8Z+1h4+HSveEiG0tHIDb/DltEezaOXHz+d7+P3zDa6/t6Te3TRxe9XC/W0Tl1/f4vqyhRvC1bcW7q6b+LG59+uuWYfCm/LwUuC99F2N5fIQs2kHcwK3s5h3MJ10sPzYxsXZHo4/tPF+wehgQvN3ctyGp5esEPIuv8bqMf4AP75WvBFtgX4AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;annotation-next-to-code&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png&quot;
+        srcset=&quot;/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-c443a.png 148w,
+/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-a37e4.png 295w,
+/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png 553w&quot;
+        sizes=&quot;(max-width: 553px) 100vw, 553px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;With these status and limitations we have seen, do we still want to introduce Swagger to an Akka HTTP based server? Let’s take a step back and recap what benefits Swagger gives.&lt;/p&gt;
+&lt;h2&gt;Recap - what Swagger is, and what Swagger’s benefits are&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://swagger.io/&quot;&gt;Swagger&lt;/a&gt; is REST API tooling - in its core is the API specification file (.yaml or .json) and a rich set of tools to help you manage the API and develp both the server and client sides. The biggest motivation of using Swagger is well explained by the history of &lt;a href=&quot;https://en.wikipedia.org/wiki/Swagger_(software)&quot;&gt;Swagger at Wikipedia&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;During the development of Wordnik’s products, the need for automation of API documentation and client SDK generation became a major source of frustration. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;For many development teams as of today, automation of API documentation and client SDK generation can still be the primary benefit of Swagger.&lt;/p&gt;
+&lt;h3&gt;Swagger specification file (.yaml or .json)&lt;/h3&gt;
+&lt;p&gt;Swagger’s specification file is standardized as in &lt;a href=&quot;https://swagger.io/docs/specification/about/&quot;&gt;Swagger specification&lt;/a&gt;, and curently the specifications are called &lt;a href=&quot;https://github.com/OAI/OpenAPI-Specification&quot;&gt;Open API Specification 3.x&lt;/a&gt; as it is now widely accepted and maintained as community effort. OK, the first benefit is you have a well-understood format of API documentation, which is closely related to the other benefits.&lt;/p&gt;
+&lt;h3&gt;Swagger UI (Documentation generator and viewer)&lt;/h3&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-05e8b.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 71.33838383838383%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABhElEQVQoz53Sy4oUMRQG4Dy1TyC494LgwqWitLiYjS0D4wXRxUAPDDN9qUrqmqRSSSq3qqkkMwvTuhmUFtqfj39zNgfOATHGEEL8rwDGeVHXtO+TTnAmhHLWzdN9ZrQd50wKQjnGe0Kpab4BC3z+YLN4XpzBnhSCJojvm4xDd6MPSVMkCJjohVsvXPXVGXoUqymI5afb1Yuwfj8QpAjSXTlg6HgdDf0Hr7DtK7Dc3T76fPdqFbN2yNthU/GskRVziBpIdCvnzsS/EeWLTgM9eqZnab2dwpE8mOd5+pVB6UTKwRhrrUvGcQoH4r0fxxGcwfjk+927y5Dv15YF1UVnys6kxZiNh1DtK6bBWsplXZ8zRp07CnMj+MguHxenr5sfO9oksMc5w5ATxMnvRoJWqqeTug87WaQ7hw/L8Oypf/tG7DK+zYYcyixXEM0YB0IOmdtWIQQE2pbfTunVSgt2FCM5OKGrh9nJy/LLhtbJNjWprnG57Zqsb6EgefrlafhD4wTk+CcI0wKga48CpwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Swagger-UI&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-fb8a0.png&quot;
+        srcset=&quot;/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-1a291.png 148w,
+/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-2bc4a.png 295w,
+/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-fb8a0.png 590w,
+/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-05e8b.png 792w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;At &lt;a href=&quot;http://petstore.swagger.io/&quot;&gt;http://petstore.swagger.io/&lt;/a&gt; you can see the specification document for Swagger’s official PetStore sample, and it is generated by &lt;a href=&quot;https://swagger.io/swagger-ui/&quot;&gt;Swagger UI&lt;/a&gt;. Once you have the specification file for your application, this nice-looking documentation comes for free for you too. &lt;/p&gt;
+&lt;p&gt;Also when you load your spec file in &lt;a href=&quot;https://editor.swagger.io/&quot;&gt;Swagger Editor&lt;/a&gt;, it spots your specification errors like below. In fully manual workflow, it will be much more difficult to spot your mistakes in specification.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-7ccc8.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 46.44628099173554%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAx0lEQVQoz52OawuCMBSG+///rCKISHff1Gybc3mjeyQds74lSvAyDu/27DmztqraPP8nzs1aa8lipdabqzZTmEJKMl+mATpR2sEmRCbE+wBlmHrOSyGaOL6Zwb+ezkHaJOngHNMDF7WKrlo/sqy7mLJ2D+ttqENsMW2i+JymfS7fYQQ+MAHmUsicsErIUipHWB3F0EDfqOiY7IbNAbKIQAC7G3N75/457YjZYQoqTzkMnjLPuEG4EAIGKEfMsHYtVcHl70fD5hfsWvEcCy6/9gAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;swagger-error&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-fb8a0.png&quot;
+        srcset=&quot;/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-1a291.png 148w,
+/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-2bc4a.png 295w,
+/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-fb8a0.png 590w,
+/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-7ccc8.png 605w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;With the help of Swagger UI document generation, and clearly defined Swagger/Open API specification, the work of writing REST API specification became much more concrete (I wouldn’t say it became “easy” though), and there are clearer learning paths avaialble to improve on API management. You can find a plenty of other Swagger speficitation examples out there which you can get inspiration from, and people have published lots of materials on how to write good specification in Swagger. This made a step forward in API specification writing, so that it became a managable job for an engineer from something like black magic done by a veteran craftman with 30 years of experience. Having a concrete tool available is a huge win, where you can focus on more detailed ways to leverage tools, rather than talking about “what a good design of your REST API is” in a vague fasion. (I believe as an engineer, you have seen such phenomena in many other areas - when good tools are available, things get traction and move forward.) Of course conceptual understanding of good design is a must, but good tooling is also a must for maintaining good design in practice.&lt;/p&gt;
+&lt;p&gt;Another feature I like in Swagger UI is that you can send HTTP requests by pressing buttons (as long as you write example input to the specification file). Also ig gives you curl command for the request which is great for automation of testing. Save the curl commands and invoke them by an automated tool. To use this feature, it is &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-51273.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 53.385416666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABgklEQVQoz53J60vCUBgG8PPfFVpmkZdN59TUVOg/iD4UFV2ELClJkiyCLAvqg0ZBn6OghMBQy8um7uxsbpq3rtBRQYggKPjx8jzPC/Zu0O512841Oo6L4VuhW7ev0FmCTyKerSKmgvISnxFKOQni3AMicXR413Zwh6IJ8fReiHTq/i26TMI0gmyFZ2Q+L8GMUMyKJZx7QElAUr3WeH9rfnzT+nyXGzVYFrtYjntIpZOPT/liUZRlQZIKHAfKjefKS6P62vwJ792X3KpDucwgWBD5HlaAIMWxWZH7h1wZAop2msxuyuzS6i16g42kHEbaaaTHTRaXlrBo9GbCYMM7bXHjQFA2ncFKUHbzmHtEawJW+wRJ2bWElba6jSbHoJrsIJSDOpWaVKp0/UrNwJAeBzzigK9qmOxTjCpUOjA1uzA5M/8P04sesB0+DB1EItHoUSz2JycX58AXCPoCW15/YCMYwndtc8vj8895vLPLK79bWl0HaVhIlRhGRlxdhs3Kn3wB5mvYFGSeFtQAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Swagger-UI-curl&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-fb8a0.png&quot;
+        srcset=&quot;/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-1a291.png 148w,
+/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-2bc4a.png 295w,
+/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-fb8a0.png 590w,
+/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-51273.png 768w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h3&gt;Client code and stub server code generation&lt;/h3&gt;
+&lt;p&gt;Even though no existing tool available to generate the Akka HTTP server side code, &lt;a href=&quot;https://github.com/swagger-api/swagger-codegen&quot;&gt;Swagger codegen&lt;/a&gt; can still generate the client-side code for various dev environments, and server stubs.&lt;/p&gt;
+&lt;p&gt;Some client-side development teams could be benefited from the code generation, as they might use the generated client code as the SDK to depend on, or might prefer the generated server stub code as for testing against the server - as long as test is concerned from the client side, they might not care whetherthe server implementation is Akka HTTP or not.&lt;/p&gt;
+&lt;h2&gt;To go with or without Swagger?&lt;/h2&gt;
+&lt;p&gt;So I have covered current limitations and benefits of using Swagger with Akka HTTP. Some part works nicely with the current integration, and there’s still a lot of benefits you get from the rich Swagger echosystem. It’s up to you how you evaluate the benefits against the cost you have to maintain the swagger specification. Hopefully this article gives you some hints to judge its value in your engineering team.&lt;/p&gt;
+&lt;h2&gt;What’s next?&lt;/h2&gt;
+&lt;p&gt;If I am going to write next article about Swagger, probably I will explore possibilities of more automation. With &lt;a href=&quot;http://www.scala-lang.org/blog/2017/10/09/scalamacros.html&quot;&gt;the rise of the new Scala macro&lt;/a&gt;, probably better automation can be achieved. Let’s see what we can get there.&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Swagger home page at - &lt;a href=&quot;https://swagger.io/&quot;&gt;https://swagger.io/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Swagger Editor - &lt;a href=&quot;https://swagger.io/swagger-editor/&quot;&gt;https://swagger.io/swagger-editor/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Swagger UI - &lt;a href=&quot;https://swagger.io/swagger-codegen/&quot;&gt;https://swagger.io/swagger-codegen/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Swagger Codegen - &lt;a href=&quot;https://swagger.io/swagger-ui/&quot;&gt;https://swagger.io/swagger-ui/&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;and Swagger Codege at GitHub - &lt;a href=&quot;https://github.com/swagger-api/swagger-codegen&quot;&gt;https://github.com/swagger-api/swagger-codegen&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Swagger 101 tutorials at - &lt;a href=&quot;https://app.swaggerhub.com/help/tutorials/writing-swagger-definitions&quot;&gt;https://app.swaggerhub.com/help/tutorials/writing-swagger-definitions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Explanation about Swagger Specification - &lt;a href=&quot;https://swagger.io/docs/specification/about/&quot;&gt;https://swagger.io/docs/specification/about/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Open API specification at GitHub - &lt;a href=&quot;https://github.com/OAI/OpenAPI-Specification&quot;&gt;https://github.com/OAI/OpenAPI-Specification&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Springfox Java framework with Swagger at - &lt;a href=&quot;https://springfox.github.io/springfox/docs/current/&quot;&gt;https://springfox.github.io/springfox/docs/current/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Benchmarking Spray and Akka HTTP Hello World servers]]></title><description><![CDATA[Overview TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference. On Macbook, with…]]></description><link>https://richardimaoka.github.io/blog//hello-world-http-bench/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//hello-world-http-bench/</guid><pubDate>Sat, 03 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;TL;DR) Benchmarking Akka HTTP and Spray “Hello World” servers did not discover significant performance difference.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;On Macbook, with Intel CPU Core i5 2.6GHz 2 cores&lt;/li&gt;

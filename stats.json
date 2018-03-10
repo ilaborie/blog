@@ -45,8 +45,8 @@
       "component---src-layouts-index-js-8a7ceae897423aca5716.js.map"
     ],
     "path---index": [
-      "path---index-0074188b0985c017441c.js",
-      "path---index-0074188b0985c017441c.js.map"
+      "path---index-34e6eb99ef01a29b5652.js",
+      "path---index-34e6eb99ef01a29b5652.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-52a963c235dc51de7ca8.js",
@@ -74,14 +74,18 @@
       "path---executor-and-execution-context-0187ec5084d8186e278c.js",
       "path---executor-and-execution-context-0187ec5084d8186e278c.js.map"
     ],
+    "path---swagger-akka-http": [
+      "path---swagger-akka-http-cf289379bf1a5592563d.js",
+      "path---swagger-akka-http-cf289379bf1a5592563d.js.map"
+    ],
     "path---event-adapter-cassandra": [
       "path---event-adapter-cassandra-d38e77137abead44de02.js",
       "path---event-adapter-cassandra-d38e77137abead44de02.js.map"
     ],
     "app": [
-      "app-940276a7d736efff0dc3.js",
+      "app-da7047fcb815b8e727f5.js",
       "build-js-styles.css",
-      "app-940276a7d736efff0dc3.js.map",
+      "app-da7047fcb815b8e727f5.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
