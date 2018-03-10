@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Mar 2018 13:07:34 GMT</lastBuildDate><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Mar 2018 16:10:54 GMT</lastBuildDate><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TL;DR)&lt;/strong&gt; You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.&lt;/p&gt;
 &lt;p&gt;Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:&lt;/p&gt;
 &lt;ol&gt;
@@ -61,18 +61,19 @@
 &lt;li&gt;you have an automatic tool to generate the server-side code&lt;/li&gt;
 &lt;li&gt;or you are developing a brand new API-based service, and the client wants to start development without waiting for the server side implementation ready&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;To automatically generate the server side implementation, it usually doesn’t produce fully detailed implementation, but it generates interfaces (in Scala, it would be traits) which you can extend to hook up detailed behaivor in a later phase.&lt;/p&gt;
+&lt;p&gt;When talking about automatic generation of the server side implementation, tools usually don’t produce fully detailed implementation, but they generates interfaces (in Scala, it would be traits) which you can extend to hook up detailed behaivor implementation in a later phase.&lt;/p&gt;
 &lt;p&gt;On the other hand, the bottom-up approach would be suitable when:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;a Swagger spec-gen tool is avaialble from the server side code&lt;/li&gt;
-&lt;li&gt;or you already have the server side implementation, and want to start using Swagger for better API management, and leverage Swagger toolset&lt;/li&gt;
+&lt;li&gt;or you already have the server side implementation, and want to start using Swagger for better API management, and leverage the Swagger toolset&lt;/li&gt;
 &lt;li&gt;even for a brand new API service, if you can quickly write up a server mock to generate the Swagger spec file, or manually write down Swagger spec until the server impelentation is ready, bottom-up is useful&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;In both cases, the automated generation tool is very important, to make sure there is only one source of truth and the other generated side is compliant with the original. If the automated tool is not avaialble no matter whether it is for the top-down or bottom-up approach, you need a lot more effort to make sure the server implementation is compliant with the API. &lt;/p&gt;
-&lt;p&gt;Probably you can leverage the swagger specification file to generate automated test cases, but it is still much better to have an auto-gen tool for either the spec file or the server implementation.&lt;/p&gt;
+&lt;p&gt;In both cases, the automated server-code or spec-file generation tool is very important, to make sure there is only one source of truth and the other generated side is compliant with the original. If the automated tool is not avaialble, no matter whether it is for the top-down or bottom-up approach, you need a lot more effort to make sure the server implementation is compliant with the API. &lt;/p&gt;
+&lt;p&gt;Probably you can leverage the swagger specification file to generate automated test cases, which helps you to make sure the specification and the server implementatin are in sync, but it is still much better to have an auto-gen tool for either the spec file or the server implementation.&lt;/p&gt;
 &lt;h2&gt;The current status of Akka HTTP and Swagger integration&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/swagger-akka-http/swagger-akka-http&quot;&gt;swagger-akka-http&lt;/a&gt; already exists and this is for the bottom-up approach, which will generate the specification from &lt;code&gt;@Annotation&lt;/code&gt;s in the Akka HTTP server-side code.&lt;/p&gt;
-&lt;p&gt;To see how it works, I did some experiment - I tried to generate the same specification as &lt;a href=&quot;http://petstore.swagger.io/&quot;&gt;the official Swagger PetStore sample&lt;/a&gt; from the server &lt;code&gt;@Annotation&lt;/code&gt;. Looking at the sample, the top section of the spec can be generated by the following &lt;code&gt;SwaggerDocService&lt;/code&gt; implementation.  &lt;/p&gt;
+&lt;p&gt;No top-down auto-generation tool is avaialble for Akka HTTP, or at least no such tool is widely used.&lt;/p&gt;
+&lt;p&gt;To see how swagger-akka-http works, I did some experiment - I tried to generate the same specification as &lt;a href=&quot;http://petstore.swagger.io/&quot;&gt;the official Swagger PetStore sample&lt;/a&gt; from the server &lt;code&gt;@Annotation&lt;/code&gt;. Looking at the sample, the top section of the spec can be generated by the following &lt;code&gt;SwaggerDocService&lt;/code&gt; implementation.  &lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
       &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;github&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SwaggerHttpService
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;github&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;swagger&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
@@ -303,8 +304,8 @@ def ...&lt;/code&gt;&lt;/pre&gt;
 &lt;blockquote&gt;
 &lt;p&gt;[Error] annotation argument needs to be a constant&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;To be honest, I felt like writing up the specification directly in json or yaml would have been easier, however, there is no top-down approach tool exists for Akka HTTP to generate the Akka HTTP server code from the spec file at the moment..&lt;/p&gt;
-&lt;p&gt;Another thing I expected to just work fine earlier, but not avaialble at the moment is that those Swagger &lt;code&gt;@Annotation&lt;/code&gt;’s compilation errors do not detect almost any type of specification (&lt;code&gt;@Annotation&lt;/code&gt;) and implementation (e.g. parameters and their types) mismatch. So again, it’s all your manual effort to make sure your server implementation is compliant with the specification.&lt;/p&gt;
+&lt;p&gt;To be honest, I felt like writing up the specification directly in json or yaml would have been easier…&lt;/p&gt;
+&lt;p&gt;Another thing I expected to just work fine earlier, but not avaialble at the moment is that those Swagger &lt;code&gt;@Annotation&lt;/code&gt;’s compilation errors do not detect almost any type of mismatch in the specification (&lt;code&gt;@Annotation&lt;/code&gt;) and the implementation (e.g. parameters and their types). So again, it’s all your manual effort to make sure your server implementation is compliant with the specification.&lt;/p&gt;
 &lt;p&gt;Now, let’s talk about how to generate the specification file with from the server code &lt;code&gt;@Annoation&lt;/code&gt;s. You need to run the Akka HTTP web server, and access to a resource &lt;a href=&quot;http://localhost:9999/api-docs/swagger.yaml&quot;&gt;http://localhost:9999/api-docs/swagger.yaml&lt;/a&gt; (or swagger.json). &lt;/p&gt;
 &lt;p&gt;
   &lt;a
@@ -339,8 +340,8 @@ def ...&lt;/code&gt;&lt;/pre&gt;
   
   &lt;/a&gt;
     &lt;/p&gt;
-&lt;p&gt;Yes, this is another interesting point, but the conventional way in the JVM world to generate the swagger spec from server code’s &lt;code&gt;@Annotation&lt;/code&gt;, even in Java frameworks like &lt;a href=&quot;https://springfox.github.io/springfox/docs/current/#springfox-swagger-ui&quot;&gt;Spring&lt;/a&gt;, is to run the web server and access to the rendered page. &lt;/p&gt;
-&lt;p&gt;This is NOT very Continuous-Integration friendly as your build tool won’t usually bring up the web server, so it is difficult to put the generated specification file in the build pipeline, like automated testing. &lt;/p&gt;
+&lt;p&gt;Yes, this is another interesting point, but it seems the conventional way in the JVM world to generate the swagger spec from server code’s &lt;code&gt;@Annotation&lt;/code&gt;, even in Java frameworks like &lt;a href=&quot;https://springfox.github.io/springfox/docs/current/#springfox-swagger-ui&quot;&gt;Spring&lt;/a&gt;, is to run the web server and access to the rendered page. &lt;/p&gt;
+&lt;p&gt;This is NOT very Continuous-Integration friendly as your build tool won’t usually bring up the web server, so it is difficult to put the generated specification file in the build pipeline. &lt;/p&gt;
 &lt;p&gt;Don’t get me wrong - I am not saying  &lt;a href=&quot;https://github.com/swagger-akka-http/swagger-akka-http&quot;&gt;swagger-akka-http&lt;/a&gt; is not a satisfactory tool. It is still a nice tool when you need to integrate Swagger with Akka HTTP, and the way &lt;code&gt;@Annotation&lt;/code&gt; works is coming from Swagger &lt;code&gt;@Annotation&lt;/code&gt;, not something swagger-akka-http did in its own. &lt;/p&gt;
 &lt;p&gt;And there is one nice thing about the current integration. With &lt;code&gt;@ApiOperation&lt;/code&gt;, you can specify the type of response with &lt;code&gt;classOf&lt;/code&gt; as follows:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot;&gt;
@@ -369,7 +370,7 @@ def ...&lt;/code&gt;&lt;/pre&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;you don’t need to add &lt;code&gt;@Annotation&lt;/code&gt; to the case classes, but Swagger UI nicely generate this much of model definition. Note that the &lt;code&gt;Pet&lt;/code&gt; case class has some parameters in other case classes, and that is correctly and automatically handled by swagger spec generation.&lt;/p&gt;
+&lt;p&gt;you don’t need to add &lt;code&gt;@Annotation&lt;/code&gt; to the case classes, but Swagger UI nicely generate this much of model definition. Note that the &lt;code&gt;Pet&lt;/code&gt; case class has &lt;code&gt;category: Category&lt;/code&gt; and &lt;code&gt;tags: Array[Tag]&lt;/code&gt; parameters, but those case classes used in another case class are correctly and automatically handled by swagger spec generation.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
@@ -411,7 +412,7 @@ def ...&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;Compile time errors to detect specification and implementation difference are not generated by Swagger &lt;code&gt;@Annotation&lt;/code&gt;s&lt;/li&gt;
 &lt;li&gt;Model definition works nicely for bottom-up&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;So if you still feel it is beneficial that the endpoint specification (&lt;code&gt;@Annotation&lt;/code&gt;) being close to the Akka HTTP route implementation, rather than a separate .json/.yaml file, swagger-akka-http is the way to go.&lt;/p&gt;
+&lt;p&gt;So if you still feel it is beneficial that the endpoint specification (&lt;code&gt;@Annotation&lt;/code&gt;) being close to the Akka HTTP route implementation, rather than a separate .json/.yaml file, swagger-akka-http is the way to go. Otherwise, write and manage the specification manually.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;

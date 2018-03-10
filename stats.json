@@ -75,17 +75,17 @@
       "path---executor-and-execution-context-0187ec5084d8186e278c.js.map"
     ],
     "path---swagger-akka-http": [
-      "path---swagger-akka-http-cf289379bf1a5592563d.js",
-      "path---swagger-akka-http-cf289379bf1a5592563d.js.map"
+      "path---swagger-akka-http-2ab7ab15a987f5daee24.js",
+      "path---swagger-akka-http-2ab7ab15a987f5daee24.js.map"
     ],
     "path---event-adapter-cassandra": [
       "path---event-adapter-cassandra-d38e77137abead44de02.js",
       "path---event-adapter-cassandra-d38e77137abead44de02.js.map"
     ],
     "app": [
-      "app-da7047fcb815b8e727f5.js",
+      "app-780456590cbf57acee24.js",
       "build-js-styles.css",
-      "app-da7047fcb815b8e727f5.js.map",
+      "app-780456590cbf57acee24.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
