@@ -26,7 +26,7 @@ Like explained in the previous article, the 1st attempt in benchmarking could be
 |2nd attempt | 52,196 req/sec  | 27,507 req/sec |   992 req/sec  |
 |3rd attempt | 48,293 req/sec  | 30,746 req/sec | 1,122 req/sec  |
 
-Comparing the throughput, obviously adding Cassandra and **wait the HTTP response until Cassandra persistence is done** makes the performance order of magnitude down, and the CPU usage for 3 were around 40% although that of 1 and 2 topped at 100% like the prevoius article.
+Comparing the throughput, obviously adding Cassandra and **wait the HTTP response until Cassandra persistence is done** makes the performance order of magnitude going down, and the CPU usage for 3 were around 40% although that of 1 and 2 topped at 100% like the prevoius article. (i.e.) The bottleneck is shifted to database I/O from CPU resource competition between the web client and server.
 
 ![task-manager-cassandra](./task-manager-cassandra.png)
 
@@ -58,7 +58,7 @@ I am not going in detail, but JSON marshalling is converting a Scala case class 
 
 This HttpServer does simple stuff, to sum up all the `"score"` sent in HTTP responses, and return the current total, average and number of trials (number of HTTP requests) so far.
 
-Let's define case classes representing to marshall to/unmarshall from JSON:
+Let's define case classes to marshall to/unmarshall from JSON:
 
 ```scala
 //JSON request {"score": 10} can be unmarshalled to this
@@ -268,7 +268,7 @@ akka {
 }
 ```
 
-As in the results we saw earlier, it became slower than JSON marshalling/unmarshalling only, because there is communication between the server and the persistent actor. However, the persistent **actor** itself is still lightweight, compared to the actual persistence to Cassandra as you saw.
+As in the results we saw earlier, it became slower than 1. JSON marshalling/unmarshalling, because there is communication between the server and the persistent actor. However, the persistent **actor** itself is still lightweight, compared to the actual persistence to Cassandra which I'll explain next.
 
 ## 3. Persistence to Cassandra
 
@@ -316,7 +316,7 @@ No need to change the Scala code.
 
 ## Lessons learned
 
-Even before conducting the benchmark, it was almost clear that Cassandra would be the bottleneck of the system, as database I/O is typically the performance bottleneck of a web applicaiton system.
+Even before conducting the benchmark, we could have guessed that Cassandra would be the bottleneck of the system, as database I/O is typically the performance bottleneck of a web applicaiton system.
 
 However, **to know how much the difference is**, experiment is necessary. So I went through the process on how to distinguish the performance overhead of a single component from all the other , and you can apply the same technique to analyze any component in your system.
 
