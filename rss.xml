@@ -1,4 +1,573 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 10 Mar 2018 16:10:54 GMT</lastBuildDate><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Mar 2018 17:39:21 GMT</lastBuildDate><item><title><![CDATA[Locally Benchmarking Akka HTTP with akka-persistence-cassandra]]></title><description><![CDATA[Overview Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up benchmarking environment for Akka and Akka HTTP. I am going to add persistence to Cassandra to the system, to see how the benchmark figures are affected.&lt;/p&gt;
+&lt;p&gt;The source code is available &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-cassandra&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Results&lt;/h2&gt;
+&lt;p&gt;In the previous article, &lt;a href=&quot;../hello-world-http-bench/&quot;&gt;Benchmarking Spray and Akka HTTP Hello World servers&lt;/a&gt;, the web server just returned the constant response. Here I am comparing three different types of web servers.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Akka HTTP server with JSON marshalling/unmarshalling&lt;/li&gt;
+&lt;li&gt;Akka HTTP server with JSON marshalling/unmarshalling, and in-memory persistence&lt;/li&gt;
+&lt;li&gt;Akka HTTP server with JSON marshalling/unmarshalling, and akka-persistence-cassandra&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Like explained in the previous article, the 1st attempt in benchmarking could be affected by incomplete JIT compliation. So I only show results from the 2nd and 3rd attempts here.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-320d7.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 61.47403685092128%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA80lEQVQoz2P48ePHly9f/hIN/v37d/fpl48fP3769InhP+ng0/VLn8AAoXnWlme5nRe+ntj399sXIk1h+PPnz69fv4CsvtWPw1PW3bEU+nn3GrGaf//+/fPnT6Bn+lY9Ck8Gaf5++wp+PyM0w1mYNn9cv+DH9Qv4bMaq+fSNT46FFy67qL9fNhWfZqCbIVGF7Oyjl98bp5256Kz+bukUkp19/OpHoOZLzoRsplQzMMCB6WzXicdzFx+/3Vv18cmDu08+9i69fmNy6/szR4BS1++9fnDx0oc714FsoMux2Izsse/fv0PS0Ldv34BSQH+i+RYCAA85jG34HPlcAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;result-throughput&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-fb8a0.png&quot;
+        srcset=&quot;/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-1a291.png 148w,
+/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-2bc4a.png 295w,
+/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-fb8a0.png 590w,
+/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-320d7.png 597w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;1. JSON&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;2. In-Memory&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;3. Cassandra&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;52,196 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;27,507 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;992 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;48,293 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;30,746 req/sec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;1,122 req/sec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Comparing the throughput, obviously adding Cassandra and &lt;strong&gt;wait the HTTP response until Cassandra persistence is done&lt;/strong&gt; makes the performance order of magnitude down, and the CPU usage for 3 were around 40% although that of 1 and 2 topped at 100% like the prevoius article.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-d30b5.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 84.98452012383902%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAIAAABSJhvpAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACAElEQVQ4y4VTy27bMBDk//9Uc2wuRYIeAgd25FqyHpRIkVw+9bA7kurABzcZUCtC5CyHOytWCHOu+KmobRjiePl2+DRhJ4ZxkRUV503DG15VVbwhrLi94jAMl0dg2emcHY9SiHbFx+EDsa5rKSSwTKTs+/4xeV92tQ6/fr/9eHp6/vm82+1AAP/l9eV6vXZdB1VLuqZBlqZpuvWYc1l679n+1O7/tMW5rm4oy9KG2PYKt4rj/HCQjy4kJjtPve3Kbvf+nuc5FILshmm+XPB8EcM4M0XOEnnnICOlBKn/I5s4ImIlTfM/sg4uTUHTUiCUdiP3flB+8HcpIJWb2FISLiFiA3Ix44zzwhL0Su9vZDf0LpkwDvNMccRRrU34Iu8iVhmRmYbgSa3F5BtZUKh7Wypfm4jBKZ5VEDZ1Nn1GEwaGu4JMuuecE9mN7L2DuygBVq83OOeMMZigZ1rejuPErCWQkydI6DqxkcnothPotFOeF0URY9o83yZowS0ds6STlaTl/clGa7QV6oeGwVZY70NQqIqUxhDc2SQw1ZaUv0VSnydjATKEEJCN/eM0KdUrpVeKgUvw9ZgdF/LSRktWWdU13MInGN5L8ZFlTV371bwNCgm0xiR4dzhkC5nQGrhKSt4ho53nOdwRvgbTNuCXQjFIa6GssGPvJm6GNF6+Jf8FD13NKG5gi80AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;task-manager-cassandra&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-fb8a0.png&quot;
+        srcset=&quot;/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-1a291.png 148w,
+/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-2bc4a.png 295w,
+/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-fb8a0.png 590w,
+/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-d30b5.png 646w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;The below is the comparison of average latency,&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-3d59e.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 61.68067226890756%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAvElEQVQoz2P49evX79+//5IA/t189AkCGP6TCv79/XrrClDnly9fGH7+/Am0HI9Fbz7+XH3gFZCEcJHNIWzz1ftfjNPOnJyz5OvRXWhSDEDD8Pv58r3PQM27PB2f1yaTaTNQ84vaFHSbgdbi9zPNbP7z588A+RmIv3///u37jzuPPz68dv3L43vA2L92+/nFy/efnT/1+vmz56+/zN5w69yCOa/3b/3x4wey5dhtBup///79u3fvgJ7C4ygAQHCicnqiZzAAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;result-avg&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-fb8a0.png&quot;
+        srcset=&quot;/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-1a291.png 148w,
+/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-2bc4a.png 295w,
+/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-fb8a0.png 590w,
+/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-3d59e.png 595w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;1. JSON&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;2. In-Memory&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;3. Cassandra&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;2.17 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;2.41 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;101.55 millisec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;2.16 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;2.10 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;88.92 millisec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;and the max latency.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-691bb.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 60.934891485809686%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABB0lEQVQoz2P48ePHr1+//hIN/v37d/PR549gwPAfG7j15NvpG5/+4wDfbl3+BAYMWG1uX/IgrOEKLpvhpmC3uX3pw7CGqxA2UPEPoOH/sChj+PnzJ8Tm2Lbru8+8xbT54Ytvxmlnjl5+j89moIq5hd0vW7LRbH786gdQ6vjVj/hsBqqYHpT+MMQIq817Zq/5fGgbPpvBmo2x2rzex/dZQTC6zb/AANPmoMydQIO+nj8GsRmo+Wl+MLE2B6ZuuWMp9PXEPnw2A/EPMFiy8/HhZetfb1zy9evXXccfLF137u7MzmdXzr95/3X2htsnFy58tXMdUBnQcgLx/Pv37w8fPrx///4/XgAAAJh6Ef9QAboAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;result-max&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-fb8a0.png&quot;
+        srcset=&quot;/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-1a291.png 148w,
+/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-2bc4a.png 295w,
+/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-fb8a0.png 590w,
+/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-691bb.png 599w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Attempt&lt;/th&gt;
+&lt;th align=&quot;right&quot;&gt;1. JSON&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;2. In-Memory&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;3. Cassandra&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;2nd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;321.87 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;452.84 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;335.73 millisec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;3rd attempt&lt;/td&gt;
+&lt;td align=&quot;right&quot;&gt;267.60 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;119.31 millisec&lt;/td&gt;
+&lt;td align=&quot;center&quot;&gt;199.44 millisec&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;From here, let’s see how I set up the servers for 1, 2 and 3.&lt;/p&gt;
+&lt;h2&gt;1. JSON marshalling/unmarshalling&lt;/h2&gt;
+&lt;p&gt;I am not going in detail, but JSON marshalling is converting a Scala case class instance to JSON payload, and unmarshalling is the opposite.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe5lBNUf/8QAFxAAAwEAAAAAAAAAAAAAAAAAAAERIP/aAAgBAQABBQKsrK8f/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFhAAAwAAAAAAAAAAAAAAAAAAECAx/9oACAEBAAY/AhE//8QAGBAAAgMAAAAAAAAAAAAAAAAAARAAESH/2gAIAQEAAT8hMMFiLf8A/9oADAMBAAIAAwAAABAXD//EABURAQEAAAAAAAAAAAAAAAAAABAR/9oACAEDAQE/EKf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAEAAgIDAAAAAAAAAAAAAAABABEhMRBBof/aAAgBAQABPxDGAC+0lIaVVNYhRnwwNi6gVrj/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;json-marshalling&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-e8976.jpg 148w,
+/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-63df2.jpg 295w,
+/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-f8fb9.jpg 590w,
+/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;This HttpServer does simple stuff, to sum up all the &lt;code&gt;&quot;score&quot;&lt;/code&gt; sent in HTTP responses, and return the current total, average and number of trials (number of HTTP requests) so far.&lt;/p&gt;
+&lt;p&gt;Let’s define case classes representing to marshall to/unmarshall from JSON:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;//JSON request {&quot;score&quot;: 10} can be unmarshalled to this&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ScoringRequest&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  score&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;//This case class can be marshalled to JSON response {&quot;averageScore&quot;: ... }&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  averageScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  totalScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  numberOfTrials&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;To enable marshlling and unmarshalling, I used &lt;code&gt;SprayJsonSupport&lt;/code&gt; as follows: &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;DefaultJsonProtocol
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; ScoringJsonSupport &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; DefaultJsonProtocol &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; SprayJsonSupport &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; scoringRequestFormat &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jsonFormat1&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ScoringRequest&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; scoreResponseFormat &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jsonFormat3&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And the route becomes like this.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; ScoringJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;scoring&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    post &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      entity&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;as&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ScoringRequest&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; request &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+        updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        complete &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;averageScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; totalScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; numberOfTrials&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;For those who are intersted, &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/akka-http-cassandra/src/main/scala/example/HttpNoPersistentServer.scala&quot;&gt;the full HttpServer code&lt;/a&gt; is as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;io&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;PrintWriter&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; StringWriter&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorSystem
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Route&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stream&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorMaterializer
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Timeout
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Await
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;duration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; HttpNoPersistentServer &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; Directives &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;args&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; ScoringJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorSystem &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;HttpNoPersistentServer&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorMaterializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; timeout&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Timeout &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;seconds
+
+    &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; averageScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; totalScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; numberOfTrials&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      totalScore &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; totalScore &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; score
+      numberOfTrials &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; numberOfTrials &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+      averageScore &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; totalScore &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; numberOfTrials
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+        path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;scoring&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          post &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            entity&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;as&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ScoringRequest&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; request &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+              updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+              complete &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;averageScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; totalScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; numberOfTrials&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+      Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandle&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8095&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;token string&quot;&gt;&quot;Server online at http://localhost:8095/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      Await&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;result&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;whenTerminated&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Duration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Inf&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; t&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Throwable &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; sw &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; StringWriter
+        t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;printStackTrace&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; PrintWriter&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sw&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;getMessage&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        println&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sw&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/wg/wrk/issues/267&quot;&gt;To send a JSON request by wrk&lt;/a&gt;, you need to write a lua script like this: &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;wrk.method = &quot;POST&quot;
+wrk.body   = &apos;{&quot;score&quot;: 10}&apos;
+wrk.headers[&quot;Content-Type&quot;] = &quot;application/json&quot;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;I saved it as &lt;code&gt;wrk-script.lua&lt;/code&gt;, and ran the following command:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;$ wrk -t2 -c100 -d30s  -s wrk-script.lua http://localhost:8095/scoring&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The results were already pasted at the beginning of this article.&lt;/p&gt;
+&lt;h2&gt;2. In-Memory persistence&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB3EvQUgs//8QAGRABAQEAAwAAAAAAAAAAAAAAAQIAESEy/9oACAEBAAEFAuM9EedQJMgf/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGRAAAgMBAAAAAAAAAAAAAAAAAAEQESEx/9oACAEBAAY/Ajk0zEf/xAAaEAADAAMBAAAAAAAAAAAAAAAAAREQIXGB/9oACAEBAAE/IW3fS9MPo9SveJsqIaCP/9oADAMBAAIAAwAAABDL3//EABYRAQEBAAAAAAAAAAAAAAAAAAABIf/aAAgBAwEBPxBMj//EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQIBAT8QUujlw//EABoQAQADAQEBAAAAAAAAAAAAAAEAESExEFH/2gAIAQEAAT8QVrycVsKGz46qJSkqL4iEiYx0Jm6Ps//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;in-memory&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-e8976.jpg 148w,
+/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-63df2.jpg 295w,
+/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-f8fb9.jpg 590w,
+/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Now I’m adding persistence to the system, but before doing it with Cassandra, I’m using in-memory persistence. The persistent actor code is as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ScoringActor &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; PersistentActor &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; ScoringActor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+
+  &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; averageScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; totalScore&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; numberOfTrials&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; persistenceId &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;scoring&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    totalScore &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; totalScore &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; score
+    numberOfTrials &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; numberOfTrials &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+    averageScore &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; totalScore &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; numberOfTrials
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receiveCommand &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; ScoringCommand&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; _sender &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sender&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      persist&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ScoringEvent&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        evt &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;evt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+          _sender &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+            averageScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            totalScore&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            numberOfTrials
+          &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; receiveRecover &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; evt&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ScoringEvent &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+      updateState&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;evt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; ScoringActor &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ScoringCommand&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; ScoringEvent&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;score&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The HttpServer code needs to instantiate the persistent actor (&lt;code&gt;ScoringActor&lt;/code&gt;) and do &lt;code&gt;scoringActor ? ScoringCommand(request.score)&lt;/code&gt; to perform persistence.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; ScoringJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorSystem &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;HttpPersistentServer&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorMaterializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; scoringActor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actorOf&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Props&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ScoringActor&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;scoring&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; timeout&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Timeout &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;seconds
+
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;scoring&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    post &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      entity&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;as&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ScoringRequest&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; request &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt;
+        complete &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;scoringActor &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; ScoringCommand&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;score&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mapTo&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ScoreResponse&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;    
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;here is &lt;code&gt;application.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;akka {
+  loggers = [&quot;akka.event.slf4j.Slf4jLogger&quot;]
+
+  persistence {
+    journal {
+      plugin = &quot;akka.persistence.journal.inmem&quot;
+    }
+    snapshot-store {
+      plugin = &quot;akka.persistence.snapshot-store.local&quot;
+    }
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As in the results we saw earlier, it became slower than JSON marshalling/unmarshalling only, because there is communication between the server and the persistent actor. However, the persistent &lt;strong&gt;actor&lt;/strong&gt; itself is still lightweight, compared to the actual persistence to Cassandra as you saw.&lt;/p&gt;
+&lt;h2&gt;3. Persistence to Cassandra&lt;/h2&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAdxLyAUP/8QAGhAAAgIDAAAAAAAAAAAAAAAAADIBAwIRIf/aAAgBAQABBQLRPIwUsSpP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGBAAAgMAAAAAAAAAAAAAAAAAABABETH/2gAIAQEABj8CMpyv/8QAGhABAQEAAwEAAAAAAAAAAAAAAREAEFFxgf/aAAgBAQABPyFXv3Wsp7nTWvDjZWnvf//aAAwDAQACAAMAAAAQh8//xAAXEQADAQAAAAAAAAAAAAAAAAAAAREh/9oACAEDAQE/EBKYf//EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oACAECAQE/EFf/xAAbEAEAAwEAAwAAAAAAAAAAAAABABEhMRBRkf/aAAgBAQABPxBWvJxWy5egdBGYAKKeGExKT6RiS1Vs/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;cassandra&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-e8976.jpg 148w,
+/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-63df2.jpg 295w,
+/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-f8fb9.jpg 590w,
+/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Finally we do real persistence. application.conf becomes this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;akka {
+  loggers = [&quot;akka.event.slf4j.Slf4jLogger&quot;]
+
+  persistence {
+    journal {
+      plugin = &quot;cassandra-journal&quot;
+    }
+    snapshot-store {
+      plugin = &quot;cassandra-snapshot-store&quot;
+    }
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And you would also need this logback.xml otherwise the log is filled up by a lot of DEBUG level messages from the Cassandra library.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&amp;ltconfiguration&amp;gt
+    &amp;ltappender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&amp;gt
+        &amp;lt!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default --&amp;gt
+        &amp;ltencoder&amp;gt
+            &amp;ltpattern&amp;gt%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&amp;lt/pattern&amp;gt
+        &amp;lt/encoder&amp;gt
+    &amp;lt/appender&amp;gt
+
+    &amp;ltlogger name=&quot;com.datastax.driver.core.Connection&quot;  level=&quot;WARN&quot; additivity=&quot;false&quot; /&amp;gt
+    &amp;ltlogger name=&quot;com.datastax.driver&quot;                  level=&quot;WARN&quot; additivity=&quot;false&quot; /&amp;gt
+
+    &amp;ltroot level=&quot;INFO&quot;&amp;gt
+        &amp;ltappender-ref ref=&quot;STDOUT&quot; /&amp;gt
+    &amp;lt/root&amp;gt
+&amp;lt/configuration&amp;gt&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;No need to change the Scala code.&lt;/p&gt;
+&lt;h2&gt;Lessons learned&lt;/h2&gt;
+&lt;p&gt;Even before conducting the benchmark, it was almost clear that Cassandra would be the bottleneck of the system, as database I/O is typically the performance bottleneck of a web applicaiton system.&lt;/p&gt;
+&lt;p&gt;However, &lt;strong&gt;to know how much the difference is&lt;/strong&gt;, experiment is necessary. So I went through the process on how to distinguish the performance overhead of a single component from all the other , and you can apply the same technique to analyze any component in your system.&lt;/p&gt;
+&lt;p&gt;Next step, I want to dockerize this performance experiment environment so that we can run it in the cloud. Also later on I want to Kubernet-ize this and hopefully the deployment and running of the performance test is just a breeze!!&lt;/p&gt;
+&lt;p&gt;It’s getting interesting to me :)&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Marshalling and Unmarshalling in Akka HTTP at - &lt;a href=&quot;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&quot;&gt;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Persistent actor at - &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;akka-cassandra at &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra&quot;&gt;https://github.com/akka/akka-persistence-cassandra&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TL;DR)&lt;/strong&gt; You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.&lt;/p&gt;
 &lt;p&gt;Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:&lt;/p&gt;
 &lt;ol&gt;

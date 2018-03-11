@@ -45,8 +45,8 @@
       "component---src-layouts-index-js-8a7ceae897423aca5716.js.map"
     ],
     "path---index": [
-      "path---index-34e6eb99ef01a29b5652.js",
-      "path---index-34e6eb99ef01a29b5652.js.map"
+      "path---index-aa14d7c92dfa2eea46db.js",
+      "path---index-aa14d7c92dfa2eea46db.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-52a963c235dc51de7ca8.js",
@@ -70,6 +70,10 @@
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js",
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
     ],
+    "path---benchmarking-akka-http-cassandra-local": [
+      "path---benchmarking-akka-http-cassandra-local-e5e6fa6775fdf7a220b6.js",
+      "path---benchmarking-akka-http-cassandra-local-e5e6fa6775fdf7a220b6.js.map"
+    ],
     "path---executor-and-execution-context": [
       "path---executor-and-execution-context-0187ec5084d8186e278c.js",
       "path---executor-and-execution-context-0187ec5084d8186e278c.js.map"
@@ -83,9 +87,9 @@
       "path---event-adapter-cassandra-d38e77137abead44de02.js.map"
     ],
     "app": [
-      "app-780456590cbf57acee24.js",
+      "app-2b500cac9e0bf0ac5ca6.js",
       "build-js-styles.css",
-      "app-780456590cbf57acee24.js.map",
+      "app-2b500cac9e0bf0ac5ca6.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
