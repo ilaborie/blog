@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:44:10 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:46:09 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
 &lt;p&gt;The last Sunday was a pretty exciting day for me!&lt;/p&gt;
 &lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan.
 And the last Sunday, May 27th was the first occurrence of the hackathon events.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg&quot;
+    href=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -24,12 +24,12 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;20180527231509&quot;
         title=&quot;&quot;
-        src=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg&quot;
-        srcset=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-e8976.jpg 148w,
-/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-63df2.jpg 295w,
-/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg 590w,
-/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-85e3d.jpg 885w,
-/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg 1024w&quot;
+        src=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-e8976.jpg 148w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-63df2.jpg 295w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg 590w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-85e3d.jpg 885w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg 1024w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -40,7 +40,7 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
 
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg&quot;
+    href=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -59,12 +59,12 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;20180527231537&quot;
         title=&quot;&quot;
-        src=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg&quot;
-        srcset=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-e8976.jpg 148w,
-/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-63df2.jpg 295w,
-/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg 590w,
-/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-85e3d.jpg 885w,
-/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg 1024w&quot;
+        src=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-e8976.jpg 148w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-63df2.jpg 295w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg 590w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-85e3d.jpg 885w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg 1024w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -118,7 +118,7 @@ Also we are seeking the best way for remote communication - for now we use Slack
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg&quot;
+    href=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -137,11 +137,11 @@ Also we are seeking the best way for remote communication - for now we use Slack
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;timeshift&quot;
         title=&quot;&quot;
-        src=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg&quot;
-        srcset=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-e8976.jpg 148w,
-/static/timeshift-a02e407c7c8e0528f998c417c288702c-63df2.jpg 295w,
-/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg 590w,
-/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg 640w&quot;
+        src=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-e8976.jpg 148w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-63df2.jpg 295w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg 590w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
