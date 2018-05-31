@@ -7,13 +7,13 @@ date: "2018-06-01T01:31:08.000+0900"
 
 The last Sunday was a pretty exciting day for me!
 
-We started a new community to run OSS Hackathon events regularly in Tokyo, Japan,
+We started a new community to run OSS Hackathon events regularly in Tokyo, Japan.
 And the last Sunday, May 27th was the first occurrence of the hackathon events.
 
 ![20180527231509](./20180527231509.jpg)
 ![20180527231537](./20180527231537.jpg)
 
-On that day, a small group eight attendees and three OSS maintainers worked on their favorite OSS projects,
+On that day, a small group of eight attendees and three OSS maintainers worked on their favorite OSS projects,
 and the attendees tried to contribute to the OSS projects with help from the maintainers. The maintainers who helped the hackathon were:
 
  - [@ko_noike](https://twitter.com/ko_noike), a [GitBucket](https://github.com/gitbucket/gitbucket) maintainer
@@ -24,7 +24,7 @@ where [@seratch](https://twitter.com/seratch) and [@xuwei-k](https://twitter.com
 
 ## The OSS Hackathon community was born out of ScalaMatsuri
 
-Actually we held a similar hackathon event in the past as part of ScalaMatsuri 2018,
+Actually we held a [similar hackathon event in the past as part of ScalaMatsuri 2018](https://jsa.connpass.com/event/79409/),
 and received a great deal of positive feedback was from the attendees and the OSS maintainers.
 
 After ScalaMatsuri OSS Hackathon, there were several people who showed interest in running such OSS Hackathon events in a monthly or bi-monthly basis,
@@ -32,7 +32,7 @@ and we we decided to form up the new community focused on this effort.
 
 ## The outcome of the event
 
-During this four-hour long hackathon, three attendees opened pull requests, and few more attendees were close to create pull requests.
+During this four-hour long hackathon, three attendees opened pull requests, and few more were close to create pull requests.
 I think they would be able to finish the pull requests on a later day.
 
 Some feedback from the attendees were:
@@ -44,8 +44,9 @@ Some feedback from the attendees were:
 - Good opportunity to get focused on just for contribution, for four hours long
 - Advice on writing pull request description was useful
 
-With the feedback in mind, we'll keep making this smoother and easier for attendees to contribute.
-Oh by the way below are lovely picture taken during the break time in the event.
+With the feedback in mind, we'll keep making this hackathon smoother and easier for attendees to contribute.
+
+Oh by the way below are lovely pictures taken during the break time in the event.
 
 <blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="ja" dir="ltr">たこやきを囲むハッカソン <a href="https://twitter.com/hashtag/osshackathon?src=hash&amp;ref_src=twsrc%5Etfw">#osshackathon</a> <a href="https://t.co/IXNP0T84HF">pic.twitter.com/IXNP0T84HF</a></p>&mdash; リチャード　伊真岡 (@RichardImaokaJP) <a href="https://twitter.com/RichardImaokaJP/status/1000640600364924928?ref_src=twsrc%5Etfw">May 27, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
