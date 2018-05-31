@@ -12,6 +12,10 @@
       "path---local-minimal-sender-d60d1b4a0a4b5f61449f.js",
       "path---local-minimal-sender-d60d1b4a0a4b5f61449f.js.map"
     ],
+    "path---benchmarking-with-wrk-container": [
+      "path---benchmarking-with-wrk-container-be9b9899d5a9bdc43106.js",
+      "path---benchmarking-with-wrk-container-be9b9899d5a9bdc43106.js.map"
+    ],
     "path---": [
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
@@ -19,6 +23,10 @@
     "path---remote-minimal-setup": [
       "path---remote-minimal-setup-dba0e397633bbb4f4a34.js",
       "path---remote-minimal-setup-dba0e397633bbb4f4a34.js.map"
+    ],
+    "path---oss-hackathon-1": [
+      "path---oss-hackathon-1-0cb707a145e4055abd24.js",
+      "path---oss-hackathon-1-0cb707a145e4055abd24.js.map"
     ],
     "path---local-minimal-receiver": [
       "path---local-minimal-receiver-341324391631eab7e2dd.js",
@@ -45,8 +53,8 @@
       "component---src-layouts-index-js-8a7ceae897423aca5716.js.map"
     ],
     "path---index": [
-      "path---index-aa14d7c92dfa2eea46db.js",
-      "path---index-aa14d7c92dfa2eea46db.js.map"
+      "path---index-507004080c0bbd51ed50.js",
+      "path---index-507004080c0bbd51ed50.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-52a963c235dc51de7ca8.js",
@@ -87,9 +95,9 @@
       "path---event-adapter-cassandra-d38e77137abead44de02.js.map"
     ],
     "app": [
-      "app-2b500cac9e0bf0ac5ca6.js",
+      "app-ee7553b8e50f170b51c1.js",
       "build-js-styles.css",
-      "app-2b500cac9e0bf0ac5ca6.js.map",
+      "app-ee7553b8e50f170b51c1.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [

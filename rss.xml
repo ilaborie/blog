@@ -1,4 +1,214 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 11 Mar 2018 18:05:30 GMT</lastBuildDate><item><title><![CDATA[Locally Benchmarking Akka HTTP with akka-persistence-cassandra]]></title><description><![CDATA[Overview Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:26:45 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
+&lt;p&gt;The last Sunday was a pretty exciting day for me!&lt;/p&gt;
+&lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan,
+And the last Sunday, May 27th was the first occurrence of the hackathon events.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQD/8QAFgEBAQEAAAAAAAAAAAAAAAAAAQAC/9oADAMBAAIQAxAAAAGZNaWDVl//xAAaEAACAgMAAAAAAAAAAAAAAAABAgMRABIh/9oACAEBAAEFAkk1km5gU0K3Z+C8/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAIAQMBAT8BR//EABURAQEAAAAAAAAAAAAAAAAAAAAS/9oACAECAQE/AVP/xAAcEAACAgIDAAAAAAAAAAAAAAAAARExAhASUXH/2gAIAQEABj8CWCZPeuSJv0s//8QAGhABAAMBAQEAAAAAAAAAAAAAAQARITFBUf/aAAgBAQABPyE7BBbfsaC3W7FhHpEbLrDuaVeIK5P/2gAMAwEAAgADAAAAECwf/8QAFREBAQAAAAAAAAAAAAAAAAAAEQD/2gAIAQMBAT8QGd//xAAXEQADAQAAAAAAAAAAAAAAAAAAAREx/9oACAECAQE/EE5hB//EAB0QAQACAgIDAAAAAAAAAAAAAAEAESFBMVFhgbH/2gAIAQEAAT8QBMY1rx7hV5lFJrSYlv0BNREA3JWAx9lmCYZeq5ibWXlUn//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;20180527231509&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-e8976.jpg 148w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-63df2.jpg 295w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg 590w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-85e3d.jpg 885w,
+/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg 1024w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 75%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAABQq7MZo4P/8QAGxAAAgEFAAAAAAAAAAAAAAAAAQIAAxESEyH/2gAIAQEAAQUCAjUrRCwG5YclJfv/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAaEAACAwEBAAAAAAAAAAAAAAABIQACECJR/9oACAEBAAY/Ag1FnhhuLc5//8QAGhABAAMBAQEAAAAAAAAAAAAAAQARMUEhgf/aAAgBAQABPyFuhTCMLs/ImEdjRW2eXNvXHkay6z//2gAMAwEAAgADAAAAEM/f/8QAFREBAQAAAAAAAAAAAAAAAAAAERD/2gAIAQMBAT8QSf/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAgEBPxBNtL//xAAcEAEBAQEAAgMAAAAAAAAAAAABEQAhMUFRkbH/2gAIAQEAAT8QAOR0Fz4iilv81uzrjPjdZ5dMBuBqTHt9c5gErD3v/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;20180527231537&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-e8976.jpg 148w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-63df2.jpg 295w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg 590w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-85e3d.jpg 885w,
+/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg 1024w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;On that day, a small group eight attendees and three OSS maintainers worked on their favorite OSS projects,
+and the attendees tried to contribute to the OSS projects with help from the maintainers. The maintainers who helped the hackathon were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/ko_noike&quot;&gt;@ko_noike&lt;/a&gt;, a &lt;a href=&quot;https://github.com/gitbucket/gitbucket&quot;&gt;GitBucket&lt;/a&gt; maintainer&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/seratch&quot;&gt;@seratch&lt;/a&gt;, the creator of &lt;a href=&quot;https://github.com/scalikejdbc&quot;&gt;ScalikeJDBC&lt;/a&gt; and &lt;a href=&quot;https://github.com/skinny-framework&quot;&gt;SkinnyFramework&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/xuwei_k&quot;&gt;@xuwei-k&lt;/a&gt;, maintainer of &lt;a href=&quot;https://github.com/scalaz&quot;&gt;Scalaz&lt;/a&gt;, &lt;a href=&quot;https://github.com/argonaut-io&quot;&gt;argonaut-io&lt;/a&gt;, &lt;a href=&quot;https://github.com/scalikejdbc&quot;&gt;ScalikeJDBC&lt;/a&gt;, @&lt;a href=&quot;https://github.com/unfiltered&quot;&gt;unfiltered&lt;/a&gt;, etc and creator of &lt;a href=&quot;https://github.com/scalaprops&quot;&gt;scalaprops&lt;/a&gt;, &lt;a href=&quot;https://github.com/msgpack4z&quot;&gt;msgpack4z projects&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;where &lt;a href=&quot;https://twitter.com/seratch&quot;&gt;@seratch&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/xuwei_k&quot;&gt;@xuwei-k&lt;/a&gt; joined remotely via Slack. Special thanks to the maintainers!!&lt;/p&gt;
+&lt;h2&gt;The OSS Hackathon community was born out of ScalaMatsuri&lt;/h2&gt;
+&lt;p&gt;Actually we held a similar hackathon event in the past as part of ScalaMatsuri 2018,
+and received a great deal of positive feedback was from the attendees and the OSS maintainers.&lt;/p&gt;
+&lt;p&gt;After ScalaMatsuri OSS Hackathon, there were several people who showed interest in running such OSS Hackathon events in a monthly or bi-monthly basis,
+and we we decided to form up the new community focused on this effort.&lt;/p&gt;
+&lt;h2&gt;The outcome of the event&lt;/h2&gt;
+&lt;p&gt;During this four-hour long hackathon, three attendees opened pull requests, and few more attendees were close to create pull requests.
+I think they would be able to finish the pull requests on a later day.&lt;/p&gt;
+&lt;p&gt;Some feedback from the attendees were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Appreciate quick help from the OSS maintainers&lt;/li&gt;
+&lt;li&gt;It would have been even better if there was more introduction in advance about basics in how to contribute to OSS, how to pick issues, etc&lt;/li&gt;
+&lt;li&gt;Interesting to find that each OSS project has different culture and policies in test requirements, code reviews, etc&lt;/li&gt;
+&lt;li&gt;I worked on a seemingly-easy issue but it turned out difficult and tedious!&lt;/li&gt;
+&lt;li&gt;Good opportunity to get focused on just for contribution, for four hours long&lt;/li&gt;
+&lt;li&gt;Advice on writing pull request description was useful&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the feedback in mind, we’ll keep making this smoother and easier for attendees to contribute.
+Oh by the way below are lovely picture taken during the break time in the event.&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; data-partner=&quot;tweetdeck&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;たこやきを囲むハッカソン &lt;a href=&quot;https://twitter.com/hashtag/osshackathon?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#osshackathon&lt;/a&gt; &lt;a href=&quot;https://t.co/IXNP0T84HF&quot;&gt;pic.twitter.com/IXNP0T84HF&lt;/a&gt;&lt;/p&gt;&amp;mdash; リチャード　伊真岡 (@RichardImaokaJP) &lt;a href=&quot;https://twitter.com/RichardImaokaJP/status/1000640600364924928?ref_src=twsrc%5Etfw&quot;&gt;May 27, 2018&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;h2&gt;Slack workspace is avaialble - OSS maintainer’s participation is highly welcome !!&lt;/h2&gt;
+&lt;p&gt;Not only holding hackathon , we also opened a Slack workspace so that people can ask questions or consult with maintainers anytime,
+and even help each other, like what issue to tackle in a certain OSS project, when they get stuck, etc. &lt;a href=&quot;https://join.slack.com/t/osshackathon/shared_invite/enQtMzYwMTIxODQ1Mzk1LWY0Mjk4YWI3MDY4NTQ4NTI3MGQ2M2I3ZTgzY2QzOGRjOTg5YTFlYWU1MGU3MTRmODFkM2IyZGQxNGZlNzlkOTM&quot;&gt;Anyone can join the Slack workspace from this link&lt;/a&gt;,
+and especially participation from OSS maintainers are highly appreciated.&lt;/p&gt;
+&lt;p&gt;Since the community is started from Tokyo, Japan, currently people communicate in Japanese most of the time.
+However, many of us can speak and write English, so please just say hi when you join the workspace,
+and we can use English whenever we talk to people who don’t use Japanese.&lt;/p&gt;
+&lt;p&gt;To involve more OSS maintainers and attendees, I believe we have to offer benefits to both of them.
+For OSS maintainers, the main benefit we can provide is to attract more aspiring contributors and add more activities to their OSS projects.
+For attendees, we should give as many opportunities as possible to communicate and work with OSS maintainers so that the bar to OSS contribution is lowered.&lt;/p&gt;
+&lt;p&gt;We are still in a very early phase of the community and exploring all the possibilities
+to make the community grow, make the collaboration easier with OSS maintainers overseas.
+For example, we might hold a hackathon in more friendly hours for Europe, US or any other part of the world where OSS maintainers live.
+Also we are seeking the best way for remote communication - for now we use Slack but we might encounter a better tool, or a combination different tools.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 31.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAGABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAduAsD//xAAZEAACAwEAAAAAAAAAAAAAAAAAAQIREiL/2gAIAQEAAQUCejojbX//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAZEAACAwEAAAAAAAAAAAAAAAAAkQEhMUH/2gAIAQEABj8C4zIZZ//EABsQAAICAwEAAAAAAAAAAAAAAAERAEExUfCR/9oACAEBAAE/IdYR8xK8vIZChup//9oADAMBAAIAAwAAABADz//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8QP//EABgQAQEBAQEAAAAAAAAAAAAAAAERAFGB/9oACAEBAAE/EFSLhKhlxCwDe+OLAQgq0PN//9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;timeshift&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-e8976.jpg 148w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-63df2.jpg 295w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg 590w,
+/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Probably for communication with maintainers overseas, we don’t need to do that synchronously - if that make things easier for the maintainers,
+we don’t need the maintainers to be available during the hackathon hours, but the attendees will only communicate with them before and after the hackathon.&lt;/p&gt;
+&lt;h2&gt;The next hackathon …&lt;/h2&gt;
+&lt;p&gt;We are planning the next hackathon event in Tokyo some time at the end of June, yet to be decided.
+For now it’ll most likely be held in a similar format to the first one on May 27th,
+but we might change the format to attract maintainers in other countries.&lt;/p&gt;
+&lt;p&gt;If any of you are interested in this continuous effort, please let me know!! You can talk to me on Twitter
+by replying to me, or via Twitter DM as I can receive it from anyone.&lt;/p&gt;
+&lt;p&gt;Cheers!
+Richard&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Benchmarking Akka HTTP with wrk containers]]></title><description><![CDATA[Overview wrk and Akka HTTP Dockerize wrk, with formatting tweaks Dockerize Akka HTTP  Kubernetise wrk and akka http - next>? survey about…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;wrk and Akka HTTP&lt;/li&gt;
+&lt;li&gt;Dockerize wrk, with formatting tweaks&lt;/li&gt;
+&lt;li&gt;Dockerize Akka HTTP &lt;/li&gt;
+&lt;li&gt;Kubernetise wrk and akka http - next&gt;? survey about local Kubernetes on Windows?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/getting-started-guides/minikube/&quot;&gt;https://kubernetes.io/docs/getting-started-guides/minikube/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;command prompt with admin right&lt;/p&gt;
+&lt;p&gt;eval $(minikube docker-env)
+C:\WINDOWS\system32&gt;minikube docker-env
+SET DOCKER&lt;em&gt;TLS&lt;/em&gt;VERIFY=1
+SET DOCKER&lt;em&gt;HOST=tcp://192.168.11.11:2376
+SET DOCKER&lt;/em&gt;CERT&lt;em&gt;PATH=C:\Users\nishyu.minikube\certs
+SET DOCKER&lt;/em&gt;API_VERSION=1.23
+REM Run this command to configure your shell:
+REM @FOR /f “tokens=*” %i IN (‘minikube docker-env’) DO @%i&lt;/p&gt;
+&lt;p&gt;docker images
+C:\WINDOWS\system32&gt;docker images
+REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
+hello-node                                    v1                  3f944e08fa68        6 days ago          655MB
+alpine                                        3.4                 c7fc7faf8c28        2 months ago        4.82MB
+k8s.gcr.io/kubernetes-dashboard-amd64         v1.8.1              e94d2f21bc0c        3 months ago        121MB
+gcr.io/google-containers/kube-addon-manager   v6.5                d166ffa9201a        4 months ago        79.5MB
+gcr.io/k8s-minikube/storage-provisioner       v1.8.1              4689081edb10        4 months ago        80.8MB
+k8s.gcr.io/k8s-dns-sidecar-amd64              1.14.5              fed89e8b4248        6 months ago        41.8MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64             1.14.5              512cd7425a73        6 months ago        49.4MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64        1.14.5              459944ce8cc4        6 months ago        41.4MB
+node                                          6.9.2               faaadb4aaf9b        15 months ago       655MB
+k8s.gcr.io/nginx-slim                         0.8                 18ea23a675da        21 months ago       110MB
+gcr.io/google_containers/pause-amd64          3.0                 99e59f495ffa        23 months ago       747kB
+nginx                                         1.7.9               84581e99d807        3 years ago         91.7MB&lt;/p&gt;
+&lt;p&gt;タグはlatest以外にする必要があることに注意。でないと、k8sはregistryからイメージをpullしてこようとしてしまいます。
+(&lt;a href=&quot;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&quot;&gt;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;docker run myrepository:mytag
+ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 &lt;/p&gt;
+&lt;h1&gt;CMD will be ignored&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag arg1 arg2
+ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 arg1 arg2&lt;/p&gt;
+&lt;h1&gt;arg1 arg2 will be apppeneded to ENTRYPOINT, and CMD will be overrided&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag arg1 arg2
+ENTRYPOINT: command entarg1 entarg2 # shell form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 &lt;/p&gt;
+&lt;h1&gt;ETRYPOINT in shell form prevents any CMD or run arguments from being used&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag cmd&lt;/p&gt;
+&lt;p&gt;docker run myrepository:mytag cmd arg1 arg2&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Locally Benchmarking Akka HTTP with akka-persistence-cassandra]]></title><description><![CDATA[Overview Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up benchmarking environment for Akka and Akka HTTP. I am going to add persistence to Cassandra to the system, to see how the benchmark figures are affected.&lt;/p&gt;
 &lt;p&gt;The source code is available &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-cassandra&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
