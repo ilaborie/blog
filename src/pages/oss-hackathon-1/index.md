@@ -81,8 +81,8 @@ We are planning the next hackathon event in Tokyo some time at the end of June, 
 For now it'll most likely be held in a similar format to the first one on May 27th,
 but we might change the format to attract maintainers in other countries.
 
-If any of you are interested in this continuous effort, please let me know!! You can talk to me on Twitter
-by replying to me, or via Twitter DM as I can receive it from anyone.
+If any of you are interested in this continuous effort, please join [our Slack workspace](https://join.slack.com/t/osshackathon/shared_invite/enQtMzYwMTIxODQ1Mzk1LWY0Mjk4YWI3MDY4NTQ4NTI3MGQ2M2I3ZTgzY2QzOGRjOTg5YTFlYWU1MGU3MTRmODFkM2IyZGQxNGZlNzlkOTM), or just let me know!!
+You can talk to me on [Twitter](https://twitter.com/richardimaoka) by replying to me, or via Twitter DM as I can receive it from anyone on Twitter.
 
 Cheers!
 Richard
