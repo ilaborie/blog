@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:26:45 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:40:03 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
 &lt;p&gt;The last Sunday was a pretty exciting day for me!&lt;/p&gt;
-&lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan,
+&lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan.
 And the last Sunday, May 27th was the first occurrence of the hackathon events.&lt;/p&gt;
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg&quot;
+    href=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -24,12 +24,12 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;20180527231509&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-e8976.jpg 148w,
-/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-63df2.jpg 295w,
-/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg 590w,
-/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-85e3d.jpg 885w,
-/blog/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg 1024w&quot;
+        src=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg&quot;
+        srcset=&quot;/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-e8976.jpg 148w,
+/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-63df2.jpg 295w,
+/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-f8fb9.jpg 590w,
+/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-85e3d.jpg 885w,
+/static/20180527231509-ca114cdb1c349edc49756f924c8443cb-8c50e.jpg 1024w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -40,7 +40,7 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
 
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg&quot;
+    href=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -59,12 +59,12 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;20180527231537&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-e8976.jpg 148w,
-/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-63df2.jpg 295w,
-/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg 590w,
-/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-85e3d.jpg 885w,
-/blog/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg 1024w&quot;
+        src=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg&quot;
+        srcset=&quot;/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-e8976.jpg 148w,
+/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-63df2.jpg 295w,
+/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-f8fb9.jpg 590w,
+/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-85e3d.jpg 885w,
+/static/20180527231537-e603fc486dc97f3820c757ff9cd3b596-8c50e.jpg 1024w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -72,7 +72,7 @@ And the last Sunday, May 27th was the first occurrence of the hackathon events.&
   
   &lt;/a&gt;
     &lt;/p&gt;
-&lt;p&gt;On that day, a small group eight attendees and three OSS maintainers worked on their favorite OSS projects,
+&lt;p&gt;On that day, a small group of eight attendees and three OSS maintainers worked on their favorite OSS projects,
 and the attendees tried to contribute to the OSS projects with help from the maintainers. The maintainers who helped the hackathon were:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://twitter.com/ko_noike&quot;&gt;@ko_noike&lt;/a&gt;, a &lt;a href=&quot;https://github.com/gitbucket/gitbucket&quot;&gt;GitBucket&lt;/a&gt; maintainer&lt;/li&gt;
@@ -81,12 +81,12 @@ and the attendees tried to contribute to the OSS projects with help from the mai
 &lt;/ul&gt;
 &lt;p&gt;where &lt;a href=&quot;https://twitter.com/seratch&quot;&gt;@seratch&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/xuwei_k&quot;&gt;@xuwei-k&lt;/a&gt; joined remotely via Slack. Special thanks to the maintainers!!&lt;/p&gt;
 &lt;h2&gt;The OSS Hackathon community was born out of ScalaMatsuri&lt;/h2&gt;
-&lt;p&gt;Actually we held a similar hackathon event in the past as part of ScalaMatsuri 2018,
+&lt;p&gt;Actually we held a &lt;a href=&quot;https://jsa.connpass.com/event/79409/&quot;&gt;similar hackathon event in the past as part of ScalaMatsuri 2018&lt;/a&gt;,
 and received a great deal of positive feedback was from the attendees and the OSS maintainers.&lt;/p&gt;
 &lt;p&gt;After ScalaMatsuri OSS Hackathon, there were several people who showed interest in running such OSS Hackathon events in a monthly or bi-monthly basis,
 and we we decided to form up the new community focused on this effort.&lt;/p&gt;
 &lt;h2&gt;The outcome of the event&lt;/h2&gt;
-&lt;p&gt;During this four-hour long hackathon, three attendees opened pull requests, and few more attendees were close to create pull requests.
+&lt;p&gt;During this four-hour long hackathon, three attendees opened pull requests, and few more were close to create pull requests.
 I think they would be able to finish the pull requests on a later day.&lt;/p&gt;
 &lt;p&gt;Some feedback from the attendees were:&lt;/p&gt;
 &lt;ul&gt;
@@ -97,8 +97,8 @@ I think they would be able to finish the pull requests on a later day.&lt;/p&gt;
 &lt;li&gt;Good opportunity to get focused on just for contribution, for four hours long&lt;/li&gt;
 &lt;li&gt;Advice on writing pull request description was useful&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;With the feedback in mind, we’ll keep making this smoother and easier for attendees to contribute.
-Oh by the way below are lovely picture taken during the break time in the event.&lt;/p&gt;
+&lt;p&gt;With the feedback in mind, we’ll keep making this hackathon smoother and easier for attendees to contribute.&lt;/p&gt;
+&lt;p&gt;Oh by the way below are lovely pictures taken during the break time in the event.&lt;/p&gt;
 &lt;blockquote class=&quot;twitter-tweet&quot; data-partner=&quot;tweetdeck&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;たこやきを囲むハッカソン &lt;a href=&quot;https://twitter.com/hashtag/osshackathon?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#osshackathon&lt;/a&gt; &lt;a href=&quot;https://t.co/IXNP0T84HF&quot;&gt;pic.twitter.com/IXNP0T84HF&lt;/a&gt;&lt;/p&gt;&amp;mdash; リチャード　伊真岡 (@RichardImaokaJP) &lt;a href=&quot;https://twitter.com/RichardImaokaJP/status/1000640600364924928?ref_src=twsrc%5Etfw&quot;&gt;May 27, 2018&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 &lt;h2&gt;Slack workspace is avaialble - OSS maintainer’s participation is highly welcome !!&lt;/h2&gt;
@@ -118,7 +118,7 @@ Also we are seeking the best way for remote communication - for now we use Slack
 &lt;p&gt;
   &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg&quot;
+    href=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -137,11 +137,11 @@ Also we are seeking the best way for remote communication - for now we use Slack
         style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
         alt=&quot;timeshift&quot;
         title=&quot;&quot;
-        src=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg&quot;
-        srcset=&quot;/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-e8976.jpg 148w,
-/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-63df2.jpg 295w,
-/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg 590w,
-/blog/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg 640w&quot;
+        src=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg&quot;
+        srcset=&quot;/static/timeshift-a02e407c7c8e0528f998c417c288702c-e8976.jpg 148w,
+/static/timeshift-a02e407c7c8e0528f998c417c288702c-63df2.jpg 295w,
+/static/timeshift-a02e407c7c8e0528f998c417c288702c-f8fb9.jpg 590w,
+/static/timeshift-a02e407c7c8e0528f998c417c288702c-db559.jpg 640w&quot;
         sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
       /&gt;
     &lt;/span&gt;
@@ -158,57 +158,7 @@ but we might change the format to attract maintainers in other countries.&lt;/p&
 &lt;p&gt;If any of you are interested in this continuous effort, please let me know!! You can talk to me on Twitter
 by replying to me, or via Twitter DM as I can receive it from anyone.&lt;/p&gt;
 &lt;p&gt;Cheers!
-Richard&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Benchmarking Akka HTTP with wrk containers]]></title><description><![CDATA[Overview wrk and Akka HTTP Dockerize wrk, with formatting tweaks Dockerize Akka HTTP  Kubernetise wrk and akka http - next>? survey about…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;wrk and Akka HTTP&lt;/li&gt;
-&lt;li&gt;Dockerize wrk, with formatting tweaks&lt;/li&gt;
-&lt;li&gt;Dockerize Akka HTTP &lt;/li&gt;
-&lt;li&gt;Kubernetise wrk and akka http - next&gt;? survey about local Kubernetes on Windows?&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/getting-started-guides/minikube/&quot;&gt;https://kubernetes.io/docs/getting-started-guides/minikube/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;command prompt with admin right&lt;/p&gt;
-&lt;p&gt;eval $(minikube docker-env)
-C:\WINDOWS\system32&gt;minikube docker-env
-SET DOCKER&lt;em&gt;TLS&lt;/em&gt;VERIFY=1
-SET DOCKER&lt;em&gt;HOST=tcp://192.168.11.11:2376
-SET DOCKER&lt;/em&gt;CERT&lt;em&gt;PATH=C:\Users\nishyu.minikube\certs
-SET DOCKER&lt;/em&gt;API_VERSION=1.23
-REM Run this command to configure your shell:
-REM @FOR /f “tokens=*” %i IN (‘minikube docker-env’) DO @%i&lt;/p&gt;
-&lt;p&gt;docker images
-C:\WINDOWS\system32&gt;docker images
-REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
-hello-node                                    v1                  3f944e08fa68        6 days ago          655MB
-alpine                                        3.4                 c7fc7faf8c28        2 months ago        4.82MB
-k8s.gcr.io/kubernetes-dashboard-amd64         v1.8.1              e94d2f21bc0c        3 months ago        121MB
-gcr.io/google-containers/kube-addon-manager   v6.5                d166ffa9201a        4 months ago        79.5MB
-gcr.io/k8s-minikube/storage-provisioner       v1.8.1              4689081edb10        4 months ago        80.8MB
-k8s.gcr.io/k8s-dns-sidecar-amd64              1.14.5              fed89e8b4248        6 months ago        41.8MB
-k8s.gcr.io/k8s-dns-kube-dns-amd64             1.14.5              512cd7425a73        6 months ago        49.4MB
-k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64        1.14.5              459944ce8cc4        6 months ago        41.4MB
-node                                          6.9.2               faaadb4aaf9b        15 months ago       655MB
-k8s.gcr.io/nginx-slim                         0.8                 18ea23a675da        21 months ago       110MB
-gcr.io/google_containers/pause-amd64          3.0                 99e59f495ffa        23 months ago       747kB
-nginx                                         1.7.9               84581e99d807        3 years ago         91.7MB&lt;/p&gt;
-&lt;p&gt;タグはlatest以外にする必要があることに注意。でないと、k8sはregistryからイメージをpullしてこようとしてしまいます。
-(&lt;a href=&quot;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&quot;&gt;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;docker run myrepository:mytag
-ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 &lt;/p&gt;
-&lt;h1&gt;CMD will be ignored&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag arg1 arg2
-ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 arg1 arg2&lt;/p&gt;
-&lt;h1&gt;arg1 arg2 will be apppeneded to ENTRYPOINT, and CMD will be overrided&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag arg1 arg2
-ENTRYPOINT: command entarg1 entarg2 # shell form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 &lt;/p&gt;
-&lt;h1&gt;ETRYPOINT in shell form prevents any CMD or run arguments from being used&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag cmd&lt;/p&gt;
-&lt;p&gt;docker run myrepository:mytag cmd arg1 arg2&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Locally Benchmarking Akka HTTP with akka-persistence-cassandra]]></title><description><![CDATA[Overview Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+Richard&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Locally Benchmarking Akka HTTP with akka-persistence-cassandra]]></title><description><![CDATA[Overview Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-akka-http-cassandra-local/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up benchmarking environment for Akka and Akka HTTP. I am going to add persistence to Cassandra to the system, to see how the benchmark figures are affected.&lt;/p&gt;
 &lt;p&gt;The source code is available &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-cassandra&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
@@ -777,7 +727,57 @@ wrk.headers[&quot;Content-Type&quot;] = &quot;application/json&quot;&lt;/code&gt
 &lt;li&gt;Marshalling and Unmarshalling in Akka HTTP at - &lt;a href=&quot;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&quot;&gt;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Persistent actor at - &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;akka-cassandra at &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra&quot;&gt;https://github.com/akka/akka-persistence-cassandra&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Benchmarking Akka HTTP with wrk containers]]></title><description><![CDATA[Overview wrk and Akka HTTP Dockerize wrk, with formatting tweaks Dockerize Akka HTTP  Kubernetise wrk and akka http - next>? survey about…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;wrk and Akka HTTP&lt;/li&gt;
+&lt;li&gt;Dockerize wrk, with formatting tweaks&lt;/li&gt;
+&lt;li&gt;Dockerize Akka HTTP &lt;/li&gt;
+&lt;li&gt;Kubernetise wrk and akka http - next&gt;? survey about local Kubernetes on Windows?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/getting-started-guides/minikube/&quot;&gt;https://kubernetes.io/docs/getting-started-guides/minikube/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;command prompt with admin right&lt;/p&gt;
+&lt;p&gt;eval $(minikube docker-env)
+C:\WINDOWS\system32&gt;minikube docker-env
+SET DOCKER&lt;em&gt;TLS&lt;/em&gt;VERIFY=1
+SET DOCKER&lt;em&gt;HOST=tcp://192.168.11.11:2376
+SET DOCKER&lt;/em&gt;CERT&lt;em&gt;PATH=C:\Users\nishyu.minikube\certs
+SET DOCKER&lt;/em&gt;API_VERSION=1.23
+REM Run this command to configure your shell:
+REM @FOR /f “tokens=*” %i IN (‘minikube docker-env’) DO @%i&lt;/p&gt;
+&lt;p&gt;docker images
+C:\WINDOWS\system32&gt;docker images
+REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
+hello-node                                    v1                  3f944e08fa68        6 days ago          655MB
+alpine                                        3.4                 c7fc7faf8c28        2 months ago        4.82MB
+k8s.gcr.io/kubernetes-dashboard-amd64         v1.8.1              e94d2f21bc0c        3 months ago        121MB
+gcr.io/google-containers/kube-addon-manager   v6.5                d166ffa9201a        4 months ago        79.5MB
+gcr.io/k8s-minikube/storage-provisioner       v1.8.1              4689081edb10        4 months ago        80.8MB
+k8s.gcr.io/k8s-dns-sidecar-amd64              1.14.5              fed89e8b4248        6 months ago        41.8MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64             1.14.5              512cd7425a73        6 months ago        49.4MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64        1.14.5              459944ce8cc4        6 months ago        41.4MB
+node                                          6.9.2               faaadb4aaf9b        15 months ago       655MB
+k8s.gcr.io/nginx-slim                         0.8                 18ea23a675da        21 months ago       110MB
+gcr.io/google_containers/pause-amd64          3.0                 99e59f495ffa        23 months ago       747kB
+nginx                                         1.7.9               84581e99d807        3 years ago         91.7MB&lt;/p&gt;
+&lt;p&gt;タグはlatest以外にする必要があることに注意。でないと、k8sはregistryからイメージをpullしてこようとしてしまいます。
+(&lt;a href=&quot;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&quot;&gt;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;docker run myrepository:mytag
+ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 &lt;/p&gt;
+&lt;h1&gt;CMD will be ignored&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag arg1 arg2
+ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 arg1 arg2&lt;/p&gt;
+&lt;h1&gt;arg1 arg2 will be apppeneded to ENTRYPOINT, and CMD will be overrided&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag arg1 arg2
+ENTRYPOINT: command entarg1 entarg2 # shell form
+CMD       : whatever
+RESULT    : command entarg1 entarg2 &lt;/p&gt;
+&lt;h1&gt;ETRYPOINT in shell form prevents any CMD or run arguments from being used&lt;/h1&gt;
+&lt;p&gt;docker run myrepository:mytag cmd&lt;/p&gt;
+&lt;p&gt;docker run myrepository:mytag cmd arg1 arg2&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TL;DR)&lt;/strong&gt; You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.&lt;/p&gt;
 &lt;p&gt;Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:&lt;/p&gt;
 &lt;ol&gt;
