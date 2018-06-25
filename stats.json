@@ -12,10 +12,6 @@
       "path---local-minimal-sender-d60d1b4a0a4b5f61449f.js",
       "path---local-minimal-sender-d60d1b4a0a4b5f61449f.js.map"
     ],
-    "path---benchmarking-with-wrk-container": [
-      "path---benchmarking-with-wrk-container-be9b9899d5a9bdc43106.js",
-      "path---benchmarking-with-wrk-container-be9b9899d5a9bdc43106.js.map"
-    ],
     "path---": [
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
@@ -53,8 +49,8 @@
       "component---src-layouts-index-js-8a7ceae897423aca5716.js.map"
     ],
     "path---index": [
-      "path---index-62e8a1b28697c8dab703.js",
-      "path---index-62e8a1b28697c8dab703.js.map"
+      "path---index-31c113fc6e6d7d100113.js",
+      "path---index-31c113fc6e6d7d100113.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-52a963c235dc51de7ca8.js",
@@ -95,9 +91,9 @@
       "path---event-adapter-cassandra-d38e77137abead44de02.js.map"
     ],
     "app": [
-      "app-9126ac77074318748f63.js",
+      "app-01cd8c00bbdd8a128f4a.js",
       "build-js-styles.css",
-      "app-9126ac77074318748f63.js.map",
+      "app-01cd8c00bbdd8a128f4a.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [

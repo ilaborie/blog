@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 31 May 2018 21:46:09 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 25 Jun 2018 21:51:18 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
 &lt;p&gt;The last Sunday was a pretty exciting day for me!&lt;/p&gt;
 &lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan.
 And the last Sunday, May 27th was the first occurrence of the hackathon events.&lt;/p&gt;
@@ -727,57 +727,7 @@ wrk.headers[&quot;Content-Type&quot;] = &quot;application/json&quot;&lt;/code&gt
 &lt;li&gt;Marshalling and Unmarshalling in Akka HTTP at - &lt;a href=&quot;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&quot;&gt;https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Persistent actor at - &lt;a href=&quot;https://doc.akka.io/docs/akka/2.5/persistence.html&quot;&gt;https://doc.akka.io/docs/akka/2.5/persistence.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;akka-cassandra at &lt;a href=&quot;https://github.com/akka/akka-persistence-cassandra&quot;&gt;https://github.com/akka/akka-persistence-cassandra&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Benchmarking Akka HTTP with wrk containers]]></title><description><![CDATA[Overview wrk and Akka HTTP Dockerize wrk, with formatting tweaks Dockerize Akka HTTP  Kubernetise wrk and akka http - next>? survey about…]]></description><link>https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//benchmarking-with-wrk-container/</guid><pubDate>Sun, 11 Mar 2018 21:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;wrk and Akka HTTP&lt;/li&gt;
-&lt;li&gt;Dockerize wrk, with formatting tweaks&lt;/li&gt;
-&lt;li&gt;Dockerize Akka HTTP &lt;/li&gt;
-&lt;li&gt;Kubernetise wrk and akka http - next&gt;? survey about local Kubernetes on Windows?&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;a href=&quot;https://kubernetes.io/docs/getting-started-guides/minikube/&quot;&gt;https://kubernetes.io/docs/getting-started-guides/minikube/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;command prompt with admin right&lt;/p&gt;
-&lt;p&gt;eval $(minikube docker-env)
-C:\WINDOWS\system32&gt;minikube docker-env
-SET DOCKER&lt;em&gt;TLS&lt;/em&gt;VERIFY=1
-SET DOCKER&lt;em&gt;HOST=tcp://192.168.11.11:2376
-SET DOCKER&lt;/em&gt;CERT&lt;em&gt;PATH=C:\Users\nishyu.minikube\certs
-SET DOCKER&lt;/em&gt;API_VERSION=1.23
-REM Run this command to configure your shell:
-REM @FOR /f “tokens=*” %i IN (‘minikube docker-env’) DO @%i&lt;/p&gt;
-&lt;p&gt;docker images
-C:\WINDOWS\system32&gt;docker images
-REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
-hello-node                                    v1                  3f944e08fa68        6 days ago          655MB
-alpine                                        3.4                 c7fc7faf8c28        2 months ago        4.82MB
-k8s.gcr.io/kubernetes-dashboard-amd64         v1.8.1              e94d2f21bc0c        3 months ago        121MB
-gcr.io/google-containers/kube-addon-manager   v6.5                d166ffa9201a        4 months ago        79.5MB
-gcr.io/k8s-minikube/storage-provisioner       v1.8.1              4689081edb10        4 months ago        80.8MB
-k8s.gcr.io/k8s-dns-sidecar-amd64              1.14.5              fed89e8b4248        6 months ago        41.8MB
-k8s.gcr.io/k8s-dns-kube-dns-amd64             1.14.5              512cd7425a73        6 months ago        49.4MB
-k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64        1.14.5              459944ce8cc4        6 months ago        41.4MB
-node                                          6.9.2               faaadb4aaf9b        15 months ago       655MB
-k8s.gcr.io/nginx-slim                         0.8                 18ea23a675da        21 months ago       110MB
-gcr.io/google_containers/pause-amd64          3.0                 99e59f495ffa        23 months ago       747kB
-nginx                                         1.7.9               84581e99d807        3 years ago         91.7MB&lt;/p&gt;
-&lt;p&gt;タグはlatest以外にする必要があることに注意。でないと、k8sはregistryからイメージをpullしてこようとしてしまいます。
-(&lt;a href=&quot;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&quot;&gt;http://kubernetes.io/docs/getting-started-guides/minikube/#reusing-the-docker-daemon&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;docker run myrepository:mytag
-ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 &lt;/p&gt;
-&lt;h1&gt;CMD will be ignored&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag arg1 arg2
-ENTRYPOINT: [command “entarg1” “entarg2”] # exec form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 arg1 arg2&lt;/p&gt;
-&lt;h1&gt;arg1 arg2 will be apppeneded to ENTRYPOINT, and CMD will be overrided&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag arg1 arg2
-ENTRYPOINT: command entarg1 entarg2 # shell form
-CMD       : whatever
-RESULT    : command entarg1 entarg2 &lt;/p&gt;
-&lt;h1&gt;ETRYPOINT in shell form prevents any CMD or run arguments from being used&lt;/h1&gt;
-&lt;p&gt;docker run myrepository:mytag cmd&lt;/p&gt;
-&lt;p&gt;docker run myrepository:mytag cmd arg1 arg2&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Survey on Swagger with Akka HTTP]]></title><description><![CDATA[Overview TL;DR)  You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing…]]></description><link>https://richardimaoka.github.io/blog//swagger-akka-http/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//swagger-akka-http/</guid><pubDate>Sat, 10 Mar 2018 16:31:00 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TL;DR)&lt;/strong&gt; You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.&lt;/p&gt;
 &lt;p&gt;Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:&lt;/p&gt;
 &lt;ol&gt;
