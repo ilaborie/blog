@@ -1,5 +1,9 @@
 Scala installation and setup
 
+Background info
+  - what version to use, what variations exist like MySQL innoDB, NDB (no, nothing, single akka ver)
+  - where doc resides - e.g. for Cassandra, Datastax doc is much better than Apache Cassandra page
+
 What to do X (in HTTP concepts) with Akka HTTP
   - CORS
   - marshall/unmarshal

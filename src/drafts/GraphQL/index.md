@@ -1,0 +1,3 @@
+すばらしきGraphQLのSEKAIへようこそ
+https://speakerdeck.com/gfx/subarasikigraphqlfalsesekaiheyoukoso
+
