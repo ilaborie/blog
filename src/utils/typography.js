@@ -5,6 +5,16 @@ Wordpress2016.overrideThemeStyles = () => ({
   'a.gatsby-resp-image-link': {
     boxShadow: 'none',
   },
+  'p': {
+    marginBottom: '1em',
+  },
+  'li': {
+    marginBottom: '0em',
+  },
+  'code': {
+    fontSize: '1em',
+    backgroundColor: '#fdf6e3',
+  },
 })
 
 const typography = new Typography(Wordpress2016)
