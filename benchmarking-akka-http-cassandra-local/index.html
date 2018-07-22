@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-eb745b83df7613925712.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js" as="script"/><link rel="preload" href="/blog/path---benchmarking-akka-http-cassandra-local-889e7daeb2ee75f0b266.js" as="script"/><link rel="preload" href="/blog/app-e36b8fb34c6b276fa22f.js" as="script"/><link rel="preload" href="/blog/commons-85d973a0b17b2f0d3c45.js" as="script"/><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-e36b8fb34c6b276fa22f.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-a4372d8aab423f26d2d4.js","107818501498521":"component---src-templates-blog-post-js-6f6e557e669577e2753e.js","35783957827783":"component---src-pages-index-js-33b58c50c1b11bf71654.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-f7c6e001c20a8eaae7e2.js","160326069391746":"path---serializer-minimal-082ffcdf3c53d1b6ff63.js","240229599778477":"path---akka-behavior-levels-b5c64720008bc588c90d.js","205347915900230":"path---hello-world-http-bench-ea4c5153c75b2df289d0.js","218392457165648":"path---akka-http-quickstart-d7b35e32e912ae10cba4.js","90106736999892":"path---persistent-actor-minimal-b567a086afe0680e9178.js","235964179464078":"path---dispatcher-behavior-add184d47bd6f297e43a.js","36029449993048":"path---local-minimal-sender-a3c98066337814cb72fb.js","224718722256965":"path---event-adapter-cassandra-953189c8a5f823ffee75.js","217632986566844":"path---executor-and-execution-context-daa3468bd376f0ba84b6.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-889e7daeb2ee75f0b266.js","82537549859403":"path---oss-hackathon-1-79c14b82e972fb822c6e.js","86659390886147":"path---local-minimal-receiver-faf30137107cc060787b.js","165329427061039":"path---mailbox-and-fork-join-task-1a2da1cf0ed6a9b0ad97.js","107690442534757":"path---remote-minimal-receiver-41e206ff110c06cc738f.js","221230463047462":"path---swagger-akka-http-4d3beb3c5950064c9cc6.js","241179671101829":"path---remote-minimal-sender-9ffd4d742325b14097ec.js","26725176786023":"path---persistent-actor-minimal-sql-89e21577da5d29b3fe77.js","142629428675168":"path---index-7829676675d5bf4d236e.js","114276838955818":"component---src-layouts-index-js-eb745b83df7613925712.js"}/*]]>*/</script><link rel="alternate" type="application/rss+xml" href="/rss.xml"/><title data-react-helmet="true">Locally Benchmarking Akka HTTP with akka-persistence-cassandra | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75em 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><script>/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",["/blog/commons-85d973a0b17b2f0d3c45.js","/blog/app-e36b8fb34c6b276fa22f.js","/blog/path---benchmarking-akka-http-cassandra-local-889e7daeb2ee75f0b266.js","/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js","/blog/component---src-layouts-index-js-eb745b83df7613925712.js"])/*]]>*/</script><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="1925693390"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Locally Benchmarking Akka HTTP with akka-persistence-cassandra</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">March 11, 2018</p><div data-reactid="8"><h2>Overview</h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js" as="script"/><link rel="preload" href="/blog/path---benchmarking-akka-http-cassandra-local-320a98c23faa1d40e634.js" as="script"/><link rel="preload" href="/blog/app-3694e691a40a2920cb14.js" as="script"/><link rel="preload" href="/blog/commons-2174e0bf62fcadcdb7a6.js" as="script"/><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml"/><title data-react-helmet="true">Locally Benchmarking Akka HTTP with akka-persistence-cassandra | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="-1788938667"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Locally Benchmarking Akka HTTP with akka-persistence-cassandra</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">March 11, 2018</p><div data-reactid="8"><h2>Overview</h2>
 <p>Although what I tried here does not give realistic or useful results, this is another step forward in my experiment to set up benchmarking environment for Akka and Akka HTTP. I am going to add persistence to Cassandra to the system, to see how the benchmark figures are affected.</p>
 <p>The source code is available <a href="https://github.com/richardimaoka/resources/tree/master/akka-http-cassandra">here</a></p>
 <h2>Results</h2>
@@ -9,40 +9,7 @@
 <li>Akka HTTP server with JSON marshalling/unmarshalling, and akka-persistence-cassandra</li>
 </ol>
 <p>Like explained in the previous article, the 1st attempt in benchmarking could be affected by incomplete JIT compliation. So I only show results from the 2nd and 3rd attempts here.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-320d7.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 61.47403685092128%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA80lEQVQoz2P48ePHly9f/hIN/v37d/fpl48fP3769InhP+ng0/VLn8AAoXnWlme5nRe+ntj399sXIk1h+PPnz69fv4CsvtWPw1PW3bEU+nn3GrGaf//+/fPnT6Bn+lY9Ck8Gaf5++wp+PyM0w1mYNn9cv+DH9Qv4bMaq+fSNT46FFy67qL9fNhWfZqCbIVGF7Oyjl98bp5256Kz+bukUkp19/OpHoOZLzoRsplQzMMCB6WzXicdzFx+/3Vv18cmDu08+9i69fmNy6/szR4BS1++9fnDx0oc714FsoMux2Izsse/fv0PS0Ldv34BSQH+i+RYCAA85jG34HPlcAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="result-throughput"
-        title=""
-        src="/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-fb8a0.png"
-        srcset="/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-1a291.png 148w,
-/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-2bc4a.png 295w,
-/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-fb8a0.png 590w,
-/blog/static/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2-320d7.png 597w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/result-throughput-3544dab712b097d012ff0e9a0bdcd1c2.png" alt="result-throughput"></p>
 <table>
 <thead>
 <tr>
@@ -68,75 +35,9 @@
 </tbody>
 </table>
 <p>Comparing the throughput, obviously adding Cassandra and <strong>wait the HTTP response until Cassandra persistence is done</strong> makes the performance order of magnitude going down, and the CPU usage for 3 were around 40% although that of 1 and 2 topped at 100% like the prevoius article. (i.e.) The bottleneck is shifted to database I/O from CPU resource competition between the web client and server.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-d30b5.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 84.98452012383902%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAARCAIAAABSJhvpAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACAElEQVQ4y4VTy27bMBDk//9Uc2wuRYIeAgd25FqyHpRIkVw+9bA7kurABzcZUCtC5CyHOytWCHOu+KmobRjiePl2+DRhJ4ZxkRUV503DG15VVbwhrLi94jAMl0dg2emcHY9SiHbFx+EDsa5rKSSwTKTs+/4xeV92tQ6/fr/9eHp6/vm82+1AAP/l9eV6vXZdB1VLuqZBlqZpuvWYc1l679n+1O7/tMW5rm4oy9KG2PYKt4rj/HCQjy4kJjtPve3Kbvf+nuc5FILshmm+XPB8EcM4M0XOEnnnICOlBKn/I5s4ImIlTfM/sg4uTUHTUiCUdiP3flB+8HcpIJWb2FISLiFiA3Ix44zzwhL0Su9vZDf0LpkwDvNMccRRrU34Iu8iVhmRmYbgSa3F5BtZUKh7Wypfm4jBKZ5VEDZ1Nn1GEwaGu4JMuuecE9mN7L2DuygBVq83OOeMMZigZ1rejuPErCWQkydI6DqxkcnothPotFOeF0URY9o83yZowS0ds6STlaTl/clGa7QV6oeGwVZY70NQqIqUxhDc2SQw1ZaUv0VSnydjATKEEJCN/eM0KdUrpVeKgUvw9ZgdF/LSRktWWdU13MInGN5L8ZFlTV371bwNCgm0xiR4dzhkC5nQGrhKSt4ho53nOdwRvgbTNuCXQjFIa6GssGPvJm6GNF6+Jf8FD13NKG5gi80AAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="task-manager-cassandra"
-        title=""
-        src="/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-fb8a0.png"
-        srcset="/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-1a291.png 148w,
-/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-2bc4a.png 295w,
-/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-fb8a0.png 590w,
-/blog/static/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4-d30b5.png 646w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/task-manager-cassandra-28eacb07076bda4e4e3e719c9ea2bbd4.png" alt="task-manager-cassandra"></p>
 <p>The below is the comparison of average latency,</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-3d59e.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 61.68067226890756%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAvElEQVQoz2P49evX79+//5IA/t189AkCGP6TCv79/XrrClDnly9fGH7+/Am0HI9Fbz7+XH3gFZCEcJHNIWzz1ftfjNPOnJyz5OvRXWhSDEDD8Pv58r3PQM27PB2f1yaTaTNQ84vaFHSbgdbi9zPNbP7z588A+RmIv3///u37jzuPPz68dv3L43vA2L92+/nFy/efnT/1+vmz56+/zN5w69yCOa/3b/3x4wey5dhtBup///79u3fvgJ7C4ygAQHCicnqiZzAAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="result-avg"
-        title=""
-        src="/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-fb8a0.png"
-        srcset="/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-1a291.png 148w,
-/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-2bc4a.png 295w,
-/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-fb8a0.png 590w,
-/blog/static/result-avg-e50ee60c1c8f0bb8139a305139f4fee7-3d59e.png 595w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/result-avg-e50ee60c1c8f0bb8139a305139f4fee7.png" alt="result-avg"></p>
 <table>
 <thead>
 <tr>
@@ -162,40 +63,7 @@
 </tbody>
 </table>
 <p>and the max latency.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-691bb.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 60.934891485809686%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAIAAADtbgqsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABB0lEQVQoz2P48ePHr1+//hIN/v37d/PR549gwPAfG7j15NvpG5/+4wDfbl3+BAYMWG1uX/IgrOEKLpvhpmC3uX3pw7CGqxA2UPEPoOH/sChj+PnzJ8Tm2Lbru8+8xbT54Ytvxmlnjl5+j89moIq5hd0vW7LRbH786gdQ6vjVj/hsBqqYHpT+MMQIq817Zq/5fGgbPpvBmo2x2rzex/dZQTC6zb/AANPmoMydQIO+nj8GsRmo+Wl+MLE2B6ZuuWMp9PXEPnw2A/EPMFiy8/HhZetfb1zy9evXXccfLF137u7MzmdXzr95/3X2htsnFy58tXMdUBnQcgLx/Pv37w8fPrx///4/XgAAAJh6Ef9QAboAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="result-max"
-        title=""
-        src="/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-fb8a0.png"
-        srcset="/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-1a291.png 148w,
-/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-2bc4a.png 295w,
-/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-fb8a0.png 590w,
-/blog/static/result-max-f3d8c0283cbc8fde4f269ae52a69683d-691bb.png 599w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/result-max-f3d8c0283cbc8fde4f269ae52a69683d.png" alt="result-max"></p>
 <table>
 <thead>
 <tr>
@@ -220,260 +88,179 @@
 </tr>
 </tbody>
 </table>
-<p>From here, let’s see how I set up the servers for 1, 2 and 3.</p>
+<p>From here, let's see how I set up the servers for 1, 2 and 3.</p>
 <h2>1. JSON marshalling/unmarshalling</h2>
 <p>I am not going in detail, but JSON marshalling is converting a Scala case class instance to JSON payload, and unmarshalling is the opposite.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe5lBNUf/8QAFxAAAwEAAAAAAAAAAAAAAAAAAAERIP/aAAgBAQABBQKsrK8f/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFhAAAwAAAAAAAAAAAAAAAAAAECAx/9oACAEBAAY/AhE//8QAGBAAAgMAAAAAAAAAAAAAAAAAARAAESH/2gAIAQEAAT8hMMFiLf8A/9oADAMBAAIAAwAAABAXD//EABURAQEAAAAAAAAAAAAAAAAAABAR/9oACAEDAQE/EKf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAEAAgIDAAAAAAAAAAAAAAABABEhMRBBof/aAAgBAQABPxDGAC+0lIaVVNYhRnwwNi6gVrj/2Q=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="json-marshalling"
-        title=""
-        src="/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-f8fb9.jpg"
-        srcset="/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-e8976.jpg 148w,
-/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-63df2.jpg 295w,
-/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-f8fb9.jpg 590w,
-/blog/static/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/json-marshalling-f0d34e54e0382932b6cdb0928eba76fe.jpg" alt="json-marshalling"></p>
 <p>This HttpServer does simple stuff, to sum up all the <code>"score"</code> sent in HTTP responses, and return the current total, average and number of trials (number of HTTP requests) so far.</p>
-<p>Let’s define case classes to marshall to/unmarshall from JSON:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token comment">//JSON request {"score": 10} can be unmarshalled to this</span>
-<span class="token keyword">case</span> <span class="token keyword">class</span> ScoringRequest<span class="token punctuation">(</span>
-  score<span class="token operator">:</span> <span class="token builtin">Double</span>
-<span class="token punctuation">)</span>
+<p>Let's define case classes to marshall to/unmarshall from JSON:</p>
+<pre><code class="language-scala">//JSON request {"score": 10} can be unmarshalled to this
+case class ScoringRequest(
+  score: Double
+)
 
-<span class="token comment">//This case class can be marshalled to JSON response {"averageScore": ... }</span>
-<span class="token keyword">case</span> <span class="token keyword">class</span> ScoreResponse<span class="token punctuation">(</span>
-  averageScore<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">,</span>
-  totalScore<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">,</span>
-  numberOfTrials<span class="token operator">:</span> <span class="token builtin">Long</span>
-<span class="token punctuation">)</span>
+//This case class can be marshalled to JSON response {"averageScore": ... }
+case class ScoreResponse(
+  averageScore: Double,
+  totalScore: Double,
+  numberOfTrials: Long
+)
 </code></pre>
-      </div>
 <p>To enable marshlling and unmarshalling, I used <code>SprayJsonSupport</code> as follows: </p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">import</span> akka<span class="token punctuation">.</span>http<span class="token punctuation">.</span>scaladsl<span class="token punctuation">.</span>marshallers<span class="token punctuation">.</span>sprayjson<span class="token punctuation">.</span>SprayJsonSupport
-<span class="token keyword">import</span> spray<span class="token punctuation">.</span>json<span class="token punctuation">.</span>DefaultJsonProtocol
+<pre><code class="language-scala">import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+import spray.json.DefaultJsonProtocol
 
-<span class="token keyword">object</span> ScoringJsonSupport <span class="token keyword">extends</span> DefaultJsonProtocol <span class="token keyword">with</span> SprayJsonSupport <span class="token punctuation">{</span>
-  <span class="token keyword">implicit</span> <span class="token keyword">val</span> scoringRequestFormat <span class="token operator">=</span> jsonFormat1<span class="token punctuation">(</span>ScoringRequest<span class="token punctuation">)</span>
-  <span class="token keyword">implicit</span> <span class="token keyword">val</span> scoreResponseFormat <span class="token operator">=</span> jsonFormat3<span class="token punctuation">(</span>ScoreResponse<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+object ScoringJsonSupport extends DefaultJsonProtocol with SprayJsonSupport {
+  implicit val scoringRequestFormat = jsonFormat1(ScoringRequest)
+  implicit val scoreResponseFormat = jsonFormat3(ScoreResponse)
+}
 </code></pre>
-      </div>
 <p>And the route becomes like this.</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">import</span> ScoringJsonSupport<span class="token punctuation">.</span>_
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token keyword">val</span> routes<span class="token operator">:</span> Route <span class="token operator">=</span>
-  path<span class="token punctuation">(</span><span class="token string">"scoring"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    post <span class="token punctuation">{</span>
-      entity<span class="token punctuation">(</span>as<span class="token punctuation">[</span>ScoringRequest<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> request <span class="token keyword">=></span>
-        updateState<span class="token punctuation">(</span>request<span class="token punctuation">.</span>score<span class="token punctuation">)</span>
-        complete <span class="token punctuation">{</span>
-          ScoreResponse<span class="token punctuation">(</span>averageScore<span class="token punctuation">,</span> totalScore<span class="token punctuation">,</span> numberOfTrials<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
+<pre><code class="language-scala">import ScoringJsonSupport._
+...
+val routes: Route =
+  path("scoring") {
+    post {
+      entity(as[ScoringRequest]) { request =>
+        updateState(request.score)
+        complete {
+          ScoreResponse(averageScore, totalScore, numberOfTrials)
+        }
+      }
+    }
+  }
 </code></pre>
-      </div>
 <p>For those who are intersted, <a href="https://github.com/richardimaoka/resources/blob/master/akka-http-cassandra/src/main/scala/example/HttpNoPersistentServer.scala">the full HttpServer code</a> is as follows:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span><span class="token punctuation">{</span>PrintWriter<span class="token punctuation">,</span> StringWriter<span class="token punctuation">}</span>
+<pre><code class="language-scala">import java.io.{PrintWriter, StringWriter}
 
-<span class="token keyword">import</span> akka<span class="token punctuation">.</span>actor<span class="token punctuation">.</span>ActorSystem
-<span class="token keyword">import</span> akka<span class="token punctuation">.</span>http<span class="token punctuation">.</span>scaladsl<span class="token punctuation">.</span>Http
-<span class="token keyword">import</span> akka<span class="token punctuation">.</span>http<span class="token punctuation">.</span>scaladsl<span class="token punctuation">.</span>server<span class="token punctuation">.</span><span class="token punctuation">{</span>Directives<span class="token punctuation">,</span> Route<span class="token punctuation">}</span>
-<span class="token keyword">import</span> akka<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>ActorMaterializer
-<span class="token keyword">import</span> akka<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Timeout
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.{Directives, Route}
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
 
-<span class="token keyword">import</span> scala<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>Await
-<span class="token keyword">import</span> scala<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>duration<span class="token punctuation">.</span>_
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
-<span class="token keyword">object</span> HttpNoPersistentServer <span class="token keyword">extends</span> Directives <span class="token punctuation">{</span>
-  <span class="token keyword">def</span> main<span class="token punctuation">(</span>args<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token keyword">import</span> ScoringJsonSupport<span class="token punctuation">.</span>_
+object HttpNoPersistentServer extends Directives {
+  def main(args: Array[String]): Unit = {
+    import ScoringJsonSupport._
 
-    <span class="token keyword">implicit</span> <span class="token keyword">val</span> system<span class="token operator">:</span> ActorSystem <span class="token operator">=</span> ActorSystem<span class="token punctuation">(</span><span class="token string">"HttpNoPersistentServer"</span><span class="token punctuation">)</span>
-    <span class="token keyword">implicit</span> <span class="token keyword">val</span> materializer<span class="token operator">:</span> ActorMaterializer <span class="token operator">=</span> ActorMaterializer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    implicit val system: ActorSystem = ActorSystem("HttpNoPersistentServer")
+    implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-    <span class="token keyword">implicit</span> <span class="token keyword">val</span> timeout<span class="token operator">:</span> Timeout <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">.</span>seconds
+    implicit val timeout: Timeout = 3.seconds
 
-    <span class="token keyword">var</span> averageScore<span class="token operator">:</span> <span class="token builtin">Double</span> <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">var</span> totalScore<span class="token operator">:</span>   <span class="token builtin">Double</span> <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">var</span> numberOfTrials<span class="token operator">:</span> <span class="token builtin">Long</span> <span class="token operator">=</span> <span class="token number">0</span>
+    var averageScore: Double = 0
+    var totalScore:   Double = 0
+    var numberOfTrials: Long = 0
 
-    <span class="token keyword">def</span> updateState<span class="token punctuation">(</span>score<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span><span class="token punctuation">{</span>
-      totalScore <span class="token operator">=</span> totalScore <span class="token operator">+</span> score
-      numberOfTrials <span class="token operator">=</span> numberOfTrials <span class="token operator">+</span> <span class="token number">1</span>
-      averageScore <span class="token operator">=</span> totalScore <span class="token operator">/</span> numberOfTrials
-    <span class="token punctuation">}</span>
+    def updateState(score: Double): Unit ={
+      totalScore = totalScore + score
+      numberOfTrials = numberOfTrials + 1
+      averageScore = totalScore / numberOfTrials
+    }
 
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      <span class="token keyword">val</span> routes<span class="token operator">:</span> Route <span class="token operator">=</span>
-        path<span class="token punctuation">(</span><span class="token string">"scoring"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-          post <span class="token punctuation">{</span>
-            entity<span class="token punctuation">(</span>as<span class="token punctuation">[</span>ScoringRequest<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> request <span class="token keyword">=></span>
-              updateState<span class="token punctuation">(</span>request<span class="token punctuation">.</span>score<span class="token punctuation">)</span>
-              complete <span class="token punctuation">{</span>
-                ScoreResponse<span class="token punctuation">(</span>averageScore<span class="token punctuation">,</span> totalScore<span class="token punctuation">,</span> numberOfTrials<span class="token punctuation">)</span>
-              <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
+    try {
+      val routes: Route =
+        path("scoring") {
+          post {
+            entity(as[ScoringRequest]) { request =>
+              updateState(request.score)
+              complete {
+                ScoreResponse(averageScore, totalScore, numberOfTrials)
+              }
+            }
+          }
+        }
 
-      Http<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>bindAndHandle<span class="token punctuation">(</span>routes<span class="token punctuation">,</span> <span class="token string">"localhost"</span><span class="token punctuation">,</span> <span class="token number">8095</span><span class="token punctuation">)</span>
-      println<span class="token punctuation">(</span>s<span class="token string">"Server online at http://localhost:8095/"</span><span class="token punctuation">)</span>
-      Await<span class="token punctuation">.</span>result<span class="token punctuation">(</span>system<span class="token punctuation">.</span>whenTerminated<span class="token punctuation">,</span> Duration<span class="token punctuation">.</span>Inf<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">{</span>
-      <span class="token keyword">case</span> t<span class="token operator">:</span> Throwable <span class="token keyword">=></span>
-        <span class="token keyword">val</span> sw <span class="token operator">=</span> <span class="token keyword">new</span> StringWriter
-        t<span class="token punctuation">.</span>printStackTrace<span class="token punctuation">(</span><span class="token keyword">new</span> PrintWriter<span class="token punctuation">(</span>sw<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        println<span class="token punctuation">(</span>t<span class="token punctuation">.</span>getMessage<span class="token punctuation">)</span>
-        println<span class="token punctuation">(</span>sw<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+      Http().bindAndHandle(routes, "localhost", 8095)
+      println(s"Server online at http://localhost:8095/")
+      Await.result(system.whenTerminated, Duration.Inf)
+    } catch {
+      case t: Throwable =>
+        val sw = new StringWriter
+        t.printStackTrace(new PrintWriter(sw))
+        println(t.getMessage)
+        println(sw)
+    }
+  }
+}
 </code></pre>
-      </div>
 <p><a href="https://github.com/wg/wrk/issues/267">To send a JSON request by wrk</a>, you need to write a lua script like this: </p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>wrk.method = "POST"
+<pre><code>wrk.method = "POST"
 wrk.body   = '{"score": 10}'
-wrk.headers["Content-Type"] = "application/json"</code></pre>
-      </div>
+wrk.headers["Content-Type"] = "application/json"
+</code></pre>
 <p>I saved it as <code>wrk-script.lua</code>, and ran the following command:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>$ wrk -t2 -c100 -d30s  -s wrk-script.lua http://localhost:8095/scoring</code></pre>
-      </div>
+<pre><code>$ wrk -t2 -c100 -d30s  -s wrk-script.lua http://localhost:8095/scoring
+</code></pre>
 <p>The results were already pasted at the beginning of this article.</p>
 <h2>2. In-Memory persistence</h2>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB3EvQUgs//8QAGRABAQEAAwAAAAAAAAAAAAAAAQIAESEy/9oACAEBAAEFAuM9EedQJMgf/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGRAAAgMBAAAAAAAAAAAAAAAAAAEQESEx/9oACAEBAAY/Ajk0zEf/xAAaEAADAAMBAAAAAAAAAAAAAAAAAREQIXGB/9oACAEBAAE/IW3fS9MPo9SveJsqIaCP/9oADAMBAAIAAwAAABDL3//EABYRAQEBAAAAAAAAAAAAAAAAAAABIf/aAAgBAwEBPxBMj//EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQIBAT8QUujlw//EABoQAQADAQEBAAAAAAAAAAAAAAEAESExEFH/2gAIAQEAAT8QVrycVsKGz46qJSkqL4iEiYx0Jm6Ps//Z'); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="in-memory"
-        title=""
-        src="/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-f8fb9.jpg"
-        srcset="/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-e8976.jpg 148w,
-/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-63df2.jpg 295w,
-/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-f8fb9.jpg 590w,
-/blog/static/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<p>Now I’m adding persistence to the system, but before doing it with Cassandra, I’m using in-memory persistence. The persistent actor code is as follows:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">class</span> ScoringActor <span class="token keyword">extends</span> PersistentActor <span class="token punctuation">{</span>
-  <span class="token keyword">import</span> ScoringActor<span class="token punctuation">.</span>_
+<p><img src="/blog/in-memory-f620aaeb90877b05fd3d23a9ac44a0a8.jpg" alt="in-memory"></p>
+<p>Now I'm adding persistence to the system, but before doing it with Cassandra, I'm using in-memory persistence. The persistent actor code is as follows:</p>
+<pre><code class="language-scala">class ScoringActor extends PersistentActor {
+  import ScoringActor._
 
-  <span class="token keyword">var</span> averageScore<span class="token operator">:</span> <span class="token builtin">Double</span> <span class="token operator">=</span> <span class="token number">0</span>
-  <span class="token keyword">var</span> totalScore<span class="token operator">:</span>   <span class="token builtin">Double</span> <span class="token operator">=</span> <span class="token number">0</span>
-  <span class="token keyword">var</span> numberOfTrials<span class="token operator">:</span> <span class="token builtin">Long</span> <span class="token operator">=</span> <span class="token number">0</span>
+  var averageScore: Double = 0
+  var totalScore:   Double = 0
+  var numberOfTrials: Long = 0
 
-  <span class="token keyword">def</span> persistenceId <span class="token operator">=</span> <span class="token string">"scoring"</span>
+  def persistenceId = "scoring"
 
-  <span class="token keyword">def</span> updateState<span class="token punctuation">(</span>score<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span><span class="token punctuation">{</span>
-    totalScore <span class="token operator">=</span> totalScore <span class="token operator">+</span> score
-    numberOfTrials <span class="token operator">=</span> numberOfTrials <span class="token operator">+</span> <span class="token number">1</span>
-    averageScore <span class="token operator">=</span> totalScore <span class="token operator">/</span> numberOfTrials
-  <span class="token punctuation">}</span>
+  def updateState(score: Double): Unit ={
+    totalScore = totalScore + score
+    numberOfTrials = numberOfTrials + 1
+    averageScore = totalScore / numberOfTrials
+  }
 
-  <span class="token keyword">def</span> receiveCommand <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token keyword">case</span> ScoringCommand<span class="token punctuation">(</span>score<span class="token punctuation">)</span> <span class="token keyword">=></span>
-      <span class="token keyword">val</span> _sender <span class="token operator">=</span> sender<span class="token punctuation">(</span><span class="token punctuation">)</span>
-      persist<span class="token punctuation">(</span>ScoringEvent<span class="token punctuation">(</span>score<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        evt <span class="token keyword">=></span> updateState<span class="token punctuation">(</span>evt<span class="token punctuation">.</span>score<span class="token punctuation">)</span>
-          _sender <span class="token operator">!</span> ScoreResponse<span class="token punctuation">(</span>
-            averageScore<span class="token punctuation">,</span>
-            totalScore<span class="token punctuation">,</span>
+  def receiveCommand = {
+    case ScoringCommand(score) =>
+      val _sender = sender()
+      persist(ScoringEvent(score)) {
+        evt => updateState(evt.score)
+          _sender ! ScoreResponse(
+            averageScore,
+            totalScore,
             numberOfTrials
-          <span class="token punctuation">)</span>
-      <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
+          )
+      }
+  }
 
-  <span class="token keyword">override</span> <span class="token keyword">def</span> receiveRecover <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token keyword">case</span> evt<span class="token operator">:</span> ScoringEvent <span class="token keyword">=></span>
-      updateState<span class="token punctuation">(</span>evt<span class="token punctuation">.</span>score<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+  override def receiveRecover = {
+    case evt: ScoringEvent =>
+      updateState(evt.score)
+  }
+}
 
-<span class="token keyword">object</span> ScoringActor <span class="token punctuation">{</span>
-  <span class="token keyword">case</span> <span class="token keyword">class</span> ScoringCommand<span class="token punctuation">(</span>score<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">)</span>
-  <span class="token keyword">case</span> <span class="token keyword">class</span> ScoringEvent<span class="token punctuation">(</span>score<span class="token operator">:</span> <span class="token builtin">Double</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+object ScoringActor {
+  case class ScoringCommand(score: Double)
+  case class ScoringEvent(score: Double)
+}
 </code></pre>
-      </div>
 <p>The HttpServer code needs to instantiate the persistent actor (<code>ScoringActor</code>) and do <code>scoringActor ? ScoringCommand(request.score)</code> to perform persistence.</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">import</span> ScoringJsonSupport<span class="token punctuation">.</span>_
+<pre><code class="language-scala">import ScoringJsonSupport._
 
-<span class="token keyword">implicit</span> <span class="token keyword">val</span> system<span class="token operator">:</span> ActorSystem <span class="token operator">=</span> ActorSystem<span class="token punctuation">(</span><span class="token string">"HttpPersistentServer"</span><span class="token punctuation">)</span>
-<span class="token keyword">implicit</span> <span class="token keyword">val</span> materializer<span class="token operator">:</span> ActorMaterializer <span class="token operator">=</span> ActorMaterializer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+implicit val system: ActorSystem = ActorSystem("HttpPersistentServer")
+implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-<span class="token keyword">val</span> scoringActor <span class="token operator">=</span> system<span class="token punctuation">.</span>actorOf<span class="token punctuation">(</span>Props<span class="token punctuation">[</span>ScoringActor<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"scoring"</span><span class="token punctuation">)</span>
+val scoringActor = system.actorOf(Props[ScoringActor], "scoring")
 
-<span class="token keyword">implicit</span> <span class="token keyword">val</span> timeout<span class="token operator">:</span> Timeout <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">.</span>seconds
+implicit val timeout: Timeout = 3.seconds
 
-<span class="token keyword">val</span> routes<span class="token operator">:</span> Route <span class="token operator">=</span>
-  path<span class="token punctuation">(</span><span class="token string">"scoring"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    post <span class="token punctuation">{</span>
-      entity<span class="token punctuation">(</span>as<span class="token punctuation">[</span>ScoringRequest<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> request <span class="token keyword">=></span>
-        complete <span class="token punctuation">{</span>
-          <span class="token punctuation">(</span>scoringActor <span class="token operator">?</span> ScoringCommand<span class="token punctuation">(</span>request<span class="token punctuation">.</span>score<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>mapTo<span class="token punctuation">[</span>ScoreResponse<span class="token punctuation">]</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>    
+val routes: Route =
+  path("scoring") {
+    post {
+      entity(as[ScoringRequest]) { request =>
+        complete {
+          (scoringActor ? ScoringCommand(request.score)).mapTo[ScoreResponse]
+        }
+      }
+    }
+  }    
 </code></pre>
-      </div>
 <p>here is <code>application.conf</code>:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>akka {
+<pre><code>akka {
   loggers = ["akka.event.slf4j.Slf4jLogger"]
 
   persistence {
@@ -484,47 +271,13 @@ wrk.headers["Content-Type"] = "application/json"</code></pre>
       plugin = "akka.persistence.snapshot-store.local"
     }
   }
-}</code></pre>
-      </div>
-<p>As in the results we saw earlier, it became slower than 1. JSON marshalling/unmarshalling, because there is communication between the server and the persistent actor. However, the persistent <strong>actor</strong> itself is still lightweight, compared to the actual persistence to Cassandra which I’ll explain next.</p>
+}
+</code></pre>
+<p>As in the results we saw earlier, it became slower than 1. JSON marshalling/unmarshalling, because there is communication between the server and the persistent actor. However, the persistent <strong>actor</strong> itself is still lightweight, compared to the actual persistence to Cassandra which I'll explain next.</p>
 <h2>3. Persistence to Cassandra</h2>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAdxLyAUP/8QAGhAAAgIDAAAAAAAAAAAAAAAAADIBAwIRIf/aAAgBAQABBQLRPIwUsSpP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGBAAAgMAAAAAAAAAAAAAAAAAABABETH/2gAIAQEABj8CMpyv/8QAGhABAQEAAwEAAAAAAAAAAAAAAREAEFFxgf/aAAgBAQABPyFXv3Wsp7nTWvDjZWnvf//aAAwDAQACAAMAAAAQh8//xAAXEQADAQAAAAAAAAAAAAAAAAAAAREh/9oACAEDAQE/EBKYf//EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oACAECAQE/EFf/xAAbEAEAAwEAAwAAAAAAAAAAAAABABEhMRBRkf/aAAgBAQABPxBWvJxWy5egdBGYAKKeGExKT6RiS1Vs/9k='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="cassandra"
-        title=""
-        src="/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-f8fb9.jpg"
-        srcset="/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-e8976.jpg 148w,
-/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-63df2.jpg 295w,
-/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-f8fb9.jpg 590w,
-/blog/static/cassandra-8529bc064b866354443cb375e34bc1f6-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/cassandra-8529bc064b866354443cb375e34bc1f6.jpg" alt="cassandra"></p>
 <p>Finally we do real persistence. application.conf becomes this:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>akka {
+<pre><code>akka {
   loggers = ["akka.event.slf4j.Slf4jLogger"]
 
   persistence {
@@ -535,47 +288,50 @@ wrk.headers["Content-Type"] = "application/json"</code></pre>
       plugin = "cassandra-snapshot-store"
     }
   }
-}</code></pre>
-      </div>
+}
+</code></pre>
 <p>And you would also need this logback.xml otherwise the log is filled up by a lot of DEBUG level messages from the Cassandra library.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>&ltconfiguration&gt
-    &ltappender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt
-        &lt!-- encoders are assigned the type
-             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default --&gt
-        &ltencoder&gt
-            &ltpattern&gt%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt/pattern&gt
-        &lt/encoder&gt
-    &lt/appender&gt
+<pre><code>&#x26;ltconfiguration&#x26;gt
+    &#x26;ltappender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&#x26;gt
+        &#x26;lt!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default --&#x26;gt
+        &#x26;ltencoder&#x26;gt
+            &#x26;ltpattern&#x26;gt%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&#x26;lt/pattern&#x26;gt
+        &#x26;lt/encoder&#x26;gt
+    &#x26;lt/appender&#x26;gt
 
-    &ltlogger name="com.datastax.driver.core.Connection"  level="WARN" additivity="false" /&gt
-    &ltlogger name="com.datastax.driver"                  level="WARN" additivity="false" /&gt
+    &#x26;ltlogger name="com.datastax.driver.core.Connection"  level="WARN" additivity="false" /&#x26;gt
+    &#x26;ltlogger name="com.datastax.driver"                  level="WARN" additivity="false" /&#x26;gt
 
-    &ltroot level="INFO"&gt
-        &ltappender-ref ref="STDOUT" /&gt
-    &lt/root&gt
-&lt/configuration&gt</code></pre>
-      </div>
+    &#x26;ltroot level="INFO"&#x26;gt
+        &#x26;ltappender-ref ref="STDOUT" /&#x26;gt
+    &#x26;lt/root&#x26;gt
+&#x26;lt/configuration&#x26;gt
+</code></pre>
 <p>No need to change the Scala code.</p>
 <h2>Lessons learned</h2>
 <p>Even before conducting the benchmark, we could have guessed that Cassandra would be the bottleneck of the system, as database I/O is typically the performance bottleneck of a web applicaiton system.</p>
 <p>However, <strong>to know how much the difference is</strong>, experiment is necessary. So I went through the process on how to distinguish the performance overhead of a single component from all the other , and you can apply the same technique to analyze any component in your system.</p>
 <p>Next step, I want to dockerize this performance experiment environment so that we can run it in the cloud. Also later on I want to Kubernet-ize this and hopefully the deployment and running of the performance test is just a breeze!!</p>
-<p>It’s getting interesting to me :)</p>
+<p>It's getting interesting to me :)</p>
 <h2>References</h2>
 <ul>
 <li>Marshalling and Unmarshalling in Akka HTTP at - <a href="https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling">https://doc.akka.io/docs/akka-http/2.5/common/marshalling.html#marshalling</a></li>
 <li>Persistent actor at - <a href="https://doc.akka.io/docs/akka/2.5/persistence.html">https://doc.akka.io/docs/akka/2.5/persistence.html</a></li>
 <li>akka-cassandra at <a href="https://github.com/akka/akka-persistence-cassandra">https://github.com/akka/akka-persistence-cassandra</a></li>
-</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script>
+</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-3694e691a40a2920cb14.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-5c4c5a0f7af9dc69d6d7.js","107818501498521":"component---src-templates-blog-post-js-ca71989682cd54639ff0.js","35783957827783":"component---src-pages-index-js-f3ac62be02813b36160e.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-236041f30af0d2d50321.js","160326069391746":"path---serializer-minimal-3a5ef328caa94a3f322f.js","240229599778477":"path---akka-behavior-levels-777fa10830698420117c.js","90106736999892":"path---persistent-actor-minimal-96858b12ad3143e32630.js","235964179464078":"path---dispatcher-behavior-e43175dd21f98148787b.js","205347915900230":"path---hello-world-http-bench-35da9d029fe5bdfb8576.js","218392457165648":"path---akka-http-quickstart-65f688c2d48558377460.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-320a98c23faa1d40e634.js","217632986566844":"path---executor-and-execution-context-da168d50899ef102ec56.js","224718722256965":"path---event-adapter-cassandra-e408dbea1d16996b771a.js","82537549859403":"path---oss-hackathon-1-45b25dd27b904fa78bb5.js","36029449993048":"path---local-minimal-sender-a23036f2d395d0f98d1a.js","86659390886147":"path---local-minimal-receiver-b2b2763cafabcda11bad.js","26725176786023":"path---persistent-actor-minimal-sql-b570323b919e40633eb6.js","165329427061039":"path---mailbox-and-fork-join-task-97325a03045c0cfff16f.js","107690442534757":"path---remote-minimal-receiver-604ce16ec527b8bef1e8.js","221230463047462":"path---swagger-akka-http-94f9bf4298041495fff2.js","241179671101829":"path---remote-minimal-sender-f33f35285248494c3d95.js","142629428675168":"path---index-cbf0e8c6a22e61bd8852.js","114276838955818":"component---src-layouts-index-js-ab448737d2670585c2fb.js"}/*]]>*/</script><script>
+            
   
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-111892799-1', 'auto');
-  </script><script>
+  if(true) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', 'UA-111892799-1', 'auto');
+      }
+      </script><script>
           window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -592,4 +348,4 @@ wrk.headers["Content-Type"] = "application/json"</code></pre>
 
   return t;
 }(document, "script", "twitter-wjs"));
-      </script></body></html>
+      </script><script>/*<![CDATA[*/["/blog/commons-2174e0bf62fcadcdb7a6.js","/blog/app-3694e691a40a2920cb14.js","/blog/path---benchmarking-akka-http-cassandra-local-320a98c23faa1d40e634.js","/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js","/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js"].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/</script></body></html>

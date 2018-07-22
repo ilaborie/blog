@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-eb745b83df7613925712.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js" as="script"/><link rel="preload" href="/blog/path---swagger-akka-http-4d3beb3c5950064c9cc6.js" as="script"/><link rel="preload" href="/blog/app-e36b8fb34c6b276fa22f.js" as="script"/><link rel="preload" href="/blog/commons-85d973a0b17b2f0d3c45.js" as="script"/><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-e36b8fb34c6b276fa22f.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-a4372d8aab423f26d2d4.js","107818501498521":"component---src-templates-blog-post-js-6f6e557e669577e2753e.js","35783957827783":"component---src-pages-index-js-33b58c50c1b11bf71654.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-f7c6e001c20a8eaae7e2.js","160326069391746":"path---serializer-minimal-082ffcdf3c53d1b6ff63.js","240229599778477":"path---akka-behavior-levels-b5c64720008bc588c90d.js","205347915900230":"path---hello-world-http-bench-ea4c5153c75b2df289d0.js","218392457165648":"path---akka-http-quickstart-d7b35e32e912ae10cba4.js","90106736999892":"path---persistent-actor-minimal-b567a086afe0680e9178.js","235964179464078":"path---dispatcher-behavior-add184d47bd6f297e43a.js","36029449993048":"path---local-minimal-sender-a3c98066337814cb72fb.js","224718722256965":"path---event-adapter-cassandra-953189c8a5f823ffee75.js","217632986566844":"path---executor-and-execution-context-daa3468bd376f0ba84b6.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-889e7daeb2ee75f0b266.js","82537549859403":"path---oss-hackathon-1-79c14b82e972fb822c6e.js","86659390886147":"path---local-minimal-receiver-faf30137107cc060787b.js","165329427061039":"path---mailbox-and-fork-join-task-1a2da1cf0ed6a9b0ad97.js","107690442534757":"path---remote-minimal-receiver-41e206ff110c06cc738f.js","221230463047462":"path---swagger-akka-http-4d3beb3c5950064c9cc6.js","241179671101829":"path---remote-minimal-sender-9ffd4d742325b14097ec.js","26725176786023":"path---persistent-actor-minimal-sql-89e21577da5d29b3fe77.js","142629428675168":"path---index-7829676675d5bf4d236e.js","114276838955818":"component---src-layouts-index-js-eb745b83df7613925712.js"}/*]]>*/</script><link rel="alternate" type="application/rss+xml" href="/rss.xml"/><title data-react-helmet="true">Survey on Swagger with Akka HTTP | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75em 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><script>/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",["/blog/commons-85d973a0b17b2f0d3c45.js","/blog/app-e36b8fb34c6b276fa22f.js","/blog/path---swagger-akka-http-4d3beb3c5950064c9cc6.js","/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js","/blog/component---src-layouts-index-js-eb745b83df7613925712.js"])/*]]>*/</script><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="-941926869"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Survey on Swagger with Akka HTTP</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">March 10, 2018</p><div data-reactid="8"><h2>Overview</h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js" as="script"/><link rel="preload" href="/blog/path---swagger-akka-http-94f9bf4298041495fff2.js" as="script"/><link rel="preload" href="/blog/app-3694e691a40a2920cb14.js" as="script"/><link rel="preload" href="/blog/commons-2174e0bf62fcadcdb7a6.js" as="script"/><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml"/><title data-react-helmet="true">Survey on Swagger with Akka HTTP | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="1555217386"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Survey on Swagger with Akka HTTP</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">March 10, 2018</p><div data-reactid="8"><h2>Overview</h2>
 <p><strong>TL;DR)</strong> You can use Swagger with Akka HTTP and get some benefit from Swagger, but the workflow is not fully automated with existing tools.</p>
 <p>Recently I did some personal survey on how Swagger can be integrated with Akka HTTP. Before the survey, I was expeciting automation just works like:</p>
 <ol>
@@ -19,41 +19,7 @@
 <p>A bottom-up approach where you have an existing REST API for which you want to create a Swagger definition</p>
 </blockquote>
 <p><a href="https://editor.swagger.io/">Swagger Editor</a> is a browser based tool for editing the swagger specification file in json or yaml. For <a href="https://github.com/swagger-api/swagger-codegen">Swagger codegen</a>, it already officially supports a bunch of languages and frameworks,</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-69289.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 43.87755102040816%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABCklEQVQoz5VR2W6EMAzk/39yERBIfOVYBSgqdCfwXrWWsYzlGY+dboYtft+/fv5vXco5xhRjVDNDlktMb0uIOd0WmyEmNOC3lALIum03OCXvPREvi1+8D0RzUNJiNxh8qiqqxKwtSggEF7Vt37t1XYdxmiY3OQe8c7NrewQfYORbQqBGDV2IzRcPLkjrQHB3BBZFwizQMbkZXEAFYmCGcQTmoUZRRBmfWVdrVbVGLsLQBolm8Ng0m6Ao5lkxDEKgCHdBEeuf54nJh5fCsZJViW+6WUH/7A8hxMoaMYiFMYEka9rq1l6nTUbffeh20pxKzs+prK7rdV2/PRVa+354vXqNWfJxfF9/f+cPYzr8CpRImhcAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="swagger-codege-support"
-        title=""
-        src="/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-fb8a0.png"
-        srcset="/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-1a291.png 148w,
-/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-2bc4a.png 295w,
-/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-fb8a0.png 590w,
-/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-526de.png 885w,
-/blog/static/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed-69289.png 980w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/swagger-codegen-support-2007b8af3c0adcf09ab7c7b904f615ed.png" alt="swagger-codege-support"></p>
 <p> and also a lot of community plugins available for other frameworks.</p>
 <h3>When to use which approach?</h3>
 <p>The top-down approach is suitable when:</p>
@@ -61,7 +27,7 @@
 <li>you have an automatic tool to generate the server-side code</li>
 <li>or you are developing a brand new API-based service, and the client wants to start development without waiting for the server side implementation ready</li>
 </ul>
-<p>When talking about automatic generation of the server side implementation, tools usually don’t produce fully detailed implementation, but they generates interfaces (in Scala, it would be traits) which you can extend to hook up detailed behaivor implementation in a later phase.</p>
+<p>When talking about automatic generation of the server side implementation, tools usually don't produce fully detailed implementation, but they generates interfaces (in Scala, it would be traits) which you can extend to hook up detailed behaivor implementation in a later phase.</p>
 <p>On the other hand, the bottom-up approach would be suitable when:</p>
 <ul>
 <li>a Swagger spec-gen tool is avaialble from the server side code</li>
@@ -74,192 +40,117 @@
 <p><a href="https://github.com/swagger-akka-http/swagger-akka-http">swagger-akka-http</a> already exists and this is for the bottom-up approach, which will generate the specification from <code>@Annotation</code>s in the Akka HTTP server-side code.</p>
 <p>No top-down auto-generation tool is avaialble for Akka HTTP, or at least no such tool is widely used.</p>
 <p>To see how swagger-akka-http works, I did some experiment - I tried to generate the same specification as <a href="http://petstore.swagger.io/">the official Swagger PetStore sample</a> from the server <code>@Annotation</code>. Looking at the sample, the top section of the spec can be generated by the following <code>SwaggerDocService</code> implementation.  </p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">import</span> com<span class="token punctuation">.</span>github<span class="token punctuation">.</span>swagger<span class="token punctuation">.</span>akka<span class="token punctuation">.</span>SwaggerHttpService
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>github<span class="token punctuation">.</span>swagger<span class="token punctuation">.</span>akka<span class="token punctuation">.</span>model<span class="token punctuation">.</span>_
-<span class="token keyword">import</span> example<span class="token punctuation">.</span>endpoints<span class="token punctuation">.</span>PetEndPoint
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>swagger<span class="token punctuation">.</span>models<span class="token punctuation">.</span>ExternalDocs
-<span class="token keyword">import</span> io<span class="token punctuation">.</span>swagger<span class="token punctuation">.</span>models<span class="token punctuation">.</span>auth<span class="token punctuation">.</span><span class="token punctuation">{</span>ApiKeyAuthDefinition<span class="token punctuation">,</span> In<span class="token punctuation">,</span> OAuth2Definition<span class="token punctuation">}</span>
+<pre><code class="language-scala">import com.github.swagger.akka.SwaggerHttpService
+import com.github.swagger.akka.model._
+import example.endpoints.PetEndPoint
+import io.swagger.models.ExternalDocs
+import io.swagger.models.auth.{ApiKeyAuthDefinition, In, OAuth2Definition}
 
-<span class="token keyword">object</span> SwaggerDocService <span class="token keyword">extends</span> SwaggerHttpService <span class="token punctuation">{</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> apiClasses <span class="token operator">=</span> Set<span class="token punctuation">(</span>classOf<span class="token punctuation">[</span>PetEndPoint<span class="token punctuation">]</span><span class="token punctuation">)</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> host <span class="token operator">=</span> <span class="token string">"localhost:9999"</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> basePath <span class="token operator">=</span> <span class="token string">"v2"</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> info <span class="token operator">=</span> Info<span class="token punctuation">(</span>
-    version <span class="token operator">=</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
-    description <span class="token operator">=</span>
-      <span class="token string">"""This is a sample server Petstore server.  You can find out more about
+object SwaggerDocService extends SwaggerHttpService {
+  override val apiClasses = Set(classOf[PetEndPoint])
+  override val host = "localhost:9999"
+  override val basePath = "v2"
+  override val info = Info(
+    version = "1.0.0",
+    description =
+      """This is a sample server Petstore server.  You can find out more about
         |Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
         |For this sample, you can use the api key `special-key` to test the authorization filters."
-      """</span><span class="token punctuation">.</span>stripMargin<span class="token punctuation">,</span>
-    title <span class="token operator">=</span> <span class="token string">"Swagger Petstore"</span><span class="token punctuation">,</span>
-    termsOfService <span class="token operator">=</span> <span class="token string">"http://swagger.io/terms/"</span><span class="token punctuation">,</span>
-    contact <span class="token operator">=</span> Some<span class="token punctuation">(</span>Contact<span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">"apiteam@swagger.io"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    license <span class="token operator">=</span> Some<span class="token punctuation">(</span>License<span class="token punctuation">(</span><span class="token string">"Apache 2.0"</span><span class="token punctuation">,</span> <span class="token string">"http://www.apache.org/licenses/LICENSE-2.0.html"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> externalDocs <span class="token operator">=</span> Some<span class="token punctuation">(</span><span class="token keyword">new</span> ExternalDocs<span class="token punctuation">(</span><span class="token string">"Core Docs"</span><span class="token punctuation">,</span> <span class="token string">"http://acme.com/docs"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      """.stripMargin,
+    title = "Swagger Petstore",
+    termsOfService = "http://swagger.io/terms/",
+    contact = Some(Contact("","","apiteam@swagger.io")),
+    license = Some(License("Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0.html"))
+  )
+  override val externalDocs = Some(new ExternalDocs("Core Docs", "http://acme.com/docs"))
 
-  <span class="token keyword">private</span> <span class="token keyword">val</span> oAuth2Definition <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">new</span> OAuth2Definition<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span>scope<span class="token punctuation">(</span><span class="token string">"write:pets"</span><span class="token punctuation">,</span> <span class="token string">"modify pets in your account"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span>scope<span class="token punctuation">(</span><span class="token string">"read:pets"</span><span class="token punctuation">,</span> <span class="token string">"read your pets"</span><span class="token punctuation">)</span>
+  private val oAuth2Definition = (new OAuth2Definition())
+    .scope("write:pets", "modify pets in your account")
+    .scope("read:pets", "read your pets")
 
-  oAuth2Definition<span class="token punctuation">.</span>setAuthorizationUrl<span class="token punctuation">(</span><span class="token string">"http://petstore.swagger.io/oauth/dialog"</span><span class="token punctuation">)</span>
-  oAuth2Definition<span class="token punctuation">.</span>setFlow<span class="token punctuation">(</span><span class="token string">"implicit"</span><span class="token punctuation">)</span>
+  oAuth2Definition.setAuthorizationUrl("http://petstore.swagger.io/oauth/dialog")
+  oAuth2Definition.setFlow("implicit")
 
-  <span class="token keyword">override</span> <span class="token keyword">val</span> securitySchemeDefinitions <span class="token operator">=</span> Map<span class="token punctuation">(</span>
-    <span class="token string">"petsotre_auth"</span> <span class="token operator">-</span><span class="token operator">></span> oAuth2Definition<span class="token punctuation">,</span>
-    <span class="token string">"api_key"</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> ApiKeyAuthDefinition<span class="token punctuation">(</span><span class="token string">"api_key"</span><span class="token punctuation">,</span> In<span class="token punctuation">.</span>HEADER<span class="token punctuation">)</span>
-  <span class="token punctuation">)</span>
-  <span class="token keyword">override</span> <span class="token keyword">val</span> unwantedDefinitions <span class="token operator">=</span> Seq<span class="token punctuation">(</span><span class="token string">"Function1"</span><span class="token punctuation">,</span> <span class="token string">"Function1RequestContextFutureRouteResult"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+  override val securitySchemeDefinitions = Map(
+    "petsotre_auth" -> oAuth2Definition,
+    "api_key" -> new ApiKeyAuthDefinition("api_key", In.HEADER)
+  )
+  override val unwantedDefinitions = Seq("Function1", "Function1RequestContextFutureRouteResult")
+}
 </code></pre>
-      </div>
 <p>Interestingly, in swagger-akka-http, you extend this <code>SwaggerHttpService</code> to supply application-wide information, instead of using <a href="https://github.com/swagger-api/swagger-core/wiki/annotations-1.5.x#swaggerdefinition"><code>@SwaggerDefinition</code></a> annotation like other Java frameworks.</p>
 <p>The generated schema is this (I will explain how to generate the spec later): </p>
-<div class="gatsby-highlight">
-      <pre class="language-yaml"><code><span class="token key atrule">swagger</span><span class="token punctuation">:</span> <span class="token string">"2.0"</span>
-<span class="token key atrule">info</span><span class="token punctuation">:</span>
-  <span class="token key atrule">description</span><span class="token punctuation">:</span> "This is a sample server Petstore server.  You can find out more about\r\
-    \nSwagger at <span class="token punctuation">[</span>http<span class="token punctuation">:</span>//swagger.io<span class="token punctuation">]</span>(http<span class="token punctuation">:</span>//swagger.io) or on <span class="token punctuation">[</span>irc.freenode.net<span class="token punctuation">,</span> <span class="token comment">#swagger](http://swagger.io/irc/).\r\</span>
-    \nFor this sample<span class="token punctuation">,</span> you can use the api key `special<span class="token punctuation">-</span>key` to test the authorization\
+<pre><code class="language-yaml">swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about\r\
+    \nSwagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\r\
+    \nFor this sample, you can use the api key `special-key` to test the authorization\
     \ filters.\"\r\n      "
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">"1.0.0"</span>
-  <span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">"Swagger Petstore"</span>
-  <span class="token key atrule">termsOfService</span><span class="token punctuation">:</span> <span class="token string">"http://swagger.io/terms/"</span>
-  <span class="token key atrule">contact</span><span class="token punctuation">:</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">""</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> <span class="token string">""</span>
-    <span class="token key atrule">email</span><span class="token punctuation">:</span> <span class="token string">"apiteam@swagger.io"</span>
-  <span class="token key atrule">license</span><span class="token punctuation">:</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Apache 2.0"</span>
-    <span class="token key atrule">url</span><span class="token punctuation">:</span> <span class="token string">"http://www.apache.org/licenses/LICENSE-2.0.html"</span>
-<span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"localhost:9939"</span>
-<span class="token key atrule">basePath</span><span class="token punctuation">:</span> <span class="token string">"/v2"</span>
-<span class="token key atrule">tags</span><span class="token punctuation">:</span>
-<span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"pet"</span>
-<span class="token key atrule">schemes</span><span class="token punctuation">:</span>
-<span class="token punctuation">-</span> <span class="token string">"http"</span>
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: ""
+    url: ""
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:9939"
+basePath: "/v2"
+tags:
+- name: "pet"
+schemes:
+- "http"
 </code></pre>
-      </div>
 <p>which is (almost) same as that of <a href="https://editor.swagger.io/">the Petstore sample</a> I modeled after. </p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-26c84.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 52.823920265780735%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABnUlEQVQoz41RyW4UMRDtC+IU8QEgERYRlFF62mu7ysuMu6dnmASiaKQIDiDBBSE+BQSnJAiuCCG+IgGR5cLySbxmDpyiUCqXq+x69nt2sf/97udfky+/7338kT799K8OL739dmXv+OqbrysHJ6uvjy6/P7vz4Wzt4OT63vG1vjzty3enN9FTLJ7cePl8fffp7cWLte1nt7Yer/6/F7osF8RjpbLSSgiXnDRSWcUNa6dtsIZNHewyR5RWIRoyKIvBYIBuF2vAKLNxWigRppEz2VBzQ5SJGo5dsNHRGE51qsMkYLcHazY8pjhPaEqbKXSBW+bWN9s5zSIoxFkcbY6anbaOtW8ZYE26UqIHj8jO24hr0aSdElqCp6rVxkXWg6G2gYrk0gyjxvHQs9wuhyXisBqeC95x9JA5a5OkhGDr+2tBHtzwWm5E54KFEFPnHsXog49tzFs5dSlNEyWSF1lRlmXU5j6xz56zt2zxDZWoYEIup0oqiRxWYSwX/1phy7I1NkVK8+Qnvtvt8oOMHMoNabwcVMDBHyqwOBT/JPwBVomgM9pHur4AAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="Sawgger-Editor-top"
-        title=""
-        src="/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-fb8a0.png"
-        srcset="/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-1a291.png 148w,
-/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-2bc4a.png 295w,
-/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-fb8a0.png 590w,
-/blog/static/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889-26c84.png 602w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/Swagger-Editor-top-a2fd782f8ad497ebbaea89130d00e889.png" alt="Sawgger-Editor-top"></p>
 <p>Next, look at the <code>pet</code> endpoint. This is how the sample PetStore specification looks when you load it in Swagger Editor.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-26c84.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 79.734219269103%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAIAAACZeshMAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABOklEQVQoz51S7U7DMAzcC61pEn/ESdq1bCqaYBJCAon3fxGuZPyD0RFZsZvqdD6fd7XWMdKT2v7+syMipEOMNcR/gp1zU0mBQ+e6fff9s9u3uuu6n8GqihRd/1HKRe00ZjJmRGZKREZS5FdwSmkF9/2b5fdcoB/gNKa1hT/bbsxoW6vWZSingrB50/wAFqTg3GJ6LBY5evI++k3glK7MaHV6msbziMgbmUvOX8z9Jdl5yHVId1hllpoZC/OJeTlWlhglslGggAIzh4UITB6fQcL6rutS7JipgedIz6KHSA/iocIH73ok1/t+LXCFa9GiMVsDG9FLLqSkg0oVGRTFbcOguSCB69XsxCvpHZpFVqvQCNb7ommKNIYISSDHkuG+CWZpVs1EjzlNKnOSzczMTTNmgN2qS5XCG8GfUpm3iEM+tSUAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="Sawgger-Editor-pet"
-        title=""
-        src="/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-fb8a0.png"
-        srcset="/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-1a291.png 148w,
-/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-2bc4a.png 295w,
-/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-fb8a0.png 590w,
-/blog/static/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b-26c84.png 602w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/Swagger-Editor-pet-d26ec67ac1ceac1eea450f034c10995b.png" alt="Sawgger-Editor-pet"></p>
 <p>To get the same spec as above, you need these annotations to be added at the class or trait level to give information across different HTTP methods, <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>PATCH</code> and <code>DELETE</code>.</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token annotation punctuation">@Api</span><span class="token punctuation">(</span>
-  value <span class="token operator">=</span> <span class="token string">"/pet"</span><span class="token punctuation">,</span> <span class="token comment">//tags in endpoint</span>
-  consumes <span class="token operator">=</span> <span class="token string">"application/json, application/xml"</span><span class="token punctuation">,</span>
-  produces <span class="token operator">=</span> <span class="token string">"application/json, application/xml"</span>
-<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Path</span><span class="token punctuation">(</span><span class="token string">"/pet"</span><span class="token punctuation">)</span>
-<span class="token keyword">trait</span> PetEndPoint <span class="token keyword">extends</span> Directives <span class="token keyword">with</span> DefaultJsonFormats <span class="token punctuation">{</span>
-  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span>
+<pre><code class="language-scala">@Api(
+  value = "/pet", //tags in endpoint
+  consumes = "application/json, application/xml",
+  produces = "application/json, application/xml"
+)
+@Path("/pet")
+trait PetEndPoint extends Directives with DefaultJsonFormats {
+  ...
+}
 </code></pre>
-      </div>
-<p>and for each HTTP method, you typically add a method in the trait like this … ugh it is really a lot of verbose <code>@Annotation</code>’s to explain this single HTTP <code>POST</code> method!!</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code>  <span class="token annotation punctuation">@ApiOperation</span><span class="token punctuation">(</span>
-    value <span class="token operator">=</span> <span class="token string">"Add a new pet to the store"</span><span class="token punctuation">,</span>
-    nickname <span class="token comment">/*operationId*/</span><span class="token operator">=</span> <span class="token string">"addPet"</span><span class="token punctuation">,</span>
-    httpMethod <span class="token operator">=</span> <span class="token string">"POST"</span><span class="token punctuation">,</span>
-    response <span class="token operator">=</span> classOf<span class="token punctuation">[</span>Pet<span class="token punctuation">]</span><span class="token punctuation">,</span>
-    authorizations <span class="token operator">=</span> Array<span class="token punctuation">(</span>
-      <span class="token keyword">new</span> Authorization<span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"petstore_auth"</span><span class="token punctuation">,</span> scopes <span class="token operator">=</span> Array<span class="token punctuation">(</span>
-          <span class="token keyword">new</span> AuthorizationScope<span class="token punctuation">(</span>scope <span class="token operator">=</span><span class="token string">"write:pets"</span><span class="token punctuation">,</span> description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-          <span class="token keyword">new</span> AuthorizationScope<span class="token punctuation">(</span>scope <span class="token operator">=</span><span class="token string">"read:pets"</span><span class="token punctuation">,</span>  description <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">)</span>
-      <span class="token punctuation">)</span>
-    <span class="token punctuation">)</span>
-  <span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@ApiImplicitParams</span><span class="token punctuation">(</span>Array<span class="token punctuation">(</span>
-    <span class="token keyword">new</span> ApiImplicitParam<span class="token punctuation">(</span>
-      name <span class="token operator">=</span> <span class="token string">"body"</span><span class="token punctuation">,</span>
-      paramType <span class="token operator">=</span> <span class="token string">"body"</span><span class="token punctuation">,</span>
-      value <span class="token operator">=</span> <span class="token string">"Pet object that needs to be added to the store"</span><span class="token punctuation">,</span>
-      required <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-      dataTypeClass <span class="token operator">=</span> classOf<span class="token punctuation">[</span>Pet<span class="token punctuation">]</span>
-    <span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@ApiResponses</span><span class="token punctuation">(</span>Array<span class="token punctuation">(</span>
-    <span class="token keyword">new</span> ApiResponse<span class="token punctuation">(</span>code <span class="token operator">=</span> <span class="token number">405</span><span class="token punctuation">,</span> message <span class="token operator">=</span> <span class="token string">"Invalid Input"</span><span class="token punctuation">)</span>
-  <span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token keyword">def</span> addPet <span class="token operator">=</span>
-      post <span class="token punctuation">{</span> <span class="token comment">//stub implementation</span>
-        complete <span class="token punctuation">{</span> <span class="token string">"pet"</span> <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
+<p>and for each HTTP method, you typically add a method in the trait like this ... ugh it is really a lot of verbose <code>@Annotation</code>'s to explain this single HTTP <code>POST</code> method!!</p>
+<pre><code class="language-scala">  @ApiOperation(
+    value = "Add a new pet to the store",
+    nickname /*operationId*/= "addPet",
+    httpMethod = "POST",
+    response = classOf[Pet],
+    authorizations = Array(
+      new Authorization(value = "petstore_auth", scopes = Array(
+          new AuthorizationScope(scope ="write:pets", description = ""),
+          new AuthorizationScope(scope ="read:pets",  description = ""),
+        )
+      )
+    )
+  )
+  @ApiImplicitParams(Array(
+    new ApiImplicitParam(
+      name = "body",
+      paramType = "body",
+      value = "Pet object that needs to be added to the store",
+      required = true,
+      dataTypeClass = classOf[Pet]
+    )
+  ))
+  @ApiResponses(Array(
+    new ApiResponse(code = 405, message = "Invalid Input")
+  ))
+  def addPet =
+      post { //stub implementation
+        complete { "pet" }
+      }
 </code></pre>
-      </div>
 <p>With these many annotations, you get the (almost) same specification as the sample, </p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>paths:
+<pre><code>paths:
   /pet:
     post:
       tags:
@@ -289,122 +180,52 @@
           description: "Invalid Input"
       security:
       - petstore_auth:
-        - "write:pets"</code></pre>
-      </div>
-<p>but you need to repeat the same <code>@Annotation</code> for all available HTTP methods, multiplied by the number of endpoints. In the sample applicatoin, there are endpoints, <code>/pet</code>, <code>/pet/{petID}</code>, <code>/store</code>, <code>/store/inventory</code>, …</p>
+        - "write:pets"
+</code></pre>
+<p>but you need to repeat the same <code>@Annotation</code> for all available HTTP methods, multiplied by the number of endpoints. In the sample applicatoin, there are endpoints, <code>/pet</code>, <code>/pet/{petID}</code>, <code>/store</code>, <code>/store/inventory</code>, ...</p>
 <p>Is there a way to avoid it? Unfortunately, even for repetitive <code>@Annotation</code>s, you cannot do like below,</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>val reuseParam1 = @ApiImplicitParam //or 
+<pre><code>val reuseParam1 = @ApiImplicitParam //or 
 val reuseParam2 = new ApiImplicitParam
 
 @ApiImplicitParams(Array(reuseParam))
-def ...</code></pre>
-      </div>
+def ...
+</code></pre>
 <p>because you get a Scala compilation error saying:</p>
 <blockquote>
 <p>[Error] annotation argument needs to be a constant</p>
 </blockquote>
-<p>To be honest, I felt like writing up the specification directly in json or yaml would have been easier…</p>
-<p>Another thing I expected to just work fine earlier, but not avaialble at the moment is that those Swagger <code>@Annotation</code>’s compilation errors do not detect almost any type of mismatch in the specification (<code>@Annotation</code>) and the implementation (e.g. parameters and their types). So again, it’s all your manual effort to make sure your server implementation is compliant with the specification.</p>
-<p>Now, let’s talk about how to generate the specification file with from the server code <code>@Annoation</code>s. You need to run the Akka HTTP web server, and access to a resource <a href="http://localhost:9999/api-docs/swagger.yaml">http://localhost:9999/api-docs/swagger.yaml</a> (or swagger.json). </p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 581px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 72.28915662650603%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABcklEQVQoz5VSa2+jMBDk//+kqlXJQ5dEaqV8Oek4NabBbxsbMARIBLRD79NVrVQGyVrtMrs7Y0dFUdCMpmmqtfr95zne3K/i1W63+/V0t94+3j887Pf74/G43W7Wmw3iw+GwXq/iOEYQKaXKsmSMIQCfcZa73DmHJPraPMfZdd3tK0Rt214/0C9HxDk7n8/tjMvbQkSYKYU8kRdjDONcSWmNTpJEaw0tggu05kKgChkSUIrSjDEulYzQAMJOhCitUvLq7CwZ/8yCnTXGeu+EFLm1zvlQB5tb5/GhpufJlFKlJaPUaFPXNQT8dO2u71NCwM+yrK4D59x7LwQPofJFUVbVNE3fksdxPGcZ7gbBYsPGacKcuqkhRBvYNN83lv8ReRgGQlJjtLU53sWlbf+tOQ4DTlTxGLAUlh8+Mv+RQxXgLxf89EJwK5RRuAogD09DCHD70lwg/3q7fSa/pimYfdc1TbNYs/d5kvytqrK/XpeS3wEiXRwgJkfCQQAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="swagger-spec-browser"
-        title=""
-        src="/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png"
-        srcset="/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-3532c.png 148w,
-/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-3fdea.png 295w,
-/blog/static/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda-75924.png 581w"
-        sizes="(max-width: 581px) 100vw, 581px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<p>Yes, this is another interesting point, but it seems the conventional way in the JVM world to generate the swagger spec from server code’s <code>@Annotation</code>, even in Java frameworks like <a href="https://springfox.github.io/springfox/docs/current/#springfox-swagger-ui">Spring</a>, is to run the web server and access to the rendered page. </p>
-<p>This is NOT very Continuous-Integration friendly as your build tool won’t usually bring up the web server, so it is difficult to put the generated specification file in the build pipeline. </p>
-<p>Don’t get me wrong - I am not saying  <a href="https://github.com/swagger-akka-http/swagger-akka-http">swagger-akka-http</a> is not a satisfactory tool. It is still a nice tool when you need to integrate Swagger with Akka HTTP, and the way <code>@Annotation</code> works is coming from Swagger <code>@Annotation</code>, not something swagger-akka-http did in its own. </p>
+<p>To be honest, I felt like writing up the specification directly in json or yaml would have been easier...</p>
+<p>Another thing I expected to just work fine earlier, but not avaialble at the moment is that those Swagger <code>@Annotation</code>'s compilation errors do not detect almost any type of mismatch in the specification (<code>@Annotation</code>) and the implementation (e.g. parameters and their types). So again, it's all your manual effort to make sure your server implementation is compliant with the specification.</p>
+<p>Now, let's talk about how to generate the specification file with from the server code <code>@Annoation</code>s. You need to run the Akka HTTP web server, and access to a resource <a href="http://localhost:9999/api-docs/swagger.yaml">http://localhost:9999/api-docs/swagger.yaml</a> (or swagger.json). </p>
+<p><img src="/blog/swagger-spec-browser-b4b815a42af3dc87b08df3341fbfbfda.png" alt="swagger-spec-browser"></p>
+<p>Yes, this is another interesting point, but it seems the conventional way in the JVM world to generate the swagger spec from server code's <code>@Annotation</code>, even in Java frameworks like <a href="https://springfox.github.io/springfox/docs/current/#springfox-swagger-ui">Spring</a>, is to run the web server and access to the rendered page. </p>
+<p>This is NOT very Continuous-Integration friendly as your build tool won't usually bring up the web server, so it is difficult to put the generated specification file in the build pipeline. </p>
+<p>Don't get me wrong - I am not saying  <a href="https://github.com/swagger-akka-http/swagger-akka-http">swagger-akka-http</a> is not a satisfactory tool. It is still a nice tool when you need to integrate Swagger with Akka HTTP, and the way <code>@Annotation</code> works is coming from Swagger <code>@Annotation</code>, not something swagger-akka-http did in its own. </p>
 <p>And there is one nice thing about the current integration. With <code>@ApiOperation</code>, you can specify the type of response with <code>classOf</code> as follows:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token annotation punctuation">@ApiOperation</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> response <span class="token operator">=</span> classOf<span class="token punctuation">[</span>Pet<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<pre><code class="language-scala">@ApiOperation(..., response = classOf[Pet], ...)
 </code></pre>
-      </div>
 <p>and having the case classes defined:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">case</span> <span class="token keyword">class</span> Pet<span class="token punctuation">(</span>
-    id<span class="token operator">:</span> <span class="token builtin">Long</span><span class="token punctuation">,</span>
-    category<span class="token operator">:</span> Category<span class="token punctuation">,</span>
-    name<span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">,</span>
-    photoUrls<span class="token operator">:</span> Array<span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    tags<span class="token operator">:</span> Array<span class="token punctuation">[</span>Tag<span class="token punctuation">]</span><span class="token punctuation">,</span>
-    status<span class="token operator">:</span> <span class="token builtin">String</span>
-<span class="token punctuation">)</span>
+<pre><code class="language-scala">case class Pet(
+    id: Long,
+    category: Category,
+    name: String,
+    photoUrls: Array[String],
+    tags: Array[Tag],
+    status: String
+)
 
-<span class="token keyword">case</span> <span class="token keyword">class</span> Category<span class="token punctuation">(</span>
-  id<span class="token operator">:</span> <span class="token builtin">Long</span><span class="token punctuation">,</span> 
-  name<span class="token operator">:</span> <span class="token builtin">String</span>
-<span class="token punctuation">)</span>
+case class Category(
+  id: Long, 
+  name: String
+)
 
-<span class="token keyword">case</span> <span class="token keyword">class</span> Tag<span class="token punctuation">(</span>
-  id<span class="token operator">:</span> <span class="token builtin">Long</span><span class="token punctuation">,</span>
-  name<span class="token operator">:</span> <span class="token builtin">String</span>
-<span class="token punctuation">)</span>
+case class Tag(
+  id: Long,
+  name: String
+)
 </code></pre>
-      </div>
-<p>you don’t need to add <code>@Annotation</code> to the case classes, but Swagger UI nicely generate this much of model definition. Note that the <code>Pet</code> case class has <code>category: Category</code> and <code>tags: Array[Tag]</code> parameters, but those case classes used in another case class are correctly and automatically handled by swagger spec generation.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-b91be.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 103.84615384615385%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAIAAADJt1n/AAAACXBIWXMAAA7DAAAOwwHHb6hkAAACh0lEQVQ4y3WUy27TQBSGs+QiFmxQEUjADiE8sT2eiZ22OGrrkLJEKq26qiqx4x14AKgEDYIFC56BN2hFWgnxABUSCW4qNbZj10naNFdV/BNXqanTo7MYj+ab85/LOPX2+43N7UffftGvP58US3c3tm9tbN/8WLqDxaed+8XS1Put69gv7tz78OP2Zmnq8+4D+Jfdh++2rqVmFyRrXnpVUF88V3Tzcdxfv1kK25Vmx57o4enfFOOcSFKesfnstKqqUszW19e73W6tVuv1+2f/W6/XGw6HKcMw0oQwWbZMk0jkEjwYDHCumzBsDgBnMjohxFAUk2q4KB4cMK4/CoLfe3uO6zYaTbjjBNDSbDaHY5im5QLjOs9QSi/BJycnnuO2RgbGdQMsjo+PBazrupImCJszsmKtKEk4ae12W8DQiUSzipp/ZiYLhhOdTuc0YdgUMOcZyE6n05ZlTYQD3z+oHrRGgh3HrdfrkI3gAtY0hsjgLSsvy3ISxjnXdX3ft227Ui5X92uO44SNxnlktCpHaY5qVFUhIQlH1QrD0PfqqPZFZDEkREK1l7JZc2aWc5aE7Yrtud7hoQflKPgFTKkWwXPoU0bTdOEsy2RVvtQqZFv+U/E8PwhEcMwJ+pyJJuylYcyZOVVVrpZ9VHe9fdsFjPiYsxRjjIxsEdkzjs8xvLq6ihNRwRphWKvVw7AZXYTNCD7PucAhQo9Xe3l5Gf1sTbJzWLRqNJ6LuoFyRznDxzAOdRIWPQ/AmkwIlxU8SM55POcIHg1JNSpy/GEIWNcNMV6MjcZTScq+6mEImGpQ+BSzvTA9g7LH4ZWVlQie+DAEHLVKw8+A8VkMSazaa2traNXZFdbv9/8BAzXWfz/z21MAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="swagger-model"
-        title=""
-        src="/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-fb8a0.png"
-        srcset="/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-1a291.png 148w,
-/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-2bc4a.png 295w,
-/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-fb8a0.png 590w,
-/blog/static/swagger-model-305e2b4ba52988bfaed1b2358a59421a-b91be.png 832w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p>you don't need to add <code>@Annotation</code> to the case classes, but Swagger UI nicely generate this much of model definition. Note that the <code>Pet</code> case class has <code>category: Category</code> and <code>tags: Array[Tag]</code> parameters, but those case classes used in another case class are correctly and automatically handled by swagger spec generation.</p>
+<p><img src="/blog/swagger-model-305e2b4ba52988bfaed1b2358a59421a.png" alt="swagger-model"></p>
 <h3>Summary of the current status</h3>
 <ul>
 <li>No top-down tool available for Akka HTTP, so top-down is fully manual</li>
@@ -413,162 +234,31 @@ def ...</code></pre>
 <li>Model definition works nicely for bottom-up</li>
 </ul>
 <p>So if you still feel it is beneficial that the endpoint specification (<code>@Annotation</code>) being close to the Akka HTTP route implementation, rather than a separate .json/.yaml file, swagger-akka-http is the way to go. Otherwise, write and manage the specification manually.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 553px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 93.85171790235081%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAA7CAAAOwgEVKEqAAAACPElEQVQ4y61Ua1MTQRDMLzEREqHubvd29557eZG3SqhIAMtSQaDAsvz/39uZuYAUH6hE+dCZS3ar09M9cw1rQ5RlgLIIkGUBlFIIw3BnlOWh1AZ/FL5CdzCEyxySlEA1zR2MM0gKQmmhdfQi4frTXk0YRRHy0qNHhHlRwCVMaGGsBp8prUg1VXqOXsD5el9qI45j9I/GGM/mQjocTTAcTzGaT+EcK9Nb4WLdkSoKjQrhU4PSe2mfFTMyUmwTS1aQYqdhsxjGaDlL0qy+kxcIoxBnp+2/HjKcDjGuEvGy2x8IesORqB5QB5a9ZT8LIjcR3TuiO/Xd2BgsZgG61UGtMIoUon9M9wFKBVid7NeESun/IntMekWESapR5IEg50rzmBeJeMR/tj1hgNPVRmHlQjI3p0A80iynMEoan2QndZU/wHj0rg7FugRHkxmqfh8utZSsJht2a5f9Yx+FMI4Nqt6AyFJqNUZGNmijENOoxJahoDeVv/OZnMvwP9sUITRWRsD3+vDcto0fWy8HfrtAHgjVZtJfI2EhdC4iVfS2KUMBT35CrcvF5ylHWxCywm6inqxSKc/WOfLJSdqcPttS+8Z+1h4+HSveEiG0tHIDb/DltEezaOXHz+d7+P3zDa6/t6Te3TRxe9XC/W0Tl1/f4vqyhRvC1bcW7q6b+LG59+uuWYfCm/LwUuC99F2N5fIQs2kHcwK3s5h3MJ10sPzYxsXZHo4/tPF+wehgQvN3ctyGp5esEPIuv8bqMf4AP75WvBFtgX4AAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="annotation-next-to-code"
-        title=""
-        src="/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png"
-        srcset="/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-c443a.png 148w,
-/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-a37e4.png 295w,
-/blog/static/annotation-next-to-code-afb115c5db16c726718d0dccaf651128-32a99.png 553w"
-        sizes="(max-width: 553px) 100vw, 553px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<p>With these status and limitations we have seen, do we still want to introduce Swagger to an Akka HTTP based server? Let’s take a step back and recap what benefits Swagger gives.</p>
-<h2>Recap - what Swagger is, and what Swagger’s benefits are</h2>
+<p><img src="/blog/annotation-next-to-code-afb115c5db16c726718d0dccaf651128.png" alt="annotation-next-to-code"></p>
+<p>With these status and limitations we have seen, do we still want to introduce Swagger to an Akka HTTP based server? Let's take a step back and recap what benefits Swagger gives.</p>
+<h2>Recap - what Swagger is, and what Swagger's benefits are</h2>
 <p><a href="https://swagger.io/">Swagger</a> is REST API tooling - in its core is the API specification file (.yaml or .json) and a rich set of tools to help you manage the API and develp both the server and client sides. The biggest motivation of using Swagger is well explained by the history of <a href="https://en.wikipedia.org/wiki/Swagger_(software)">Swagger at Wikipedia</a>.</p>
 <blockquote>
-<p>During the development of Wordnik’s products, the need for automation of API documentation and client SDK generation became a major source of frustration. </p>
+<p>During the development of Wordnik's products, the need for automation of API documentation and client SDK generation became a major source of frustration. </p>
 </blockquote>
 <p>For many development teams as of today, automation of API documentation and client SDK generation can still be the primary benefit of Swagger.</p>
 <h3>Swagger specification file (.yaml or .json)</h3>
-<p>Swagger’s specification file is standardized as in <a href="https://swagger.io/docs/specification/about/">Swagger specification</a>, and curently the specifications are called <a href="https://github.com/OAI/OpenAPI-Specification">Open API Specification 3.x</a> as it is now widely accepted and maintained as community effort. OK, the first benefit is you have a well-understood format of API documentation, which is closely related to the other benefits.</p>
+<p>Swagger's specification file is standardized as in <a href="https://swagger.io/docs/specification/about/">Swagger specification</a>, and curently the specifications are called <a href="https://github.com/OAI/OpenAPI-Specification">Open API Specification 3.x</a> as it is now widely accepted and maintained as community effort. OK, the first benefit is you have a well-understood format of API documentation, which is closely related to the other benefits.</p>
 <h3>Swagger UI (Documentation generator and viewer)</h3>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-05e8b.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 71.33838383838383%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAIAAACgpqunAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABhElEQVQoz53Sy4oUMRQG4Dy1TyC494LgwqWitLiYjS0D4wXRxUAPDDN9qUrqmqRSSSq3qqkkMwvTuhmUFtqfj39zNgfOATHGEEL8rwDGeVHXtO+TTnAmhHLWzdN9ZrQd50wKQjnGe0Kpab4BC3z+YLN4XpzBnhSCJojvm4xDd6MPSVMkCJjohVsvXPXVGXoUqymI5afb1Yuwfj8QpAjSXTlg6HgdDf0Hr7DtK7Dc3T76fPdqFbN2yNthU/GskRVziBpIdCvnzsS/EeWLTgM9eqZnab2dwpE8mOd5+pVB6UTKwRhrrUvGcQoH4r0fxxGcwfjk+927y5Dv15YF1UVnys6kxZiNh1DtK6bBWsplXZ8zRp07CnMj+MguHxenr5sfO9oksMc5w5ATxMnvRoJWqqeTug87WaQ7hw/L8Oypf/tG7DK+zYYcyixXEM0YB0IOmdtWIQQE2pbfTunVSgt2FCM5OKGrh9nJy/LLhtbJNjWprnG57Zqsb6EgefrlafhD4wTk+CcI0wKga48CpwAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="Swagger-UI"
-        title=""
-        src="/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-fb8a0.png"
-        srcset="/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-1a291.png 148w,
-/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-2bc4a.png 295w,
-/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-fb8a0.png 590w,
-/blog/static/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce-05e8b.png 792w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<p>At <a href="http://petstore.swagger.io/">http://petstore.swagger.io/</a> you can see the specification document for Swagger’s official PetStore sample, and it is generated by <a href="https://swagger.io/swagger-ui/">Swagger UI</a>. Once you have the specification file for your application, this nice-looking documentation comes for free for you too. </p>
+<p><img src="/blog/Swagger-UI-34b3edf56d6d39b48a7ec3ccbb9598ce.png" alt="Swagger-UI"></p>
+<p>At <a href="http://petstore.swagger.io/">http://petstore.swagger.io/</a> you can see the specification document for Swagger's official PetStore sample, and it is generated by <a href="https://swagger.io/swagger-ui/">Swagger UI</a>. Once you have the specification file for your application, this nice-looking documentation comes for free for you too. </p>
 <p>Also when you load your spec file in <a href="https://editor.swagger.io/">Swagger Editor</a>, it spots your specification errors like below. In fully manual workflow, it will be much more difficult to spot your mistakes in specification.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-7ccc8.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 46.44628099173554%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAx0lEQVQoz52OawuCMBSG+///rCKISHff1Gybc3mjeyQds74lSvAyDu/27DmztqraPP8nzs1aa8lipdabqzZTmEJKMl+mATpR2sEmRCbE+wBlmHrOSyGaOL6Zwb+ezkHaJOngHNMDF7WKrlo/sqy7mLJ2D+ttqENsMW2i+JymfS7fYQQ+MAHmUsicsErIUipHWB3F0EDfqOiY7IbNAbKIQAC7G3N75/457YjZYQoqTzkMnjLPuEG4EAIGKEfMsHYtVcHl70fD5hfsWvEcCy6/9gAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="swagger-error"
-        title=""
-        src="/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-fb8a0.png"
-        srcset="/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-1a291.png 148w,
-/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-2bc4a.png 295w,
-/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-fb8a0.png 590w,
-/blog/static/swagger-error-98a94e736684c1c8ddc554164b48f7ea-7ccc8.png 605w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<p>With the help of Swagger UI document generation, and clearly defined Swagger/Open API specification, the work of writing REST API specification became much more concrete (I wouldn’t say it became “easy” though), and there are clearer learning paths avaialble to improve on API management. You can find a plenty of other Swagger speficitation examples out there which you can get inspiration from, and people have published lots of materials on how to write good specification in Swagger. This made a step forward in API specification writing, so that it became a managable job for an engineer from something like black magic done by a veteran craftman with 30 years of experience. Having a concrete tool available is a huge win, where you can focus on more detailed ways to leverage tools, rather than talking about “what a good design of your REST API is” in a vague fasion. (I believe as an engineer, you have seen such phenomena in many other areas - when good tools are available, things get traction and move forward.) Of course conceptual understanding of good design is a must, but good tooling is also a must for maintaining good design in practice.</p>
+<p><img src="/blog/swagger-error-98a94e736684c1c8ddc554164b48f7ea.png" alt="swagger-error"></p>
+<p>With the help of Swagger UI document generation, and clearly defined Swagger/Open API specification, the work of writing REST API specification became much more concrete (I wouldn't say it became "easy" though), and there are clearer learning paths avaialble to improve on API management. You can find a plenty of other Swagger speficitation examples out there which you can get inspiration from, and people have published lots of materials on how to write good specification in Swagger. This made a step forward in API specification writing, so that it became a managable job for an engineer from something like black magic done by a veteran craftman with 30 years of experience. Having a concrete tool available is a huge win, where you can focus on more detailed ways to leverage tools, rather than talking about "what a good design of your REST API is" in a vague fasion. (I believe as an engineer, you have seen such phenomena in many other areas - when good tools are available, things get traction and move forward.) Of course conceptual understanding of good design is a must, but good tooling is also a must for maintaining good design in practice.</p>
 <p>Another feature I like in Swagger UI is that you can send HTTP requests by pressing buttons (as long as you write example input to the specification file). Also ig gives you curl command for the request which is great for automation of testing. Save the curl commands and invoke them by an automated tool. To use this feature, it is </p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-51273.png"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 53.385416666666664%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABgklEQVQoz53J60vCUBgG8PPfFVpmkZdN59TUVOg/iD4UFV2ELClJkiyCLAvqg0ZBn6OghMBQy8um7uxsbpq3rtBRQYggKPjx8jzPC/Zu0O512841Oo6L4VuhW7ev0FmCTyKerSKmgvISnxFKOQni3AMicXR413Zwh6IJ8fReiHTq/i26TMI0gmyFZ2Q+L8GMUMyKJZx7QElAUr3WeH9rfnzT+nyXGzVYFrtYjntIpZOPT/liUZRlQZIKHAfKjefKS6P62vwJ792X3KpDucwgWBD5HlaAIMWxWZH7h1wZAop2msxuyuzS6i16g42kHEbaaaTHTRaXlrBo9GbCYMM7bXHjQFA2ncFKUHbzmHtEawJW+wRJ2bWElba6jSbHoJrsIJSDOpWaVKp0/UrNwJAeBzzigK9qmOxTjCpUOjA1uzA5M/8P04sesB0+DB1EItHoUSz2JycX58AXCPoCW15/YCMYwndtc8vj8895vLPLK79bWl0HaVhIlRhGRlxdhs3Kn3wB5mvYFGSeFtQAAAAASUVORK5CYII='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="Swagger-UI-curl"
-        title=""
-        src="/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-fb8a0.png"
-        srcset="/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-1a291.png 148w,
-/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-2bc4a.png 295w,
-/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-fb8a0.png 590w,
-/blog/static/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523-51273.png 768w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/Swagger-UI-curl-19169ae77681a3acb3d3cf4cfc9fe523.png" alt="Swagger-UI-curl"></p>
 <h3>Client code and stub server code generation</h3>
 <p>Even though no existing tool available to generate the Akka HTTP server side code, <a href="https://github.com/swagger-api/swagger-codegen">Swagger codegen</a> can still generate the client-side code for various dev environments, and server stubs.</p>
 <p>Some client-side development teams could be benefited from the code generation, as they might use the generated client code as the SDK to depend on, or might prefer the generated server stub code as for testing against the server - as long as test is concerned from the client side, they might not care whetherthe server implementation is Akka HTTP or not.</p>
 <h2>To go with or without Swagger?</h2>
-<p>So I have covered current limitations and benefits of using Swagger with Akka HTTP. Some part works nicely with the current integration, and there’s still a lot of benefits you get from the rich Swagger echosystem. It’s up to you how you evaluate the benefits against the cost you have to maintain the swagger specification. Hopefully this article gives you some hints to judge its value in your engineering team.</p>
-<h2>What’s next?</h2>
-<p>If I am going to write next article about Swagger, probably I will explore possibilities of more automation. With <a href="http://www.scala-lang.org/blog/2017/10/09/scalamacros.html">the rise of the new Scala macro</a>, probably better automation can be achieved. Let’s see what we can get there.</p>
+<p>So I have covered current limitations and benefits of using Swagger with Akka HTTP. Some part works nicely with the current integration, and there's still a lot of benefits you get from the rich Swagger echosystem. It's up to you how you evaluate the benefits against the cost you have to maintain the swagger specification. Hopefully this article gives you some hints to judge its value in your engineering team.</p>
+<h2>What's next?</h2>
+<p>If I am going to write next article about Swagger, probably I will explore possibilities of more automation. With <a href="http://www.scala-lang.org/blog/2017/10/09/scalamacros.html">the rise of the new Scala macro</a>, probably better automation can be achieved. Let's see what we can get there.</p>
 <h2>References</h2>
 <ul>
 <li>
@@ -584,15 +274,19 @@ def ...</code></pre>
 <li>Explanation about Swagger Specification - <a href="https://swagger.io/docs/specification/about/">https://swagger.io/docs/specification/about/</a></li>
 <li>Open API specification at GitHub - <a href="https://github.com/OAI/OpenAPI-Specification">https://github.com/OAI/OpenAPI-Specification</a></li>
 <li>Springfox Java framework with Swagger at - <a href="https://springfox.github.io/springfox/docs/current/">https://springfox.github.io/springfox/docs/current/</a></li>
-</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script>
+</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-3694e691a40a2920cb14.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-5c4c5a0f7af9dc69d6d7.js","107818501498521":"component---src-templates-blog-post-js-ca71989682cd54639ff0.js","35783957827783":"component---src-pages-index-js-f3ac62be02813b36160e.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-236041f30af0d2d50321.js","160326069391746":"path---serializer-minimal-3a5ef328caa94a3f322f.js","240229599778477":"path---akka-behavior-levels-777fa10830698420117c.js","90106736999892":"path---persistent-actor-minimal-96858b12ad3143e32630.js","235964179464078":"path---dispatcher-behavior-e43175dd21f98148787b.js","205347915900230":"path---hello-world-http-bench-35da9d029fe5bdfb8576.js","218392457165648":"path---akka-http-quickstart-65f688c2d48558377460.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-320a98c23faa1d40e634.js","217632986566844":"path---executor-and-execution-context-da168d50899ef102ec56.js","224718722256965":"path---event-adapter-cassandra-e408dbea1d16996b771a.js","82537549859403":"path---oss-hackathon-1-45b25dd27b904fa78bb5.js","36029449993048":"path---local-minimal-sender-a23036f2d395d0f98d1a.js","86659390886147":"path---local-minimal-receiver-b2b2763cafabcda11bad.js","26725176786023":"path---persistent-actor-minimal-sql-b570323b919e40633eb6.js","165329427061039":"path---mailbox-and-fork-join-task-97325a03045c0cfff16f.js","107690442534757":"path---remote-minimal-receiver-604ce16ec527b8bef1e8.js","221230463047462":"path---swagger-akka-http-94f9bf4298041495fff2.js","241179671101829":"path---remote-minimal-sender-f33f35285248494c3d95.js","142629428675168":"path---index-cbf0e8c6a22e61bd8852.js","114276838955818":"component---src-layouts-index-js-ab448737d2670585c2fb.js"}/*]]>*/</script><script>
+            
   
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-111892799-1', 'auto');
-  </script><script>
+  if(true) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', 'UA-111892799-1', 'auto');
+      }
+      </script><script>
           window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -609,4 +303,4 @@ def ...</code></pre>
 
   return t;
 }(document, "script", "twitter-wjs"));
-      </script></body></html>
+      </script><script>/*<![CDATA[*/["/blog/commons-2174e0bf62fcadcdb7a6.js","/blog/app-3694e691a40a2920cb14.js","/blog/path---swagger-akka-http-94f9bf4298041495fff2.js","/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js","/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js"].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/</script></body></html>

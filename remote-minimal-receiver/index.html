@@ -1,179 +1,59 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-eb745b83df7613925712.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js" as="script"/><link rel="preload" href="/blog/path---remote-minimal-receiver-41e206ff110c06cc738f.js" as="script"/><link rel="preload" href="/blog/app-e36b8fb34c6b276fa22f.js" as="script"/><link rel="preload" href="/blog/commons-85d973a0b17b2f0d3c45.js" as="script"/><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-e36b8fb34c6b276fa22f.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-a4372d8aab423f26d2d4.js","107818501498521":"component---src-templates-blog-post-js-6f6e557e669577e2753e.js","35783957827783":"component---src-pages-index-js-33b58c50c1b11bf71654.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-f7c6e001c20a8eaae7e2.js","160326069391746":"path---serializer-minimal-082ffcdf3c53d1b6ff63.js","240229599778477":"path---akka-behavior-levels-b5c64720008bc588c90d.js","205347915900230":"path---hello-world-http-bench-ea4c5153c75b2df289d0.js","218392457165648":"path---akka-http-quickstart-d7b35e32e912ae10cba4.js","90106736999892":"path---persistent-actor-minimal-b567a086afe0680e9178.js","235964179464078":"path---dispatcher-behavior-add184d47bd6f297e43a.js","36029449993048":"path---local-minimal-sender-a3c98066337814cb72fb.js","224718722256965":"path---event-adapter-cassandra-953189c8a5f823ffee75.js","217632986566844":"path---executor-and-execution-context-daa3468bd376f0ba84b6.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-889e7daeb2ee75f0b266.js","82537549859403":"path---oss-hackathon-1-79c14b82e972fb822c6e.js","86659390886147":"path---local-minimal-receiver-faf30137107cc060787b.js","165329427061039":"path---mailbox-and-fork-join-task-1a2da1cf0ed6a9b0ad97.js","107690442534757":"path---remote-minimal-receiver-41e206ff110c06cc738f.js","221230463047462":"path---swagger-akka-http-4d3beb3c5950064c9cc6.js","241179671101829":"path---remote-minimal-sender-9ffd4d742325b14097ec.js","26725176786023":"path---persistent-actor-minimal-sql-89e21577da5d29b3fe77.js","142629428675168":"path---index-7829676675d5bf4d236e.js","114276838955818":"component---src-layouts-index-js-eb745b83df7613925712.js"}/*]]>*/</script><link rel="alternate" type="application/rss+xml" href="/rss.xml"/><title data-react-helmet="true">Akka remoting minimal example part 3 - receiver side | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75em 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><script>/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",["/blog/commons-85d973a0b17b2f0d3c45.js","/blog/app-e36b8fb34c6b276fa22f.js","/blog/path---remote-minimal-receiver-41e206ff110c06cc738f.js","/blog/component---src-templates-blog-post-js-6f6e557e669577e2753e.js","/blog/component---src-layouts-index-js-eb745b83df7613925712.js"])/*]]>*/</script><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="1309995438"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Akka remoting minimal example part 3 - receiver side</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">February 09, 2018</p><div data-reactid="8"><h2>Overview</h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js" as="script"/><link rel="preload" href="/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js" as="script"/><link rel="preload" href="/blog/path---remote-minimal-receiver-604ce16ec527b8bef1e8.js" as="script"/><link rel="preload" href="/blog/app-3694e691a40a2920cb14.js" as="script"/><link rel="preload" href="/blog/commons-2174e0bf62fcadcdb7a6.js" as="script"/><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml"/><title data-react-helmet="true">Akka remoting minimal example part 3 - receiver side | Akka, Concurrency, etc.</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1em;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:0em;}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:1em;line-height:1.75rem;background-color:#fdf6e3;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><link href="//fonts.googleapis.com/css?family=Montserrat:700|Merriweather:400,400i,700,700i,900,900i" rel="stylesheet" type="text/css"/><style id="gatsby-inlined-css">code[class*=language-],pre[class*=language-]{color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::-moz-selection,code[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection{background:#073642}code[class*=language-]::selection,code[class*=language-] ::selection,pre[class*=language-]::selection,pre[class*=language-] ::selection{background:#073642}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{color:#657b83;background:#eee8d5}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.gatsby-highlight-code-line{background-color:#feb;display:block;margin-right:-1em;margin-left:-1em;padding-right:1em;padding-left:.75em;border-left:.25em solid #f99}code{line-height:1rem}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/blog/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/blog/static/montserrat-latin-100.5e334eff.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/blog/static/montserrat-latin-100italic.8c070533.woff2) format("woff2"),url(/blog/static/montserrat-latin-100italic.03e19243.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/blog/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/blog/static/montserrat-latin-200.f2022ecd.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/blog/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/blog/static/montserrat-latin-200italic.89614a60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/blog/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/blog/static/montserrat-latin-300.3a371ee0.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/blog/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/blog/static/montserrat-latin-300italic.16521668.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/blog/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/blog/static/montserrat-latin-400.b20cc131.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/blog/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/blog/static/montserrat-latin-400italic.9405e787.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/blog/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/blog/static/montserrat-latin-500.50825d47.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/blog/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/blog/static/montserrat-latin-500italic.635de59c.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/blog/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/blog/static/montserrat-latin-600.f300da4f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/blog/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/blog/static/montserrat-latin-600italic.2bc37d86.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/blog/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/blog/static/montserrat-latin-700.81826529.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/blog/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/blog/static/montserrat-latin-700italic.c162d257.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/blog/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/blog/static/montserrat-latin-800.895aadbf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/blog/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/blog/static/montserrat-latin-800italic.b3362875.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/blog/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/blog/static/montserrat-latin-900.1b99ef78.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/blog/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/blog/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/blog/static/merriweather-latin-300.f015f1e9.woff2) format("woff2"),url(/blog/static/merriweather-latin-300.92dfe81b.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/blog/static/merriweather-latin-300italic.7fd86b32.woff2) format("woff2"),url(/blog/static/merriweather-latin-300italic.878b76f5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/blog/static/merriweather-latin-400.12dbf4c0.woff2) format("woff2"),url(/blog/static/merriweather-latin-400.1fffad22.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/blog/static/merriweather-latin-400italic.1e0d3e81.woff2) format("woff2"),url(/blog/static/merriweather-latin-400italic.de18d4c4.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/blog/static/merriweather-latin-700.dc8fec81.woff2) format("woff2"),url(/blog/static/merriweather-latin-700.d7d2ed8e.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/blog/static/merriweather-latin-700italic.b7b7e5da.woff2) format("woff2"),url(/blog/static/merriweather-latin-700italic.6210a5fc.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/blog/static/merriweather-latin-900.43f870d5.woff2) format("woff2"),url(/blog/static/merriweather-latin-900.8f3806df.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/blog/static/merriweather-latin-900italic.168c1ab2.woff2) format("woff2"),url(/blog/static/merriweather-latin-900italic.ae7778f0.woff) format("woff")}</style></head><body><div id="___gatsby"><div style="max-width:42rem;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="-736643021"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/blog/" data-reactid="3">Akka, Concurrency, etc.</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Akka remoting minimal example part 3 - receiver side</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">February 09, 2018</p><div data-reactid="8"><h2>Overview</h2>
 <p>You can find the code and instruction to run the example at <a href="https://github.com/richardimaoka/resources/tree/master/remote-minimal">GitHub</a>.</p>
-<div>
-          <div
-            class="gatsby-resp-iframe-wrapper"
-            style="padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem"
-          >
-            <iframe src="https://www.youtube.com/embed/YAuamfYBb1o" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-          "></iframe>
-          </div>
-          </div>
-<p>This is the last of three articles about akka’s remote message passing. The previous articles are here:</p>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/YAuamfYBb1o" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<p>This is the last of three articles about akka's remote message passing. The previous articles are here:</p>
 <ul>
 <li><a href="../remote-minimal-setup">Akka remoting minimal example part 1 - setup</a></li>
 <li><a href="../remote-minimal-sender">Akka remoting minimal example part 2 - sender side</a></li>
 </ul>
 <h3>TcpHandlers</h3>
 <p>As in the previous article, Netty takes care of the message transport in the network layer.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/9oADAMBAAIQAxAAAAHuWwxxXJ//xAAYEAADAQEAAAAAAAAAAAAAAAAAAhEBMf/aAAgBAQABBQI2xbFRVGM5/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECEf/aAAgBAwEBPwGZRh//xAAYEQADAQEAAAAAAAAAAAAAAAAAARECA//aAAgBAgEBPwFc4PNZ/8QAFxAAAwEAAAAAAAAAAAAAAAAAABAhAf/aAAgBAQAGPwJUmP8A/8QAGxABAQABBQAAAAAAAAAAAAAAAREAECExgZH/2gAIAQEAAT8h6fMlQNwvabiCyvOq/9oADAMBAAIAAwAAABCLD//EABYRAQEBAAAAAAAAAAAAAAAAAAEQIf/aAAgBAwEBPxADk//EABcRAQEBAQAAAAAAAAAAAAAAAAEAETH/2gAIAQIBAT8QFbCjy//EAB4QAQADAAAHAAAAAAAAAAAAAAEAESExQVFhcZHw/9oACAEBAAE/EBVQVOigWgjCmAk1u/CWuPKXfrZgPM0Vv3P/2Q=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="netty"
-        title=""
-        src="/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg"
-        srcset="/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-e8976.jpg 148w,
-/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-63df2.jpg 295w,
-/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-f8fb9.jpg 590w,
-/blog/static/netty-96343e72e3f9855be8e66c37ed135e02-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/netty-96343e72e3f9855be8e66c37ed135e02.jpg" alt="netty"></p>
 <p>Onc the receiver side, <code>TcpHandler</code> has the <code>onMessage</code> method, which is called when a message payload (serialized byte array) arrives on the receiver side. </p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIEA//EABYBAQEBAAAAAAAAAAAAAAAAAAIABP/aAAwDAQACEAMQAAABparOxqUBH//EABoQAAICAwAAAAAAAAAAAAAAAAESAhEAEDH/2gAIAQEAAQUCizBro6j3P//EABYRAQEBAAAAAAAAAAAAAAAAAAASAf/aAAgBAwEBPwGcS//EABcRAQADAAAAAAAAAAAAAAAAAAABAhP/2gAIAQIBAT8BmrJ//8QAGRAAAgMBAAAAAAAAAAAAAAAAAREAAiAh/9oACAEBAAY/Ai6lToz/AP/EABoQAQADAAMAAAAAAAAAAAAAAAEAESEQQWH/2gAIAQEAAT8hTIQ7my4J4MveGp//2gAMAwEAAgADAAAAEBMf/8QAGBEAAgMAAAAAAAAAAAAAAAAAAAERQVH/2gAIAQMBAT8QdhHT/8QAGREAAwADAAAAAAAAAAAAAAAAAAERIVGh/9oACAECAQE/EEuxLPCdn//EABsQAQACAwEBAAAAAAAAAAAAAAEAESExcUHx/9oACAEBAAE/EE+w0jDmcgik+FBtVxc069lecan/2Q=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="tcphandler"
-        title=""
-        src="/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg"
-        srcset="/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-e8976.jpg 148w,
-/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-63df2.jpg 295w,
-/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-f8fb9.jpg 590w,
-/blog/static/tcphandler-7a5f4eb307023f066db3ba2a77eaa318-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">trait</span> TcpHandlers <span class="token keyword">extends</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">{</span>
+<p><img src="/blog/tcphandler-7a5f4eb307023f066db3ba2a77eaa318.jpg" alt="tcphandler"></p>
+<pre><code class="language-scala">trait TcpHandlers extends ... {
 
-  <span class="token keyword">override</span> <span class="token keyword">def</span> onMessage<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-    notifyListener<span class="token punctuation">(</span>
-      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> 
-      InboundPayload<span class="token punctuation">(</span>ByteString<span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
+  override def onMessage(...): Unit = {
+    ...
+    notifyListener(
+      ..., 
+      InboundPayload(ByteString(bytes))
+    )
+  }
 </code></pre>
-      </div>
 <p>The above <code>notifyListener</code>  method is as follows:</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code>  <span class="token keyword">def</span> notifyListener<span class="token punctuation">(</span>channel<span class="token operator">:</span> Channel<span class="token punctuation">,</span> msg<span class="token operator">:</span> HandleEvent<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Unit</span> <span class="token operator">=</span> 
-    get<span class="token punctuation">(</span>channel<span class="token punctuation">)</span> foreach <span class="token punctuation">{</span> _ notify msg <span class="token punctuation">}</span>
+<pre><code class="language-scala">  def notifyListener(channel: Channel, msg: HandleEvent): Unit = 
+    get(channel) foreach { _ notify msg }
 </code></pre>
-      </div>
 <p>and <code>notify</code> performs usual local message passing via the familiar <code>!</code> method, <code>actor ! ev</code>.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>  final case class ActorHandleEventListener(actor: ActorRef) 
+<pre><code>  final case class ActorHandleEventListener(actor: ActorRef) 
     extends HandleEventListener {
     
     override def notify(ev: HandleEvent): Unit =
       actor ! ev
-  }</code></pre>
-      </div>
+  }
+</code></pre>
 <h3>EndPointReader and de-serialization</h3>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgAE/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEEBf/aAAwDAQACEAMQAAAB1JU+cJwv/8QAFxABAQEBAAAAAAAAAAAAAAAAEQEgIf/aAAgBAQABBQKK8jj/xAAVEQEBAAAAAAAAAAAAAAAAAAAQEf/aAAgBAwEBPwGn/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQACEf/aAAgBAgEBPwHT2W//xAAXEAADAQAAAAAAAAAAAAAAAAAAASAx/9oACAEBAAY/AjHP/8QAGBABAAMBAAAAAAAAAAAAAAAAAQARISD/2gAIAQEAAT8h02ZN2JNFonH/2gAMAwEAAgADAAAAEDff/8QAFhEBAQEAAAAAAAAAAAAAAAAAAREA/9oACAEDAQE/ECWzLXf/xAAXEQEBAQEAAAAAAAAAAAAAAAABEQBx/9oACAECAQE/EAdk5gWhN//EABkQAQADAQEAAAAAAAAAAAAAAAEAESEgMf/aAAgBAQABPxB12r5LIg7jjGeoaF2uP//Z'); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="deserialize"
-        title=""
-        src="/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg"
-        srcset="/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-e8976.jpg 148w,
-/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-63df2.jpg 295w,
-/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-f8fb9.jpg 590w,
-/blog/static/deserialize-de187b0aca391605b3c8af965f49e7a7-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/deserialize-de187b0aca391605b3c8af965f49e7a7.jpg" alt="deserialize"></p>
 <p>There are some intermediate actor(s) passes through the payload after the <code>notify</code> method described above (in the case of this example, <code>AkkaProtocolManager</code>).</p>
 <p>Afterwards, an important <code>EndpointReader</code> actor receives the payload. It has the following <code>receive</code> method.</p>
-<div class="gatsby-highlight">
-      <pre class="language-scala"><code><span class="token keyword">class</span> EndpointReader<span class="token punctuation">(</span>
-  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-  <span class="token keyword">override</span> <span class="token keyword">def</span> receive<span class="token operator">:</span> Receive <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token keyword">case</span> InboundPayload<span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token keyword">if</span> p<span class="token punctuation">.</span>size <span class="token operator">&lt;=</span> transport<span class="token punctuation">.</span>maximumPayloadBytes ⇒
-      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     
-      msgDispatch<span class="token punctuation">.</span>dispatch<span class="token punctuation">(</span>
-        msg<span class="token punctuation">.</span>recipient<span class="token punctuation">,</span>
-        msg<span class="token punctuation">.</span>recipientAddress<span class="token punctuation">,</span>
-        <span class="token comment">// msg.serializedMessage.message: ByteString </span>
-        msg<span class="token punctuation">.</span>serializedMessage<span class="token punctuation">,</span>
-        msg<span class="token punctuation">.</span>senderOption
-      <span class="token punctuation">)</span>
-  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span>        
+<pre><code class="language-scala">class EndpointReader(
+  ...
+  override def receive: Receive = {
+    case InboundPayload(p) if p.size &#x3C;= transport.maximumPayloadBytes ⇒
+      ...     
+      msgDispatch.dispatch(
+        msg.recipient,
+        msg.recipientAddress,
+        // msg.serializedMessage.message: ByteString 
+        msg.serializedMessage,
+        msg.senderOption
+      )
+  ...
+}        
 </code></pre>
-      </div>
 <p>When <code>EndPointReader</code> receives the payload, it is de-serialized from a serialized byte array (represented as <code>ByteString</code>) to a Scala object, with the following call in <code>DefaultMessageDispatcher</code>.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>class DefaultMessageDispatcher(
+<pre><code>class DefaultMessageDispatcher(
     ...
     lazy val payload: AnyRef =
       MessageSerializer.deserialize(
@@ -181,57 +61,22 @@
         serializedMessage
       )
     ...
-}</code></pre>
-      </div>
+}
+</code></pre>
 <p><code>msgDispatch.dispatch</code> in <code>EndPointReader</code> finally passes the deserialized message to the <code>MessageReceiver</code> actor via local message passing.</p>
-<p>
-  <a
-    class="gatsby-resp-image-link"
-    href="/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg"
-    style="display: block"
-    target="_blank"
-    rel="noopener"
-  >
-  
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgAE/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEEBf/aAAwDAQACEAMQAAAB0p0+cJwv/8QAGRAAAgMBAAAAAAAAAAAAAAAAARECEBIh/9oACAEBAAEFAgTp8i1f/8QAFREBAQAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8Bp//EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAgEBPwFdZdb/xAAXEAADAQAAAAAAAAAAAAAAAAABECEg/9oACAEBAAY/AjFcf//EABkQAQEBAAMAAAAAAAAAAAAAAAERACAhUf/aAAgBAQABPyGQVDd1BHx1OB//2gAMAwEAAgADAAAAEEz/AP/EABYRAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAwEBPxBDbf/EABYRAQEBAAAAAAAAAAAAAAAAAAERAP/aAAgBAgEBPxAQZMaITf/EABwQAQACAQUAAAAAAAAAAAAAAAEAETEQIUFRcf/aAAgBAQABPxBPAk9yzt2UFMVwI35EHJADGn//2Q=='); background-size: cover; display: block;"
-    >
-      <img
-        class="gatsby-resp-image-image"
-        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
-        alt="receiver"
-        title=""
-        src="/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg"
-        srcset="/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-e8976.jpg 148w,
-/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-63df2.jpg 295w,
-/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-f8fb9.jpg 590w,
-/blog/static/receiver-5310b90ed8761a134f9b10a3a878337f-db559.jpg 640w"
-        sizes="(max-width: 590px) 100vw, 590px"
-      />
-    </span>
-  </span>
-  
-  </a>
-    </p>
+<p><img src="/blog/receiver-5310b90ed8761a134f9b10a3a878337f.jpg" alt="receiver"></p>
 <h2>Instruction to run the example, and output</h2>
 <p>As this example uses <a href="https://doc.akka.io/docs/akka/2.5/remoting.html">Akka remoting</a> to send a message,
 you need to run two JVMs for the receiver and sender of the application respectively.</p>
 <p>Firstly, run the receiver side with the <code>receiver</code> argument supplied to <code>Main</code>.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>> git clone https://github.com/richardimaoka/resources.git
+<pre><code>> git clone https://github.com/richardimaoka/resources.git
 > cd resources
 > cd remote-minimal
 > sbt
-> runMain example.Main receiver</code></pre>
-      </div>
-<p>You’ll get output like below, then it waits until the message is sent from the sender.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>> runMain example.Main receiver
+> runMain example.Main receiver
+</code></pre>
+<p>You'll get output like below, then it waits until the message is sent from the sender.</p>
+<pre><code>> runMain example.Main receiver
 [info] Running example.Main receiver
 Program args:
 receiver
@@ -241,16 +86,14 @@ running startMessageReceiver()
 [INFO] [02/03/2018 13:36:58.464] [run-main-0] [akka.remote.Remoting] Remoting now listens on addresses: [akka.tcp://receiverSystem@127.0.0.1:2551]
 provider = remote
 listening at port = 2551
-started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]</code></pre>
-      </div>
+started a receiver actor = Actor[akka://receiverSystem/user/receiver#-603875191]
+</code></pre>
 <p>Then in the same directory, run the same <code>Main</code> with <code>sender</code> as the argument</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>> sbt
-> runMain example.Main sender</code></pre>
-      </div>
+<pre><code>> sbt
+> runMain example.Main sender
+</code></pre>
 <p>this is the sender side output:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>[info] Running example.Main sender
+<pre><code>[info] Running example.Main sender
 Program args:
 sender
 running startMessageSender()
@@ -264,41 +107,42 @@ sending a message to akka.tcp://receiverSystem@127.0.0.1:2551/user/receiver
 [INFO] [02/03/2018 13:37:19.537] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
 [INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.actor.default-dispatcher-4] [akka.remote.Remoting] Remoting shut down
 [INFO] [02/03/2018 13:37:19.577] [senderSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://senderSystem@127.0.0.1:2552/system/remoting-terminator] Remoting shut down.
-[success] Total time: 5 s, completed Feb 3, 2018 1:37:19 PM</code></pre>
-      </div>
+[success] Total time: 5 s, completed Feb 3, 2018 1:37:19 PM
+</code></pre>
 <p>then you see the receiver output as follows:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>EchoActor: received message = Hello!!</code></pre>
-      </div>
+<pre><code>EchoActor: received message = Hello!!
+</code></pre>
 <p>and immediately after that, the receiver side shows this error, which can be ignored.</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>[ERROR] [02/03/2018 13:37:19.572] [receiverSystem-akka.remote.default-remote-dispatcher-15] [akka.tcp://receiverSystem@127.0.0.1:2551/system/endpointManager/reliableEndpointWriter-akka.tcp%3A%2F%2FsenderSystem%40127.0.0.1%3A2552-0/endpointWriter] AssociationError [akka.tcp://receiverSystem@127.0.0.1:2551] <- [akka.tcp://senderSystem@127.0.0.1:2552]: Error [Shut down address: akka.tcp://senderSystem@127.0.0.1:2552] [
+<pre><code>[ERROR] [02/03/2018 13:37:19.572] [receiverSystem-akka.remote.default-remote-dispatcher-15] [akka.tcp://receiverSystem@127.0.0.1:2551/system/endpointManager/reliableEndpointWriter-akka.tcp%3A%2F%2FsenderSystem%40127.0.0.1%3A2552-0/endpointWriter] AssociationError [akka.tcp://receiverSystem@127.0.0.1:2551] &#x3C;- [akka.tcp://senderSystem@127.0.0.1:2552]: Error [Shut down address: akka.tcp://senderSystem@127.0.0.1:2552] [
 akka.remote.ShutDownAssociation: Shut down address: akka.tcp://senderSystem@127.0.0.1:2552
 Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remote system terminated the association because it is shutting down.
-]</code></pre>
-      </div>
+]
+</code></pre>
 <p>As explained in <a href="https://groups.google.com/forum/#!topic/akka-user/eerWNwRQ7o0">this thrad in akka-user</a> mailing list, the error happens specifically when you launch a process like this example from sbt, but when you compile your application and run it witout sbt, then the error disappears.</p>
-<p>Once everything is done, press the enter key on the receiver side’s console and you get this:</p>
-<div class="gatsby-highlight">
-      <pre class="language-none"><code>[INFO] [02/03/2018 13:38:05.942] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Shutting down remote daemon.
+<p>Once everything is done, press the enter key on the receiver side's console and you get this:</p>
+<pre><code>[INFO] [02/03/2018 13:38:05.942] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Shutting down remote daemon.
 [INFO] [02/03/2018 13:38:05.944] [receiverSystem-akka.remote.default-remote-dispatcher-5] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
 [INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.actor.default-dispatcher-3] [akka.remote.Remoting] Remoting shut down
-[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.remote.default-remote-dispatcher-6] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remoting shut down.</code></pre>
-      </div>
+[INFO] [02/03/2018 13:38:05.960] [receiverSystem-akka.remote.default-remote-dispatcher-6] [akka.tcp://receiverSystem@127.0.0.1:2551/system/remoting-terminator] Remoting shut down.
+</code></pre>
 <h2>References</h2>
 <ul>
 <li>Official documentation of Akka remoting at <a href="https://doc.akka.io/docs/akka/2.5/remoting.html">https://doc.akka.io/docs/akka/2.5/remoting.html</a></li>
 <li>Official documentation of Akka serialization at <a href="https://doc.akka.io/docs/akka/2.5/serialization.html">https://doc.akka.io/docs/akka/2.5/serialization.html</a></li>
 <li>Netty documentation at <a href="https://netty.io/">https://netty.io/</a></li>
-</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script>
+</ul></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div style="display:flex;margin-bottom:4.375rem;" data-reactid="10"><img src="/blog/static/profile-pic.200b73a9.jpg" alt="Richard Imaoka" style="margin-right:0.875rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="11"/><p data-reactid="12"><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Richard Imaoka</strong><!-- react-text: 15 -->, a Scala developer . You can find me (richardimaoka) at <!-- /react-text --><a href="https://twitter.com/richardimaoka" data-reactid="16">twitter</a><!-- react-text: 17 -->, and <!-- /react-text --><a href="https://github.com/richardimaoka" data-reactid="18">github</a><!-- react-text: 19 -->.<!-- /react-text --></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script id="webpack-manifest">/*<![CDATA[*/window.webpackManifest={"231608221292675":"app-3694e691a40a2920cb14.js","99219681209289":"component---node-modules-gatsby-plugin-offline-app-shell-js-5c4c5a0f7af9dc69d6d7.js","107818501498521":"component---src-templates-blog-post-js-ca71989682cd54639ff0.js","35783957827783":"component---src-pages-index-js-f3ac62be02813b36160e.js","60335399758886":"path----557518bd178906f8d58a.js","210333531512890":"path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js","74705494097707":"path---remote-minimal-setup-236041f30af0d2d50321.js","160326069391746":"path---serializer-minimal-3a5ef328caa94a3f322f.js","240229599778477":"path---akka-behavior-levels-777fa10830698420117c.js","90106736999892":"path---persistent-actor-minimal-96858b12ad3143e32630.js","235964179464078":"path---dispatcher-behavior-e43175dd21f98148787b.js","205347915900230":"path---hello-world-http-bench-35da9d029fe5bdfb8576.js","218392457165648":"path---akka-http-quickstart-65f688c2d48558377460.js","215048048543570":"path---benchmarking-akka-http-cassandra-local-320a98c23faa1d40e634.js","217632986566844":"path---executor-and-execution-context-da168d50899ef102ec56.js","224718722256965":"path---event-adapter-cassandra-e408dbea1d16996b771a.js","82537549859403":"path---oss-hackathon-1-45b25dd27b904fa78bb5.js","36029449993048":"path---local-minimal-sender-a23036f2d395d0f98d1a.js","86659390886147":"path---local-minimal-receiver-b2b2763cafabcda11bad.js","26725176786023":"path---persistent-actor-minimal-sql-b570323b919e40633eb6.js","165329427061039":"path---mailbox-and-fork-join-task-97325a03045c0cfff16f.js","107690442534757":"path---remote-minimal-receiver-604ce16ec527b8bef1e8.js","221230463047462":"path---swagger-akka-http-94f9bf4298041495fff2.js","241179671101829":"path---remote-minimal-sender-f33f35285248494c3d95.js","142629428675168":"path---index-cbf0e8c6a22e61bd8852.js","114276838955818":"component---src-layouts-index-js-ab448737d2670585c2fb.js"}/*]]>*/</script><script>
+            
   
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-111892799-1', 'auto');
-  </script><script>
+  if(true) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', 'UA-111892799-1', 'auto');
+      }
+      </script><script>
           window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -315,4 +159,4 @@ Caused by: akka.remote.transport.Transport$InvalidAssociationException: The remo
 
   return t;
 }(document, "script", "twitter-wjs"));
-      </script></body></html>
+      </script><script>/*<![CDATA[*/["/blog/commons-2174e0bf62fcadcdb7a6.js","/blog/app-3694e691a40a2920cb14.js","/blog/path---remote-minimal-receiver-604ce16ec527b8bef1e8.js","/blog/component---src-templates-blog-post-js-ca71989682cd54639ff0.js","/blog/component---src-layouts-index-js-ab448737d2670585c2fb.js"].forEach(function(s){document.write('<script src="'+s+'" defer></'+'script>')})/*]]>*/</script></body></html>
