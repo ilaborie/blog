@@ -13,7 +13,7 @@ In this article, I am going to show how to:
 
 I will set up a simple HTTP server step by step, which in the end works as follows. As you see below, we get different JSON returned dependent on the path.
 
-![high-level](./high-level-api.gif)
+<img src="./high-level-api.gif" />
 
 I will go through the steps in a way you can **quickly understand** the outcome from running the source code, and how it works, **WITHOUT downloading and running the source code yourself.**
 
