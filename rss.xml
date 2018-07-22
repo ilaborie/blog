@@ -1,4 +1,635 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 25 Jun 2018 21:51:18 GMT</lastBuildDate><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 22 Jul 2018 06:58:09 GMT</lastBuildDate><item><title><![CDATA[Akka HTTP Quickstart]]></title><description><![CDATA[Overview In this article, I am going to show how to: Run an Akka HTTP server, Convert to JSON from Scala case classes, Use Routing DSL. I…]]></description><link>https://richardimaoka.github.io/blog//akka-http-quickstart/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-quickstart/</guid><pubDate>Sun, 15 Jul 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In this article, I am going to show how to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run an Akka HTTP server,&lt;/li&gt;
+&lt;li&gt;Convert to JSON from Scala case classes,&lt;/li&gt;
+&lt;li&gt;Use Routing DSL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I will set up a simple HTTP server step by step, which in the end works as follows. As you see below, we get different JSON returned dependent on the path.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/high-level-api-792c91bb20b6c2f1c281c0280dff73af.gif&quot; alt=&quot;high-level&quot;&gt;&lt;/p&gt;
+&lt;p&gt;I will go through the steps in a way you can &lt;strong&gt;quickly understand&lt;/strong&gt; the outcome from running the source code, and how it works, &lt;strong&gt;WITHOUT downloading and running the source code yourself.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;However, for those who want to go much deeper, the full code is available here, with instruction to run the examples.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-quickstart&quot;&gt;Jump to the Git repository with an intruction to run the code&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Setting up a minimal application&lt;/h2&gt;
+&lt;p&gt;In this section, we set up a pretty simple “Hello World” HTTP server. In the end, an Akka HTTP server can be started like below:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandle&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/hello-world-54af7de2c758beb35a0e588cb6205572.gif&quot; alt=&quot;hello-world&quot;&gt;&lt;/p&gt;
+&lt;p&gt;So, the &lt;code&gt;bindAndHandle&lt;/code&gt; method is the method to fire up everything and start the HTTP server. Let’s see what is required to run this &lt;code&gt;bindAndHandle&lt;/code&gt; method.&lt;/p&gt;
+&lt;p&gt;Firstly, we should update &lt;a href=&quot;https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html&quot;&gt;&lt;code&gt;libraryDependencies&lt;/code&gt;&lt;/a&gt; in &lt;a href=&quot;https://github.com/richardimaoka/resources/blob/master/akka-http-quickstart/build.sbt&quot;&gt;build.sbt&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;libraryDependencies ++= Seq(
+  &quot;com.typesafe.akka&quot; %% &quot;akka-http&quot;   % &quot;10.1.3&quot;,
+  &quot;com.typesafe.akka&quot; %% &quot;akka-stream&quot; % &quot;2.5.12&quot;,
+)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and add a &lt;a href=&quot;https://www.scala-lang.org/documentation/your-first-lines-of-scala.html&quot;&gt;typical main &lt;code&gt;object&lt;/code&gt;&lt;/a&gt;, as well as its main method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; MainHelloWorld &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;args&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// ... application code goes here&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Inside the main method, we should start adding necessary building blocks to run the Akka HTTP server.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorSystem
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stream&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorMaterializer
+
+&lt;span class=&quot;token comment&quot;&gt;// remember to make them implicit!!&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Main&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;token comment&quot;&gt;// for Akka Actor&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// for Akka Stream&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As a preparation, we instantiate &lt;code&gt;ActorSystem&lt;/code&gt; and &lt;code&gt;ActorMaterializer&lt;/code&gt;. For people who are not familiar with &lt;code&gt;ActorSystem&lt;/code&gt; and &lt;code&gt;ActorMaterializer&lt;/code&gt;, you can think of them as the underlying infrastructure for running Akka HTTP.&lt;/p&gt;
+&lt;p&gt;Usually there is only one instance for each of them in an entire application. In this context, an “entire application” means an OS (e.g. Linux or Windows) process, or a JVM process.  Also we need to remember making &lt;code&gt;ActorSystem&lt;/code&gt; and &lt;code&gt;ActorMaterializer&lt;/code&gt; &lt;strong&gt;implicit&lt;/strong&gt;, as other methods take implicit parameters of these types.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The below roughly illustrates the Akka technology stack cosisting of an Akka HTTP application.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/akka-layers-4cee9958d09be096686ab2ca6cff3612.svg&quot; alt=&quot;akka-layers&quot; width=&quot;300px&quot;/&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Akka HTTP is on top of the other two layers&lt;/li&gt;
+&lt;li&gt;Akka Stream (&lt;code&gt;ActorMaterializer&lt;/code&gt;) handles internal processing of Akka HTTP&lt;/li&gt;
+&lt;li&gt;Akka Actor (&lt;code&gt;ActorSystem&lt;/code&gt;) is the base for running Akka Stream&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In my upcoming articles, we will see how these layers work with each other, and see why and how Akka HTTP is designed as a &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/implications-of-streaming-http-entity.html&quot;&gt;”&lt;strong&gt;streaming-first&lt;/strong&gt;” HTTP server&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;The next thing to introduce is &lt;code&gt;Route&lt;/code&gt;. &lt;code&gt;Route&lt;/code&gt; in Akka HTTP defines the endpoint structure (or RESTful resource structure, we might say) of the HTTP server with &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/routing-dsl/index.html&quot;&gt;Route DSL&lt;/a&gt;. Again, we only touch the surface of it in this article, and go deeper in later articles.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// importing akka...Directives._ makes `get` and `complete` avaialable in scope&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ 
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Route
+
+&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// `get` for HTTP GET method&lt;/span&gt;
+  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;routes&lt;/code&gt; in the above code returns &lt;code&gt;&quot;Hello World&quot;&lt;/code&gt; for HTTP GET methods to any endpoint in the HTTP server. The &lt;code&gt;complete&lt;/code&gt; method is what is typically used in Akka HTTP when we want to return an HTTP response to the client.&lt;/p&gt;
+&lt;p&gt;Finally we can add the following code to bring up the HTTP server, like we saw at the begining of this section.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandle&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then run the server.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain com.example.MainHelloWorld
+
+[info] Running com.example.Main
+Server online at http://localhost:8080/&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And like we saw earlier in this section …&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/hello-world-54af7de2c758beb35a0e588cb6205572.gif&quot; alt=&quot;hello-world&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Boom! We said hello to the world!&lt;/p&gt;
+&lt;h2&gt;High-level Routing DSL to construct HTTP endpoint structure (RESTful resource structure)&lt;/h2&gt;
+&lt;p&gt;We will go a little deeper in how Route DSL works. It is still at a surface level of it, but hopefully this gives you a better idea about how to construct the endpoint structure with the DSL.&lt;/p&gt;
+&lt;p&gt;Assuming we want to have the following endpoint structure,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;GET /users/person1
+GET /users/person2
+GET /users/person3&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;we can construct the route as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// importing akka...Directives._ makes `get`, `complete`, `path` avaialable&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ 
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Route
+
+&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  pathPrefix&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;users&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;/span&gt;      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&quot;Joh Don&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//don&apos;t forget `~`&lt;/span&gt;
+&lt;/span&gt;    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Justin Bieber&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;
+    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Peyton List&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; 
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Now, we get three different responses dependent on the path.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/high-level-api-step1-3bd357ca49cce9b94a3269704f244dd3.gif&quot; alt=&quot;high-level-step1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Since we set up these three endpoints for the HTTP &lt;strong&gt;GET&lt;/strong&gt; method only,
+doing (e.g.) POST will give us an error. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;$ curl -X POST -d &apos;{&quot;key&quot;: &quot;value&quot;}&apos; http://localhost:8080/users/person1
+
+// HTTP/1.1 405 Method Not Allowed
+HTTP method not allowed, supported methods: GET&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Also, accessing a path which is not defined in the route will also result in an error.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;$ curl http://localhost:8080/users/nosuchperson
+
+// HTTP/1.1 404 Not Found
+The requested resource could not be found.&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;In a separate article, we go over details about the Route DSL, and introduce how to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;support POST, PATCH, DELETE and even custom HTTP methods&lt;/li&gt;
+&lt;li&gt;authenticate the user&lt;/li&gt;
+&lt;li&gt;do more complicated stuff like CORS with plugins&lt;/li&gt;
+&lt;li&gt;and lot more!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;JSON to/from Scala case class conversion&lt;/h2&gt;
+&lt;p&gt;Just returning plain &lt;code&gt;String&lt;/code&gt; values to user is nothing interesting.
+Akka HTTP is well suited to API servers, and today’s API servers most commonly interchanges JSON with clients.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/high-level-api-792c91bb20b6c2f1c281c0280dff73af.gif&quot; alt=&quot;high-level&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In Akka HTTP, JSON support comes in a form of plugins, and &lt;a href=&quot;https://github.com/spray/spray-json&quot;&gt;spray-json&lt;/a&gt;
+is one of the easiest JSON plugins to use, and also introduced in the official &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/json-support.html&quot;&gt;doc&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Scala case class to JSON - HTTP response&lt;/h3&gt;
+&lt;p&gt;In this article, we cover only one path - Scala case class to JSON conversion. The other way around, from JSON to Scala case classes should be covered in a separate article, to limit the length of this quick-start article.&lt;/p&gt;
+&lt;p&gt;To use spray-json, we need the following in &lt;code&gt;libraryDependencies&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;libraryDependencies &lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Seq&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-http&quot;&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;10.1.3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-stream&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;2.5.12&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-http-spray-json&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;10.1.3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;io.spray&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;spray-json&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;1.3.4&quot;&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And instead of returning a plain &lt;code&gt;String&lt;/code&gt;,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;we can pass in a Scala case class to the &lt;code&gt;complete&lt;/code&gt; method,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// `User` is a Scala case class&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and it’s magically turned into JSON within the HTTP response body.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// &amp;lt;--------------- converted &amp;lt;----------------&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// JSON                 | //Scala case class&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;                       &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;  User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;    name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;            &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;    age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt; 
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;                       &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;So, what’s necessary to make this magic happen? We need some type class-based
+implicit resolution done by spray-json in conjunction with Akka HTTP.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Understanding what’s happening &lt;strong&gt;inside&lt;/strong&gt; this &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/marshalling.html&quot;&gt;JSON to/from Scala case class conversion&lt;/a&gt; is really, really a difficult thing. I personally gave it up more than five times in the past, by going through the official documentation, read the source code and ended up just wasting time.&lt;/p&gt;
+&lt;p&gt;However, to make the JSON to/from Scala case class conversion happen, fortunately Akka HTTP is desined so that we &lt;strong&gt;don’t need to&lt;/strong&gt; understand what’s happening inside. We just need to know what to &lt;code&gt;import&lt;/code&gt; and what kind of &lt;code&gt;implicit&lt;/code&gt; to define.&lt;/p&gt;
+&lt;p&gt;If you are still interested in the internal workings, I’ll write other articles to help you. I hope my articles I will write work as supplemental materials to the official doc if you felt that is not very easy to understand, like I did before.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;From here we see how to make the conversion happen. After updating &lt;code&gt;libraryDependencies&lt;/code&gt; in &lt;code&gt;build.sbt&lt;/code&gt;, we should introduce the following case class.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;This case class models the JSON in the HTTP response body, returned to the client. Then we add &lt;code&gt;implicit&lt;/code&gt; &lt;code&gt;RootJsonFormat[User]&lt;/code&gt; which is typically placed in the companion object of the modeling case class.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;//importing DefaultJsonProtocol._ makes `jsonFormat2` available&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;DefaultJsonProtocol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ 
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;RootJsonFormat
+&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; User &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token comment&quot;&gt;// this will fit in the implicit resolution,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token comment&quot;&gt;// enabling JSON/case class conversion&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; userJsonFormat&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; RootJsonFormat&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    jsonFormat2&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;code&gt;jsonFormat2&lt;/code&gt; is a convenient method which takes the &lt;code&gt;apply&lt;/code&gt; method of a two-value case class, and return &lt;code&gt;RootJsonFormat&lt;/code&gt;. By using &lt;code&gt;jsonFormat2&lt;/code&gt;, we don’t need to implement field-by-field assignment manually like below.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// if we do not use a plugin like spray-json&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; json &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// this field-by-field translation&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// is NOT needed if we use `jsonFormat2`&lt;/span&gt;
+  name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;getField&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;to&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;getField&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;to&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then on the &lt;code&gt;Route&lt;/code&gt; side of the code, we need the following import and pass in a &lt;code&gt;User&lt;/code&gt; instance to the &lt;code&gt;complete&lt;/code&gt; method.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;//this bring in implicit RootJsonFormat[User]&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;User
+&lt;/span&gt;
+get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Importing these two will bring all the necessary pieces of implicit resolution, which works like putting pieces into the puzzle, and &lt;code&gt;User&lt;/code&gt; can now be converted to JSON.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-db559.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEDAgT/xAAWAQEBAQAAAAAAAAAAAAAAAAADAAL/2gAMAwEAAhADEAAAAbx6mBo2Zv/EABgQAAMBAQAAAAAAAAAAAAAAAAECEBIx/9oACAEBAAEFAn5kh4FE/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFhEBAQEAAAAAAAAAAAAAAAAAAhBB/9oACAECAQE/ASsn/8QAFxAAAwEAAAAAAAAAAAAAAAAAACAhMf/aAAgBAQAGPwIuL//EAB0QAAICAQUAAAAAAAAAAAAAAAABESFREDFxgZH/2gAIAQEAAT8hWe2RLM0Xxo1Ks3EesaP/2gAMAwEAAgADAAAAEBsP/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQAxEf/aAAgBAwEBPxBBzbl//8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAgBAgEBPxCCwRn/xAAeEAEBAAIBBQEAAAAAAAAAAAABEQAxIRBBUWFxsf/aAAgBAQABPxARe8Fg2+8LkoSInh0CWm9zI6SvPI/uFT5n/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;implicit resolution&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-f8fb9.jpg&quot;
+        srcset=&quot;/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-e8976.jpg 148w,
+/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-63df2.jpg 295w,
+/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-f8fb9.jpg 590w,
+/blog/static/implicit-resolution-ed2b3779a41e22f8071c2c24413aee7d-db559.jpg 640w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;We should do the same thing to the three paths we constructed before.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ 
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Route
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;User
+
+&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; 
+  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;users/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;
+    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Justin Bieber&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;
+    path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Peyton List&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; age &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And we can see this in action as follows.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt
+&gt; runMain com.example.main.MainHighLevelAPI&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/high-level-api-complete-55cf956ed73ee75d743b703e7792cdb5.gif&quot; alt=&quot;high-level-api-complete&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;Nested case class support by spray-json&lt;/h3&gt;
+&lt;p&gt;Another convenient feature of spray-json is (although other JSON plugins also have similar fetures) that it supports conversion of nested Scala case classes. Suppose we have the following two case classes defined.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;DefaultJsonProtocol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;jsonFormat4
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;RootJsonFormat
+
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Address&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  zip&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  street&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  city&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  state&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; Address &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// this will fit in the implicit resolution,&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// enabling JSON/case class conversion&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; addressJsonFormat&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; RootJsonFormat&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Address&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    jsonFormat4&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Address&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;DefaultJsonProtocol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;jsonFormat3
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;RootJsonFormat
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Address&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ &lt;span class=&quot;token comment&quot;&gt;// implicit val addressJsonFormat&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; EnrichedUser&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;     &lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  address&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Address &lt;span class=&quot;token comment&quot;&gt;//nested case class&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; EnrichedUser &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// this will fit in the implicit resolution,&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// enabling JSON/case class conversion&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; enrichedUserJsonFormat&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; RootJsonFormat&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;EnrichedUser&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+    jsonFormat3&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And if we &lt;code&gt;complete&lt;/code&gt; the route like below, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;User
+
+get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    EnrichedUser&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      &lt;span class=&quot;token string&quot;&gt;&quot;Richard Imaoka&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      &lt;span class=&quot;token number&quot;&gt;150&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      Address&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        zip &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1112222&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        street &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;5-6-7 XYZ-street&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        city &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;New York&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;        state &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;New York&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;      &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;we will get the following JSON.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-json&quot;&gt;&lt;code&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Richard Imaoka&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;150&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;address&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token property&quot;&gt;&quot;zip&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1112222&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token property&quot;&gt;&quot;street&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;5-6-7 XYZ-street&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token property&quot;&gt;&quot;city&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;New York&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token property&quot;&gt;&quot;state&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;New York&quot;&lt;/span&gt;     
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;This helps us model the JSON data with reusable and &lt;strong&gt;composable&lt;/strong&gt; Scala case classes, and will be useful when we are constructing a large JSON response.&lt;/p&gt;
+&lt;h2&gt;Low-level API, needs understanding of HttpRequest and HttpResponse&lt;/h2&gt;
+&lt;p&gt;Most of the cases we will be implementing our endpoint structure using the Route DSL.
+However, for certain cases we would need more fine-grained, lower-level control on how to respond to a given HTTP request. With the low-level API, instead of Route DSL, we implement a request handler in&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HttpRequest =&gt; HttpResponse&lt;/code&gt;, or &lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HttpRequest =&gt; Future[HttpResponse]&lt;/code&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;using pattern matches like below.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;HttpRequest&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; HttpResponse&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; requestHandler&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; HttpRequest &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; HttpResponse &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; HttpRequest&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;_&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; HttpResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;    
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;That’s roughly how the low level API looks differently from the high level one, then we get into a bit of more detail about this below. Like the case of high level API, we need to instantiate &lt;code&gt;ActorSystem&lt;/code&gt; and &lt;code&gt;ActorMaterializer&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorSystem
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stream&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorMaterializer
+
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorSystem &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Main&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ActorMaterializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;And the detail of the pattern match is as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshalling&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Marshal
+&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;HttpMethods&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;GET
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// for HttpRequest, HttpResponse, Uri&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;User
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; scala&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;concurrent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;ExecutionContext&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Future&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; ec&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ExecutionContext &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; system&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dispatcher
+&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; requestHandler&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; HttpRequest &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; Future&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;HttpResponse&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; HttpRequest&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    GET&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    Uri&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// matches any headers&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// matches any HTTP entity (HTTP body)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    _  &lt;span class=&quot;token comment&quot;&gt;// matches any HTTP protocol&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; m &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Marshal&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Richard Imaoka&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;    m&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;to&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;HttpResponse&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Then we can run the HTTP server like before,&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+
+Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandleAsync&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;requestHandler&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;and we get this result.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/low-level-api-ab0f421093d7a334cbaccbe40c4e3b36-16258.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 380px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 51.578947368421055%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA90lEQVQoz6XQXW+DIBQGYP7/71qyVHeh1k5FI8qXBUGQrpuuNY64y3VL1j6BC07gvCeAKIrquoYZTPbxPol3u4DzTm8opXmeB0EQhuHLLYBzrpRym/EHY0y2gbeAGqHvnKZpMSZlWUrBK9QQSjhnQoj1d8AJ4bS2xvhkIRszGGvt2LZ++aEGpf2xPjraj6946KXsuqOvGN+14wAfidX0kKaMsadDygiFZeWSxEWxrzBMiwJm7K2V7rmQ/hcIJv6CqCCCBZimeb0XWJbl+jlnOVRaq1OPNOaWSSeQQtSwaZ7+euz3cr1EcXw+XRryz+T3j/P9Y68P+AKa+TLMwbxiuQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;low-level-api&quot;
+        title=&quot;&quot;
+        src=&quot;/blog/static/low-level-api-ab0f421093d7a334cbaccbe40c4e3b36-16258.png&quot;
+        srcset=&quot;/blog/static/low-level-api-ab0f421093d7a334cbaccbe40c4e3b36-8ca7e.png 148w,
+/blog/static/low-level-api-ab0f421093d7a334cbaccbe40c4e3b36-0ff7a.png 295w,
+/blog/static/low-level-api-ab0f421093d7a334cbaccbe40c4e3b36-16258.png 380w&quot;
+        sizes=&quot;(max-width: 380px) 100vw, 380px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h2&gt;The intention of this article&lt;/h2&gt;
+&lt;p&gt;The content of this article might have felt boring to you, as there have already been many other articles covered the same stuff, and this is just like intro of introduction. &lt;/p&gt;
+&lt;p&gt;However, I wrote this with a clear intention - I tried to make this article:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Easy to see what happens upon running the code, without actually running it by hand&lt;/li&gt;
+&lt;li&gt;Illustrate how it feels on writing Akka HTTP code, rather than explaining all the technical details&lt;/li&gt;
+&lt;li&gt;but still not leaving readers in a gap, awkward jump in the context&lt;/li&gt;
+&lt;li&gt;Have concise text, not talking endlessly about something readers are not interested&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Akka HTTP 1]]></title><description><![CDATA[Overview Diagram of Akka http server -> NO!!
+or animation? Goals of this article don’t need users to download anything to see how things…]]></description><link>https://richardimaoka.github.io/blog//akka-http-streaming-nature/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-streaming-nature/</guid><pubDate>Sun, 15 Jul 2018 03:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Diagram of Akka http server -&gt; NO!!
+or animation?&lt;/p&gt;
+&lt;h2&gt;Goals of this article&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;don’t need users to download anything to see how things work in a high-level&lt;/li&gt;
+&lt;li&gt;but show code that represents typical akka-http idoms, and their results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;body&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;libraryDependencies ++= Seq(
+  &quot;com.typesafe.akka&quot; %% &quot;akka-http&quot;   % &quot;10.1.3&quot;,
+  &quot;com.typesafe.akka&quot; %% &quot;akka-stream&quot; % &quot;2.5.12&quot;,
+)&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; Main &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; main&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;args&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Array&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Unit&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;token comment&quot;&gt;// ... application code goes here&lt;/span&gt;
+
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;diagram:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Your Akka HTTP Application&lt;/li&gt;
+&lt;li&gt;ActorMaterializer (Akka stream)&lt;/li&gt;
+&lt;li&gt;ActorSystem (Akka actor) &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;actor&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorSystem
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;stream&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;ActorMaterializer
+
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; system &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorSystem&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Main&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; materializer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ActorMaterializer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;define below. will see how &lt;code&gt;Route&lt;/code&gt; works later.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token comment&quot;&gt;// Directives._ for get, complete&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Directives&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ 
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;server&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Route
+
+&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Hello World&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;route structure diagram?&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Http
+Http&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;bindAndHandle&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;routes&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;localhost&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt run
+
+[info] Running com.example.Main
+Server online at http://localhost:8080/&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;screenshot of browser, showing hello world&lt;/p&gt;
+&lt;h1&gt;JSON to/from Scala case class conversion&lt;/h1&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;libraryDependencies &lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Seq&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-http&quot;&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;10.1.3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-stream&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;2.5.12&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;com.typesafe.akka&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;akka-http-spray-json&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;10.1.3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;io.spray&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt;  &lt;span class=&quot;token string&quot;&gt;&quot;spray-json&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;1.3.4&quot;&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;case-class vs. json natural interpretation picture or code vs code comparison&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;DefaultJsonProtocol&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_ &lt;span class=&quot;token comment&quot;&gt;//for jsonFormat2&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; spray&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;json&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;RootJsonFormat
+
+&lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;name&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; age&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;object&lt;/span&gt; User &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// formats for unmarshalling and marshalling&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;implicit&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; userJsonFormat &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jsonFormat2&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apply&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;key point, reduce boilorplate json &amp;#x3C;-&gt; object transformation code, but detail will be in separate article&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; akka&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;http&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;scaladsl&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;marshallers&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sprayjson&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SprayJsonSupport&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;_
+&lt;/span&gt;&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;example&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;User
+&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;&gt; sbt run&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;screenshot of browser, showing JSON&lt;/p&gt;
+&lt;h1&gt;basic route structure&lt;/h1&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-none&quot;&gt;&lt;code&gt;//route structure
+GET /users/person1
+GET /users/person2
+GET /users/person3&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code&gt;&lt;span class=&quot;token keyword&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; routes&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Route &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Joh Don&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;
+&lt;/span&gt;  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Justin Bieber&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;gatsby-highlight-code-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;~&lt;/span&gt;
+&lt;/span&gt;  path&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;person3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    get &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      complete&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;User&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Peyton List&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Screencapture of accessing /, then three paths&lt;/p&gt;
+&lt;p&gt;PUT, PATCH, etc are available
+JSON -&gt; case class is also possible
+plugins for cors, etc&lt;/p&gt;
+&lt;h2&gt;low-level, needs understanding of HttpRequest and HttpResponse&lt;/h2&gt;
+&lt;p&gt;Hmmmm I dunno whether you can use this with marsheller/unmarshaller …
+do not mention this in the article, or just completely omit this low-level section from this article&lt;/p&gt;
+&lt;p&gt;translate above high-level code to low level
+diagram showing mapping between HTTP data structure and HttpRequest/Response
+(use real fields/values for HTTP data, for easier understanding)
+(and possibly real chrome screenshot)&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Our first "regular" OSS Hackathon was held on May 27th, 2018]]></title><description><![CDATA[We started doing OSS Hackathon regularly The last Sunday was a pretty exciting day for me! We started a new community to run OSS Hackathon…]]></description><link>https://richardimaoka.github.io/blog//oss-hackathon-1/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//oss-hackathon-1/</guid><pubDate>Thu, 31 May 2018 16:31:08 GMT</pubDate><content:encoded>&lt;h2&gt;We started doing OSS Hackathon regularly&lt;/h2&gt;
 &lt;p&gt;The last Sunday was a pretty exciting day for me!&lt;/p&gt;
 &lt;p&gt;We started a new community to run OSS Hackathon events regularly in Tokyo, Japan.
 And the last Sunday, May 27th was the first occurrence of the hackathon events.&lt;/p&gt;
