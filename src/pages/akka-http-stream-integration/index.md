@@ -93,7 +93,7 @@ def persistDatabase(data: TransformedData): Future[TransformedData] = ...
 for {
   data <- externalService(input)
   if (validateServiceResult(data))
-  transformed <- transformServiceResult(data)
+  transformed = transformServiceResult(data)
   _ <- reportMetricService(transformed)
   _ <- persistDatabase(transformed)
 } yield {
@@ -107,8 +107,8 @@ This would make many of flow-control operators like `throttle`, `buffer`, etc no
 
 ![tcp-http](./tcp-http.gif)
 
-The third and the last reason I found was, although plugging in `Flow` is not possible, but plugging in `Source` is possible as described [here in the official doc](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming). So there are ways to control the throughput of your stream **in a single HTTP request/response roundtrip**, as long as it is implemented as `Source` not `Flow`.
+The third and the last reason I found was, although plugging in `Flow` is not possible, but plugging in `Source` is possible as described [here in the official doc](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming). So there are ways to control the throughput of your stream **in a single HTTP request/response roundtrip**, as long as we implement `Source` not `Flow`.
 
 ![source-streaming](./source-streaming.gif)
 
-Here I've covered my findings about Akka HTTP and Akka Stream integration. Hope this is useful for people who were thinking about similar integration ideas like mine, and also let me know if anyone finds what I was missing to discuss in the article.
+Here I've covered my findings about Akka HTTP and Akka Stream integration. Hope this is useful for people who were thinking about similar integration ideas like mine. Also let me know if anyone finds what I was missing to discuss in the article.
