@@ -16,6 +16,10 @@
       "path----557518bd178906f8d58a.js",
       "path----557518bd178906f8d58a.js.map"
     ],
+    "path---akka-http-stream-integration": [
+      "path---akka-http-stream-integration-bdbd3ac1ad8d69c3aaef.js",
+      "path---akka-http-stream-integration-bdbd3ac1ad8d69c3aaef.js.map"
+    ],
     "path---remote-minimal-setup": [
       "path---remote-minimal-setup-9f67c56dafa7e95736ba.js",
       "path---remote-minimal-setup-9f67c56dafa7e95736ba.js.map"
@@ -49,8 +53,8 @@
       "component---src-layouts-index-js-ab448737d2670585c2fb.js.map"
     ],
     "path---index": [
-      "path---index-3536c3ae9ef44dd2a666.js",
-      "path---index-3536c3ae9ef44dd2a666.js.map"
+      "path---index-c376adb3bc29aa39c22d.js",
+      "path---index-c376adb3bc29aa39c22d.js.map"
     ],
     "path---serializer-minimal": [
       "path---serializer-minimal-39942be9fcede28e2b38.js",
@@ -95,9 +99,9 @@
       "path---event-adapter-cassandra-95f49fb0d097c223d523.js.map"
     ],
     "app": [
-      "app-2e4ec5db5d74a8606c96.js",
+      "app-2034612a5c1174998a1a.js",
       "build-js-styles.css",
-      "app-2e4ec5db5d74a8606c96.js.map",
+      "app-2034612a5c1174998a1a.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
