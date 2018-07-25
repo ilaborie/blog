@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 23 Jul 2018 13:54:31 GMT</lastBuildDate><item><title><![CDATA[Akka HTTP and Akka Stream integration? Working differently from what I originally thought]]></title><description><![CDATA[As I started writing  articles about Akka HTTP , I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own…]]></description><link>https://richardimaoka.github.io/blog//akka-http-stream-integration/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-stream-integration/</guid><pubDate>Mon, 23 Jul 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;As I started writing &lt;a href=&quot;&quot;&gt;articles about Akka HTTP&lt;/a&gt;, I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own &lt;code class=&quot;language-text&quot;&gt;Flow&lt;/code&gt; into the stream of Akka HTTP:&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 25 Jul 2018 14:29:59 GMT</lastBuildDate><item><title><![CDATA[Akka HTTP and TCP streaming]]></title><description><![CDATA[Akka HTTP server is implemented in a way using streams, all the way from the TCP layer through HTTP, up to your application layer. In this…]]></description><link>https://richardimaoka.github.io/blog//akka-http-tcp-streaming/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-tcp-streaming/</guid><pubDate>Thu, 26 Jul 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;Akka HTTP server is implemented in a way using streams, all the way from the TCP layer through HTTP, up to your application layer. In this short article, I am going to cover how TCP streaming works in Akka HTTP.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/TCP-streaming-0235c7653c929221a95b9b1bc26e766d.gif&quot; alt=&quot;TCP-streaming&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The above animation illustrates streaming at the TCP layer. Firstly, each incoming connection, triggers a creation of &lt;code class=&quot;language-text&quot;&gt;Tcp.IncomingConnection&lt;/code&gt; which essentially represents &lt;code class=&quot;language-text&quot;&gt;Flow[ByteString, ByteString]&lt;/code&gt; in Akka Streams. And within each TCP connection, data bytes in &lt;code class=&quot;language-text&quot;&gt;ByteString&lt;/code&gt; are streamed through the connection.&lt;/p&gt;
+&lt;h2&gt;Handling many connections with fewer threads&lt;/h2&gt;
+&lt;p&gt;By this design, an Akka HTTP server does not need to hold a dedicated thread for each TCP connection. To see this in action, let me do some experiment.&lt;/p&gt;
+&lt;p&gt;By default, Akka HTTP accepts up to 1024 open TCP connections, and the limit can be configured by the &lt;code class=&quot;language-text&quot;&gt;akka.http.host-connection-pool.max-connections&lt;/code&gt; config value.&lt;/p&gt;
+&lt;p&gt;Let’s use an HTTP benchmark client &lt;a href=&quot;https://github.com/wg/wrk&quot;&gt;wrk&lt;/a&gt; as follows:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ wrk -t6 -c1200  -d30s http://localhost:8080&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;This wrk command means&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-t6 : it uses 6 benchmark client threads&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-c1200: 1,200 open connections&lt;/code&gt; and&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-d30s: runs benchmark for 30 seconds&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The result is here, where I shortend the vide duration a bit from 30 seconds.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/wrk-test-2fad332d59bfe643cf05334cf6ce91c1.gif&quot; alt=&quot;wrk-test&quot;&gt;&lt;/p&gt;
+&lt;p&gt;I forcefully inserted &lt;code class=&quot;language-text&quot;&gt;println&lt;/code&gt; so show the active TCP connections and it says it opened 1016, not 1024. This was due to some connections errors, and indeed errors were included in the below result. Maybe wrk was too fast (indeed, it is super fast!) and caused connection failure.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Running 30s test @ http://localhost:8080
+
+  6 threads and 1200 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    20.42ms   10.49ms 484.06ms   95.94%
+    Req/Sec     7.92k     1.57k   11.90k    91.37%
+
+  1400416 requests in 30.04s, 205.67MB read
+  Socket errors: connect 185, read 0, write 649, timeout 0
+
+Requests/sec:  46619.78
+Transfer/sec:      6.85MB&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Anyway, see the below screenshot of VisualVM. Main-akka.actor.default-dispatcher-XX are threads serving underlying actors for Akka HTTP. There were only about 30 threads, although the HTTP server had more than 1000 connections open at the time.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/visual-vm-d53958439b5af189947957ff9b7e5de8.png&quot; alt=&quot;visual-vm.png&quot;&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Akka HTTP and Akka Stream integration? Working differently from what I originally thought]]></title><description><![CDATA[As I started writing  articles about Akka HTTP , I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own…]]></description><link>https://richardimaoka.github.io/blog//akka-http-stream-integration/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-stream-integration/</guid><pubDate>Mon, 23 Jul 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;As I started writing &lt;a href=&quot;&quot;&gt;articles about Akka HTTP&lt;/a&gt;, I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own &lt;code class=&quot;language-text&quot;&gt;Flow&lt;/code&gt; into the stream of Akka HTTP:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/blog/wrong-assumption-c72a2fbada2eb0bd7d95fa611a6ebc0c.jpg&quot; alt=&quot;wrong-assumption&quot;&gt;&lt;/p&gt;
 &lt;p&gt;After looking through the official doc, I found no section talking about integration like that, and in the end of long search in google, I encountered this &lt;a href=&quot;https://stackoverflow.com/questions/36294428/akka-http-complete-request-with-flow&quot;&gt;Stack Overflow entry&lt;/a&gt; &lt;/p&gt;
 &lt;blockquote&gt;
