@@ -35,7 +35,7 @@ The `handler` in type of  `Flow[HttpRequest, HttpResponse, Any]`, can be impleme
 
 In this article, I'm going to introduce them very briefly, and discuss them in much more detail in separate articles.
 
-The first way is to use the [high-level API](https://doc.akka.io/docs/akka-http/current/introduction.html#routing-dsl-for-http-servers) with [Routing DSL](https://doc.akka.io/docs/akka-http/current/routing-dsl/index.html). Interestingly, the `handler` writtein in Routing DSL has the type of `Route`, but there is type-class based implicit resolution going on, to convert the `Route` to `Flow[HttpRequest, HttpResponse, Any]` behind the scene.
+The first way is to use the [high-level API](https://doc.akka.io/docs/akka-http/current/introduction.html#routing-dsl-for-http-servers) with [Routing DSL](https://doc.akka.io/docs/akka-http/current/routing-dsl/index.html). Interestingly, the `handler` written in Routing DSL has the type of `Route` not `Flow`, but there is type-class based implicit resolution going on, to convert the `Route` to `Flow[HttpRequest, HttpResponse, Any]` behind the scene.
 
 ```scala
 val route: Route = path("..." ) {
@@ -60,12 +60,25 @@ val handler: HttpRequest => HttpResponse = {
     HttpResponse(...)
 }
 
-Http().bindAndHandle(handler, "localhost", 8080)
+Http().bindAndHandleSync(handler, "localhost", 8080)
 ```
 
-`HttpRequest => HttpResponse` can easily bo converted to `Flow[HttpRequest, HttpResponse, Any]` with much simpler implicit resolution than that of the high level API.
+`HttpRequest => HttpResponse` can be passed to `bindAndHandleSync` which is internally converted to `Flow[HttpRequest, HttpResponse, Any]`. Note that we used `bindAndhHandleSync` which is different from `bindAndHandle` wa saw earlier.
 
+```scala{5}
+def bindAndHandleAsync(...) = { 
+  ...
+  ...
+  bindAndHandle(
+    Flow[HttpRequest].mapAsync(parallelism)(handler),
+    interface,
+    port,
+    connectionContext,
+    settings,
+    log)
+}
 
+```
 ## HTTP Pipelining
 
 HTTP pipelining means processing the next HTTP request before sending the HTTP response for the current HTTP request. 
