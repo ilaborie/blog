@@ -12,7 +12,7 @@ After looking through the official doc, I found no section talking about integra
 
 **Really**?
 
-Really. It turned out that the Stack Overflow answer was correct - **we cannot do what is in the above diagram**, as far as I checked, and I will explain why, in this article.
+Really. It turned out that the Stack Overflow answer was correct - **we cannot do what is in the above diagram**, and I will explain why.
 
 ## The requirement:
 
@@ -64,11 +64,9 @@ My seemingly simple idea, turned out to be impossible. So, there must be somethi
 
 Let's come back to the requirement then - do we really want to integrate Akka Stream, well more precisely, **existing business logic as** `Flow` into Akka HTTP's `Flow[HttpRequest, HttpResponse, Any]`?
 
-**Probably not**. 
+**Probably not**. We can describe the business logic in plain Scala code, a chain of method executions, rather than Akka Stram.
 
-We can describe the business logic in plain Scala code, a chain of method executions, rather than Akka Stram.
-
-The first reason is why this is not needed is that, although I find Akka Stream's DSL makes it easy to understand the whole chain of processing steps, it is **only easier in comparison to a chain of Akka Actors**. When using plain Scala code, method invoking chains could be easier, or as easy as Akka Stream to read.
+The first reason why this is not needed is that, although I find Akka Stream's DSL makes it easy to understand the whole chain of processing steps, it is **only easier in comparison to a chain of Akka Actors**. When using plain Scala code, method invoking chains could be easier, or as easy as Akka Stream to read.
 
 ```scala
 // Akka stream code as explanation of the steps
