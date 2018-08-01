@@ -3,7 +3,9 @@ title: Akka HTTP response streaming
 date: "2018-07-29T12:31:08.000+0900"
 ---
 
-In this article, I am going to introduce HTTP response streaming, which is als described in the official Akka HTTP doc on the [Source Streaming/JSON streaming page](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming). 
+In this article, I am going to introduce HTTP response streaming, which is also described in the official Akka HTTP doc on the [Source Streaming/JSON streaming page](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming). 
+
+For thoese who are interested, [full source code is available here](https://github.com/richardimaoka/resources/tree/master/akka-http-response-streaming), with instruction to run the example.
 
 ![response-streaming](./response-streaming.gif)
 
@@ -40,7 +42,7 @@ If the simplicity in HTTP response streaming's prefered (i.e.) it happens inside
 
 ## How to implement HTTP response streaming
 
-From here, let's see how to implement the JSON streaming with an example as illustrated in the following demo screen recording. The complete source code can be found [here](https://github.com/richardimaoka/resources/tree/master/akka-http-response-streaming) with instruction to run the example.
+From here, let's see how to implement the JSON streaming with an example as illustrated in the following demo screen recording. [The complete source code can be found here](https://github.com/richardimaoka/resources/tree/master/akka-http-response-streaming) with instruction to run the example.
 
 More detailed explanation can be found in [the official doc](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#json-streaming).
 
