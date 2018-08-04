@@ -22,7 +22,7 @@ actor ! message
 
 This is the **fire-and-forget** style for sending a message, and used more prevalently than the other pattern in Akka-based applications.
 
-The other pattern is called the **ask pattern**, which uses the `?` method to send a message and waits until there is a returning message back from the target actor.
+The other pattern is called the **ask pattern**, which uses the `?` method to send a message and waits until there is a returning message back from the target `actor`.
 
 ```scala
 import akka.pattern.ask
