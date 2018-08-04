@@ -3,11 +3,11 @@ title: Akka actor's ask pattern and its internal PromiseActorRef
 date: "2018-08-04T12:31:08.000+0900"
 ---
 
+![](./promise-actor-ref.gif)
+
 I'm writing this article because I wanted to share my little findings about Akka ask pattern's internal behavior, which are the use of `PromiseActorRef`.
 
 While doing some experiments in Akka, I came up with a question about how the Akka ask pattern distinguishes multiple messages returned back in a random order from the target actor, and it turned out the answer was `PromiseActorRef`.
-
-![](./promise-actor-ref.gif)
 
 ## Review of the Akka ask pattern, which uses the `?` method.
 
