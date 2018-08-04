@@ -3,14 +3,25 @@ title: Akka HTTP request streaming
 date: "2018-08-01T12:31:08.000+0900"
 ---
 
-In the previous article, [Akka HTTP response streaming](../akka-http-response-streaming)), I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client.
+In the previous article, [Akka HTTP response streaming](../akka-http-response-streaming), I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client.
 
-Then I am going to introduce the oppsite of that, which is HTTP **request** streaming, which is als described in the official Akka HTTP doc on the [Consuming JSON Streaming uploads](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#consuming-json-streaming-uploads) section. 
+Then I am going to introduce the oppsite, which is HTTP **request** streaming. That is also described in the official Akka HTTP doc in the [Consuming JSON Streaming uploads](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#consuming-json-streaming-uploads) section. 
 
-For thoese who are interested, [full source code is available here, with instruction to run the example](https://github.com/richardimaoka/resources/tree/master/akka-http-request-streaming)
-
+For thoese who are interested, [full source code is available here](https://github.com/richardimaoka/resources/tree/master/akka-http-request-streaming)
+, with instruction to run the example.
 
 ![akka-http-request-streaming](./akka-http-request-streaming.gif)
+
+To follow the example, you need this in your `build.sbt`:
+
+```
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-http"   % "10.1.3",
+  "com.typesafe.akka" %% "akka-stream" % "2.5.12",
+  "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.3",
+  "io.spray" %%  "spray-json" % "1.3.4"
+)
+```
 
 ## The `asSourceOf` directive
 
@@ -18,18 +29,20 @@ In Akka HTTP [Routing DSL](https://doc.akka.io/docs/akka-http/current/routing-ds
 
 ```scala{2}
 def route(): Route = post {
-  entity(asSourceOf[DataChunk]) { source => //Source[DataChunk]
+  entity(asSourceOf[T]) { source => //Source[T, NotUsed]
     val result: Future[String] = ...
     complete(result)
   }
 }
 ```
 
-Also, to let the `asSourceOf` directive work, we will need to define an `implicit` instance of `akka.http.scaladsl.common.EntityStreamingSupport` like we did for response streaming. If the `implicit` instance is missing, the Scala compiler will give you an error.
+`entity(asSourceOf[T])` extracts an Akka Stream `Source` that can be used in the succsessive curnly bracket `{...}`.
+
+Also, to let the `asSourceOf` directive work, we will need to define an `implicit` instance of `akka.http.scaladsl.common.EntityStreamingSupport` like we did for response streaming, which I will explain later in the article. If the `implicit` instance is missing, the Scala compiler will give you an error.
 
 ## Define the data model for the JSON chunk
 
-Next, we should define a data model for a JSON chunk, as a Scala case class. For simplicity, we use this `DataChunk` definition, 
+Next, we should define a data model for a JSON chunk, as a Scala case class. For simplicity, we use this `DataChunk` definition:
 
 ```scala
 case class DataChunk(id: Int, data: String)
@@ -51,6 +64,7 @@ This `implicit` instance will be a piece of implicit resolution "puzzle" along w
 
 ![implicit-resolution](./implicit-resolution.png)
 
+Once the puzzle is complete, Akka HTTP can convert the `DataChunk` case class into JSON chunk of the HTTP body, that can be transmitted over the network.
 
 ## Construct the stream to run, upon each HTTP request
 
@@ -64,7 +78,7 @@ As we have seen earlier, this `asSourceOf` directive:
 entity(asSourceOf[DataChunk]) { source => //Source[DataChunk, NotUsed]
 ```
 
-extracts an Akka Stream `Source[DataChunk, NotUsed]`, that should be connected to the rest of the stream and run. Just for the sake of simplicity, let's define the following stream, which just counts the number of elements (i.e. number of chunks) within the HTTP request.
+extracts an Akka Stream `Source[DataChunk, NotUsed]`, that should be connected to the rest of the stream and run. Just for the sake of simplicity, let's define the following stream, which just counts the number of elements (i.e. number of chunks) within the HTTP request body.
 
 ```scala
 val initialCount = 0
@@ -82,7 +96,7 @@ source //Source[DataChunk]
 
 ### Step-by-step description about the stream example
 
-For those who can quickly understand what the above stream does, please skip this section. Otherwise, let me explain it a bit.
+For those who can quickly understand what the above stream `source...map{ ... }` does, please skip this section. Otherwise, let me explain it a bit.
 
 I'll demonstrate this entire example in action bit later, but we should expect this source:
 
@@ -107,7 +121,7 @@ emits chunks like below:
 
 although each chunk is converted from a JSON object to a Scala case class instance of `DataChunk` we defined earlier.
 
-Then this piece of operator is just for showing a log message upon each element goes through this step.
+Then the below `log` of operator is just for showing a log message upon each element going through this operator.
 
 ```scala
 .log("received").withAttributes(
@@ -125,9 +139,9 @@ val countElement =
 .runFold(initialCount)(countElement)
 ```
 
-`source. ... .runFold(initialCount)(countElement)` is the Akka Stream version of the `fold(Left)` operation, and that will result result in (i.e. **materialize** to) `6: Future[Int]`.
+where `source. ... .runFold(initialCount)(countElement)` is the Akka Stream version of the `fold(Left)` operation, and that will result in (i.e. **materialize** to) `6: Future[Int]`.
 
-Since the `complete` Akka HTTP directive does not take `Future[Int]` as the parameter, we convert it to `Future[String]`.
+Since [the complete() Akka HTTP directive](https://doc.akka.io/docs/akka-http/current/routing-dsl/directives/route-directives/complete.html) does not take `Future[Int]` as the parameter, we convert it to `Future[String]`.
 
 ```scala
 // map the materialized value
@@ -285,3 +299,5 @@ where the `request.json` file is this:
 ```
 
 Again, [the full source code is available here, with instruction to run the example](https://github.com/richardimaoka/resources/tree/master/akka-http-request-streaming). So if you want to see all the details, plase have a look.
+
+Also if you liked this article, please also visit my previous [Akka HTTP response streaming](../akka-http-response-streaming) article too.
