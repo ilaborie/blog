@@ -3,11 +3,11 @@ title: Akka HTTP response streaming
 date: "2018-07-29T12:31:08.000+0900"
 ---
 
+![response-streaming](./response-streaming.gif)
+
 In this article, I am going to introduce HTTP response streaming, which is also described in the official Akka HTTP doc on the [Source Streaming/JSON streaming page](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming). 
 
 For thoese who are interested, [full source code is available here](https://github.com/richardimaoka/resources/tree/master/akka-http-response-streaming), with instruction to run the example.
-
-![response-streaming](./response-streaming.gif)
 
 There are common use cases where such HTTP response streaming is useful, for example:
 

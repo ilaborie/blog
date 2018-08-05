@@ -3,9 +3,9 @@ title: Akka HTTP streaming at the HTTP layer
 date: "2018-07-27T12:31:08.000+0900"
 ---
 
-The previous article [Akka HTTP and TCP streaming](./akka-http-tcp-streaming/) introduced how Akka HTTP processes data in a streaming fashion at the TCP layer. Now I am going to explain the streaming behavior at the HTTP request/response level. 
-
 ![http-streaming](./http-streaming.gif)
+
+The previous article [Akka HTTP and TCP streaming](./akka-http-tcp-streaming/) introduced how Akka HTTP processes data in a streaming fashion at the TCP layer. Now I am going to explain the streaming behavior at the HTTP request/response level. 
 
 The above animation illustrates streaming in Akka HTTP at the HTTP layer. Each HTTP request is converted to an HTTP response in the end, and this conversion logic is called the `handler` here, which is passed to the `bindAndHandle` method to start up the HTTP server.
 

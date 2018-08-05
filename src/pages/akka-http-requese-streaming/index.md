@@ -3,14 +3,14 @@ title: Akka HTTP request streaming
 date: "2018-08-01T12:31:08.000+0900"
 ---
 
+![akka-http-request-streaming](./akka-http-request-streaming.gif)
+
 In the previous article, [Akka HTTP response streaming](../akka-http-response-streaming), I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client.
 
 Then I am going to introduce the oppsite, which is HTTP **request** streaming. That is also described in the official Akka HTTP doc in the [Consuming JSON Streaming uploads](https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#consuming-json-streaming-uploads) section. 
 
 For thoese who are interested, [full source code is available here](https://github.com/richardimaoka/resources/tree/master/akka-http-request-streaming)
 , with instruction to run the example.
-
-![akka-http-request-streaming](./akka-http-request-streaming.gif)
 
 To follow the example, you need this in your `build.sbt`:
 

@@ -3,9 +3,9 @@ title: Akka HTTP and Akka Stream integration? Working differently from what I or
 date: "2018-07-23T12:31:08.000+0900"
 ---
 
-As I started writing [articles about Akka HTTP](), I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own `Flow` into the stream of Akka HTTP:
-
 ![wrong-assumption](./wrong-assumption.jpg)
+
+As I started writing [articles about Akka HTTP](), I just wondered whether Akka HTTP integrates with Akka Stream like this - plug in my own `Flow` into the stream of Akka HTTP:
 
 After looking through the official doc, I found no section talking about integration like that, and in the end of long search in google, I encountered this [Stack Overflow entry](https://stackoverflow.com/questions/36294428/akka-http-complete-request-with-flow) 
 > maybe the only way is to wire and materialize a new flow (upon each HttpRequest)
