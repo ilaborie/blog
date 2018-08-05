@@ -28,7 +28,7 @@ class Bio extends React.Component {
         />
         <p>
           Written by <strong>Richard Imaoka</strong>, a Scala developer
-          . You can find me (richardimaoka) at <a href="https://twitter.com/richardimaoka">twitter</a>,
+          . You can find me at <a href="https://twitter.com/richardimaoka">twitter</a>,
           and <a href="https://github.com/richardimaoka">github</a>.
         </p>
       </div>
