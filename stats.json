@@ -28,10 +28,6 @@
       "path---remote-minimal-setup-9f67c56dafa7e95736ba.js",
       "path---remote-minimal-setup-9f67c56dafa7e95736ba.js.map"
     ],
-    "path---akka-http-boundary": [
-      "path---akka-http-boundary-1f7a3d9c7acbacc77c34.js",
-      "path---akka-http-boundary-1f7a3d9c7acbacc77c34.js.map"
-    ],
     "path---oss-hackathon-1": [
       "path---oss-hackathon-1-56629f0e9e59f45a9e98.js",
       "path---oss-hackathon-1-56629f0e9e59f45a9e98.js.map"
@@ -60,9 +56,13 @@
       "component---src-layouts-index-js-06ea60d5cca62645ca7b.js",
       "component---src-layouts-index-js-06ea60d5cca62645ca7b.js.map"
     ],
+    "path---akka-http-operation-scope": [
+      "path---akka-http-operation-scope-b9817ed00e19a759f70c.js",
+      "path---akka-http-operation-scope-b9817ed00e19a759f70c.js.map"
+    ],
     "path---index": [
-      "path---index-008f4b58747fc3fe4bdd.js",
-      "path---index-008f4b58747fc3fe4bdd.js.map"
+      "path---index-b411610eff83e1e5b8a7.js",
+      "path---index-b411610eff83e1e5b8a7.js.map"
     ],
     "path---akka-http-response-streaming": [
       "path---akka-http-response-streaming-31c8cc4df452642fb908.js",
@@ -111,9 +111,9 @@
       "path---event-adapter-cassandra-95f49fb0d097c223d523.js.map"
     ],
     "app": [
-      "app-44f6d79bbcc6287b2190.js",
+      "app-41f2d45c848af31109b7.js",
       "build-js-styles.css",
-      "app-44f6d79bbcc6287b2190.js.map",
+      "app-41f2d45c848af31109b7.js.map",
       "build-js-styles.css.map"
     ],
     "path---dispatcher-behavior": [
