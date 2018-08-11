@@ -33,11 +33,11 @@ The above example can be decomposed into different parts as follows:
 
 ![](./http-request.png)
 
-since the format of HTTP requests is clearly described in the following paragraph in [RFC7230](https://tools.ietf.org/html/rfc7230#section-2.1). It’s worth reading:
+The format of HTTP requests is clearly described in the following paragraph in [RFC7230](https://tools.ietf.org/html/rfc7230#section-2.1). It’s worth reading:
 
 > A client sends an HTTP request to a server in the form of a request message, beginning with a **request-line** that includes a method, URI, and protocol version (Section 3.1.1), followed by **header fields** containing request modifiers, client information, and representation metadata (Section 3.2), **an empty line** to indicate the end of the header section, and finally a **message body** containing the payload body (if any, Section 3.3).
      
-In the code, Akka HTTP has the [**HttpRequest**](http://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpRequest.html) case class which consists of
+In the Akka HTTP source code, the [**HttpRequest**](http://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpRequest.html) case class consists of
 
 ```scala
 final class HttpRequest(
@@ -80,8 +80,7 @@ Content-Length: 28
 {"name":"Joh Don","age":150}
 ```
 
-There is slight difference as in [RFC7230](https://tools.ietf.org/html/rfc7230#section-2.1). The main difference is that an HTTP response has a status line, while an HTTP request had a request line.
-
+There is slight difference from the request as in [RFC7230](https://tools.ietf.org/html/rfc7230#section-2.1). The main difference is that an HTTP response has a status line, while an HTTP request had a request line.
 
 > A server responds to a client's request by sending one or more HTTP response messages, each beginning with a **status line** that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by **header fields** containing server information, resource metadata, and representation metadata (Section 3.2), an **empty line** to indicate the end of the header section, and finally a **message body** containing the payload body (if any, Section 3.3).
 
@@ -128,7 +127,7 @@ So what is an "**entity**" in Akka HTTP? As briefly touched in [the official doc
 
 > an entity (body data)
 
-**That’s just it, an entity is a body. `HttpEntity` in Akka HTTP models the entity.**
+**That’s just it. An entity is a body, and `HttpEntity` models the entity.**
 
 To be honest, I am not sure why it was named as `HttpEntity` but not HttpBody (in Akka HTTP, there is no such class or trait named HttpBody). I guess there is a valid reason for this. Anyway, when you see the word "**entity**", you can assume that is the body of a request or a response.
 
