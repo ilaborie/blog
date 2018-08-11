@@ -1,4 +1,144 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 05 Aug 2018 17:00:03 GMT</lastBuildDate><item><title><![CDATA[Akka HTTP request/response scope operations, vs. Deferred operations]]></title><description><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Akka, Concurrency, etc.]]></title><description><![CDATA[Memo about Akka, concurrency, and other technical stuff]]></description><link>https://richardimaoka.github.io/blog/</link><generator>RSS for Node</generator><lastBuildDate>Sat, 11 Aug 2018 18:28:09 GMT</lastBuildDate><item><title><![CDATA[Akka HTTP Request and Response models]]></title><description><![CDATA[In this article, I am going to review the HTTP model in Akka HTTP, which is described  here in the official document  and defined as follows…]]></description><link>https://richardimaoka.github.io/blog//akka-http-request-response-model/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-request-response-model/</guid><pubDate>Sat, 11 Aug 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;In this article, I am going to review the HTTP model in Akka HTTP, which is described &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/http-model.html&quot;&gt;here in the official document&lt;/a&gt; and defined as follows:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;case-class based model of all the major HTTP data structures, like HTTP requests, responses and common headers.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This will be the base for understanding &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/marshalling.html&quot;&gt;Marshalling&lt;/a&gt;/&lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/unmarshalling.html&quot;&gt;Unmarshalling&lt;/a&gt; infrastructure in Akka HTTP, which I will discuss in upcoming articles.&lt;/p&gt;
+&lt;h2&gt;HttpRequest&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/akka-request-f6eb41c8f1bf6fd4b42efbca9c213207.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The case class &lt;code class=&quot;language-text&quot;&gt;HttpRequest&lt;/code&gt; represents, as the name indicates, an HTTP request. When you send an HTTP request, it looks like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;POST             https://example.com HTTP/1.1
+Host:            example.com
+Connection:      keep-alive
+Accept:          application/json
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ja;q=0.8
+
+{&amp;quot;field1&amp;quot;: &amp;quot;some value&amp;quot;, &amp;quot;field2&amp;quot;: 100}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The above example can be decomposed into different parts as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/http-request-8f877662b99b954756836e865f66928e.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;since the format of HTTP requests is clearly described in the following paragraph in &lt;a href=&quot;https://tools.ietf.org/html/rfc7230#section-2.1&quot;&gt;RFC7230&lt;/a&gt;. It’s worth reading:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A client sends an HTTP request to a server in the form of a request message, beginning with a &lt;strong&gt;request-line&lt;/strong&gt; that includes a method, URI, and protocol version (Section 3.1.1), followed by &lt;strong&gt;header fields&lt;/strong&gt; containing request modifiers, client information, and representation metadata (Section 3.2), &lt;strong&gt;an empty line&lt;/strong&gt; to indicate the end of the header section, and finally a &lt;strong&gt;message body&lt;/strong&gt; containing the payload body (if any, Section 3.3).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In the code, Akka HTTP has the &lt;a href=&quot;http://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpRequest.html&quot;&gt;&lt;strong&gt;HttpRequest&lt;/strong&gt;&lt;/a&gt; case class which consists of&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; HttpRequest&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; method&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   HttpMethod&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;                &lt;span class=&quot;token comment&quot;&gt;//(GET, POST, etc.)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; uri&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;      Uri&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;                       &lt;span class=&quot;token comment&quot;&gt;//URI&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; headers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;  immutable&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Seq&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;HttpHeader&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;//HTTP headers&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; entity&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   RequestEntity&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;             &lt;span class=&quot;token comment&quot;&gt;//entity (i.e.) body&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; protocol&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; HttpProtocol&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;              &lt;span class=&quot;token comment&quot;&gt;//HTTP 1.1, 1.0, etc&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; HttpMessage &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;where you can find:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Available HTTP methods (&lt;code class=&quot;language-text&quot;&gt;HttpMethod&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/current/akka/http/scaladsl/model/HttpMethods$.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Available headers (&lt;code class=&quot;language-text&quot;&gt;HttpHeader&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/current/akka/http/scaladsl/model/headers/index.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Available protocols (&lt;code class=&quot;language-text&quot;&gt;HttpProtocol&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpProtocols$.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Also you see that &lt;code class=&quot;language-text&quot;&gt;HttpRequest&lt;/code&gt; extends the &lt;code class=&quot;language-text&quot;&gt;HttpMessage&lt;/code&gt; trait, &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; HttpMessage &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;which is the base trait for both &lt;code class=&quot;language-text&quot;&gt;HttpRequest&lt;/code&gt;, and &lt;code class=&quot;language-text&quot;&gt;HttpResponse&lt;/code&gt; which we will see in the next section.&lt;/p&gt;
+&lt;h2&gt;HttpResponse&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/akka-response-afc2484d5d937e15aea4418a127f258b.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Similar to HTTP requests, an HTTP response example looks like below:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;HTTP/1.1 200 OK
+Server: akka-http/10.1.3
+Date: Sat, 11 Aug 2018 16:17:11 GMT
+Content-Type: application/json
+Content-Length: 28
+
+{&amp;quot;name&amp;quot;:&amp;quot;Joh Don&amp;quot;,&amp;quot;age&amp;quot;:150}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;There is slight difference as in &lt;a href=&quot;https://tools.ietf.org/html/rfc7230#section-2.1&quot;&gt;RFC7230&lt;/a&gt;. The main difference is that an HTTP response has a status line, while an HTTP request had a request line.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A server responds to a client’s request by sending one or more HTTP response messages, each beginning with a &lt;strong&gt;status line&lt;/strong&gt; that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by &lt;strong&gt;header fields&lt;/strong&gt; containing server information, resource metadata, and representation metadata (Section 3.2), an &lt;strong&gt;empty line&lt;/strong&gt; to indicate the end of the header section, and finally a &lt;strong&gt;message body&lt;/strong&gt; containing the payload body (if any, Section 3.3).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If there is a body in the HTTP request, the headers and the body are separated by a blank line, like below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/http-response-58a338ff0fb618fc8d5fe12181a1e96d.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In Akka HTTP, the &lt;a href=&quot;http://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpResponse.html&quot;&gt;&lt;strong&gt;HttpResponse&lt;/strong&gt;&lt;/a&gt; case class consists of&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; HttpResponse&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; status&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   StatusCode&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;                &lt;span class=&quot;token comment&quot;&gt;// HTTP Status Code&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; headers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;  immutable&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Seq&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;HttpHeader&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// HTTP headers&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; entity&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   ResponseEntity&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;            &lt;span class=&quot;token comment&quot;&gt;// entity (i.e.) body&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; protocol&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; HttpProtocol               &lt;span class=&quot;token comment&quot;&gt;// HTTP 1.1, 1.0, etc&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; HttpMessage &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;where you can find:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Available HTTP methods (&lt;code class=&quot;language-text&quot;&gt;HttpMethod&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/current/akka/http/scaladsl/model/HttpMethods$.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Available headers (&lt;code class=&quot;language-text&quot;&gt;HttpHeader&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/current/akka/http/scaladsl/model/headers/index.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Available protocols (&lt;code class=&quot;language-text&quot;&gt;HttpProtocol&lt;/code&gt;) &lt;a href=&quot;https://doc.akka.io/api/akka-http/10.1.3/akka/http/scaladsl/model/HttpProtocols$.html&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Again, like &lt;code class=&quot;language-text&quot;&gt;HttpRequest&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;HttpResponse&lt;/code&gt; extents the &lt;code class=&quot;language-text&quot;&gt;HttpMessage&lt;/code&gt; trait.&lt;/p&gt;
+&lt;h2&gt;HttpEntity&lt;/h2&gt;
+&lt;p&gt;For those who are used to other HTTP frameworks or libraries, the word ”&lt;strong&gt;entity&lt;/strong&gt;” might sound unfamiliar, because we cannot find the word in the following family of “Hypertext Transfer Protocol (HTTP/1.1)” RFCs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7230&quot;&gt;RFC7230&lt;/a&gt;: Message Syntax and Routing&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7231&quot;&gt;RFC7231&lt;/a&gt;: Semantics and Content&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7232&quot;&gt;RFC7232&lt;/a&gt;: Conditional Requests&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7233&quot;&gt;RFC723&lt;/a&gt;3: Range Requests&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7234&quot;&gt;RFC7234&lt;/a&gt;: Caching&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc7235&quot;&gt;RFC7234&lt;/a&gt;: Authentication&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(We see entity-tag but that’s different from entities in Akka HTTP.)&lt;/p&gt;
+&lt;p&gt;So what is an ”&lt;strong&gt;entity&lt;/strong&gt;” in Akka HTTP? As briefly touched in &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/http-model.html&quot;&gt;the official documentation&lt;/a&gt;, an entity is the body of an HTTP request or response. &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;an entity (body data)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;That’s just it, an entity is a body. &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt; in Akka HTTP models the entity.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To be honest, I am not sure why it was named as &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt; but not HttpBody (in Akka HTTP, there is no such class or trait named HttpBody). I guess there is a valid reason for this. Anyway, when you see the word ”&lt;strong&gt;entity&lt;/strong&gt;”, you can assume that is the body of a request or a response.&lt;/p&gt;
+&lt;p&gt;In Akka HTTP, &lt;code class=&quot;language-text&quot;&gt;RequestEntity&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;ResponseEntity&lt;/code&gt;, which represent the HTTP request body and the response body, extend &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; RequestEntity &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; HttpEntity &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;trait&lt;/span&gt; ResponseEntity &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; HttpEntity &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;As they are &lt;code class=&quot;language-text&quot;&gt;trait&lt;/code&gt;s, there are concrete classes extending from them. They are described in the &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt; &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/http-model.html#httpentity&quot;&gt;section of the official doc&lt;/a&gt;, which are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HttpEntity.Strict&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HttpEntity.Defuault&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HttpEntity.Chunked&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HttpEntity.CloseDelimited&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HttpEntity.IndefiniteLength&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and they are defined like below. The below case class definition is not very accurate, but simplified for the sake of easy understanding, still holding the essence of the actual definition.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Strict&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  contentType&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ContentType&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  data&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ByteString
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; HttpEntity
+&lt;span class=&quot;token comment&quot;&gt;// simplified, it doesn&apos;t directly extend HttpEntity&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Default&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  contentType&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;   ContentType&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  contentLength&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Long&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  data&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;          Source&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ByteString&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; HttpEntity
+&lt;span class=&quot;token comment&quot;&gt;// simplified, it doesn&apos;t directly extend HttpEntity&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-scala&quot;&gt;&lt;code class=&quot;language-scala&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Chunked&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  contentType&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; ContentType&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  chunks&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Source&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ChunkStreamPart&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; HttpEntity
+&lt;span class=&quot;token comment&quot;&gt;// simplified, it doesn&apos;t directly extend HttpEntity&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;The last two, &lt;code class=&quot;language-text&quot;&gt;CloseDelimited&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;IndefiniteLength&lt;/code&gt; are bit more complicated, and less frequently used in practice, so we are not going to cover them here.&lt;/p&gt;
+&lt;p&gt;The meaning and behavior of these concrete classes will become clearer when you have better understanding about Marshalling and Unmarshalling, as well as &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#source-streaming&quot;&gt;Streaming Support in Akka HTTP&lt;/a&gt; which I also explained in a &lt;a href=&quot;../akka-http-response-streaming&quot;&gt;past article&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Up to this point, we have covered how an HTTP request and response can be decomposed into smaller components, and what HTTP ”&lt;strong&gt;entity&lt;/strong&gt;” means - it is just the HTTP body of a request or a response, and &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt; has more specialized types like &lt;code class=&quot;language-text&quot;&gt;Strict&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Default&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;Chuked&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As said at the beginning, to understand &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/marshalling.html&quot;&gt;Marshalling&lt;/a&gt; and &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/common/unmarshalling.html&quot;&gt;Unmarshalling&lt;/a&gt;, which is difficult when you look into the internals, it is crucial to have an idea about how &lt;code class=&quot;language-text&quot;&gt;HttpRequest&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;HttpResponse&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;HttpEntity&lt;/code&gt; are related to each other.&lt;/p&gt;
+&lt;p&gt;From the next article, I’ll start talking about Marshalling and Unmarshalling, which hopefully clarifies points not touched in the official doc.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Akka HTTP request/response scope operations, vs. Deferred operations]]></title><description><![CDATA[
  If you are new to writing an HTTP server application in Akka HTTP, you might wonder how to implement the backend processing upon an HTTP…]]></description><link>https://richardimaoka.github.io/blog//akka-http-operation-scope/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-operation-scope/</guid><pubDate>Sun, 05 Aug 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;&lt;img src=&quot;/blog/inscope-operation-97f164893d68c7401fef0d16b1ce0978.png&quot;&gt;
 &lt;img src=&quot;/blog/deferred-operation-fd557ebaab2939b6a5e52109d5b50e3d.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;If you are new to writing an HTTP server application in Akka HTTP, you might wonder how to implement the backend processing upon an HTTP request. &lt;/p&gt;
@@ -286,7 +426,7 @@
   &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; result&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Promise&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _mcn&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;String&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
       &lt;/div&gt;
-&lt;p&gt;Hope this was interesting for you as well, and made it clear that you don’t need to be afraid of the order of returning messages from the target to the sender, when using the Akka ask pattern.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Akka HTTP request streaming]]></title><description><![CDATA[In the previous article,  Akka HTTP response streaming , I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client…]]></description><link>https://richardimaoka.github.io/blog//akka-http-requese-streaming/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-requese-streaming/</guid><pubDate>Wed, 01 Aug 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;&lt;img src=&quot;/blog/akka-http-request-streaming-8cb1390e8adb235de6fea931d23e478d.gif&quot; alt=&quot;akka-http-request-streaming&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Hope this was interesting for you as well, and made it clear that you don’t need to be afraid of the order of returning messages from the target to the sender, when using the Akka ask pattern.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Akka HTTP request streaming]]></title><description><![CDATA[In the previous article,  Akka HTTP response streaming , I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client…]]></description><link>https://richardimaoka.github.io/blog//akka-http-request-streaming/</link><guid isPermaLink="false">https://richardimaoka.github.io/blog//akka-http-request-streaming/</guid><pubDate>Wed, 01 Aug 2018 03:31:08 GMT</pubDate><content:encoded>&lt;p&gt;&lt;img src=&quot;/blog/akka-http-request-streaming-8cb1390e8adb235de6fea931d23e478d.gif&quot; alt=&quot;akka-http-request-streaming&quot;&gt;&lt;/p&gt;
 &lt;p&gt;In the previous article, &lt;a href=&quot;../akka-http-response-streaming&quot;&gt;Akka HTTP response streaming&lt;/a&gt;, I covered HTTP response streaming to send chunk-by-chunk HTTP body to the client.&lt;/p&gt;
 &lt;p&gt;Then I am going to introduce the oppsite, which is HTTP &lt;strong&gt;request&lt;/strong&gt; streaming. That is also described in the official Akka HTTP doc in the &lt;a href=&quot;https://doc.akka.io/docs/akka-http/current/routing-dsl/source-streaming-support.html#consuming-json-streaming-uploads&quot;&gt;Consuming JSON Streaming uploads&lt;/a&gt; section. &lt;/p&gt;
 &lt;p&gt;For thoese who are interested, &lt;a href=&quot;https://github.com/richardimaoka/resources/tree/master/akka-http-request-streaming&quot;&gt;full source code is available here&lt;/a&gt;
