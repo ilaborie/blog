@@ -112,17 +112,18 @@ However, don't jump to deferred operatoins when the latecy at an OK level. When 
 
 ## Deferred operations, out of the scope from HTTP request/response
 
+
 ![](./deferred-operation.png)
 
 Deferred operations are something that can be performed even after the HTTP response is already sent back to the client. That means that, when the client sends the next request, we have no guarantee that all the backend operation for the former request were finished.
 
 On the other hand, since we skip some operations before sending back the HTTP response, the latency within HTTP request/response cycle can be improved.
 
-Remember that still we can perform some operations within the HTTP request/response scope, so using deferred operations means using **the mix of request/response scope operations and deffered operations**.
+Remember that still we can perform some operations within the HTTP request/response scope, so using deferred operations means using **the mix of request/response scope operations and deferred operations**.
 
 When in that mixed mode, within the HTTP request/response scope, we usually put the msesages to the queue, so that the messages can be processed afterwards. Often message queue systems like Apache Kafka or RabbitMQ are used for that purpose.
 
-### Akka Streams in deffered operations
+### Akka Streams in deferred operations
 
 ![](./deferred-stream.png)
 
@@ -136,7 +137,7 @@ If you are interested and want to explore more on Akka Streams, I highly recomme
 
 ### Caution: Don't use Akka Actor nor Akka Persistence as a messaging queue 
 
-When in the deffered operation mode (i.e. mix of request/response scode and deffered operations), there might be tendency to use Akka Actor as a message queue if it feels an overkill to set up a message queue like Kafka.
+When in the deferred operation mode (i.e. mix of request/response scode and deferred operations), there might be tendency to use Akka Actor as a message queue if it feels an overkill to set up a message queue like Kafka.
 
 No, don't use Akka Actor for the message queue. Akka Actor's mailbox doesn't have durability, so when we send too many messages to it, the underlying JVM can explode and all the messages are gone. Just don't do that.
 
@@ -156,4 +157,4 @@ In this mode, your HTTP application completely has completely different expectio
 
 Hope this article gave you a basic idea about how to implement the backend processing logic in Akka HTTP, and typical misuse of Akka Actors with Akka HTTP. 
 
-Of course, there is a lot, really a lot more to think about on the implementation, so once you figured out what operations you want to perform within the HTTP request/response scope, and what can be deffered, you can go ahead looking at specific technologies like DB products, Kafka, etc to compose your whole backend. Maybe there is nothing to defer for you and everything in backend processing is in the HTTP request/response scope, and that that makes your system a lot easy to work with.
+Of course, there is a lot, really a lot more to think about on the implementation, so once you figured out what operations you want to perform within the HTTP request/response scope, and what can be deferred, you can go ahead looking at specific technologies like DB products, Kafka, etc to compose your whole backend. Maybe there is nothing to defer for you and everything in backend processing is in the HTTP request/response scope, and that that makes your system a lot easy to work with.
