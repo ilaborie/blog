@@ -15,8 +15,8 @@ Wordpress2016.overrideThemeStyles = () => ({
     fontSize: '1em',
     backgroundColor: '#fdf6e3',
   },
-  'img': {
-    align: 'middle',
+  'blockquote': {
+    fontSize: '1em',
   },
 })
 
